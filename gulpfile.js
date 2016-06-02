@@ -3,7 +3,7 @@ var gulp = require('gulp'),
    uglify = require('gulp-uglify'),
    livereload = require('gulp-livereload'),
    concat = require('gulp-concat'),
-   minifyCSS = require('gulp-minify-css'),
+   cleanCSS = require('gulp-clean-css'),
    autoprefixer = require('gulp-autoprefixer'),
    plumber = require('gulp-plumber'),
    sourcemaps = require('gulp-sourcemaps'),
@@ -28,7 +28,7 @@ gulp.task('styles', function () {
       .pipe(sourcemaps.init())
       .pipe(autoprefixer())
       .pipe(concat('styles.css'))
-      .pipe(minifyCSS())
+      .pipe(cleanCSS({compatibility: 'ie8'}))
       .pipe(sourcemaps.write())
       .pipe(gulp.dest(DIST_PATH))
       .pipe(livereload());
