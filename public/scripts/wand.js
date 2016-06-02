@@ -1,3 +1,11 @@
+/*************************
+
+This is a custom made library named "wand" that I made to handle some of the functions that I want to do in this application.
+
+-Andrew Gremlich
+
+**************************/
+
 (function (glo, lib) {
     glo.wand = lib();
 }(typeof window !== "undefined" ? window : this, function () {
