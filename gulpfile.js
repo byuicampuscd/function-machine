@@ -7,15 +7,13 @@ var gulp = require('gulp'),
    autoprefixer = require('gulp-autoprefixer'),
    plumber = require('gulp-plumber'),
    sourcemaps = require('gulp-sourcemaps'),
-   sass = require('gulp-sass'),
    babel = require('gulp-babel'),
    del = require('del');
 
 //PATHS
 var SCRIPTS_PATH = 'public/scripts/**/*.js',
    CSS_PATH = 'public/css/**/*.css',
-   DIST_PATH = 'public/dist',
-   SCSS_PATH = 'public/scss/**/*.scss';
+   DIST_PATH = 'public/dist';
 
 //Styles
 gulp.task('styles', function () {
@@ -37,14 +35,14 @@ gulp.task('styles', function () {
 //Scripts
 gulp.task('scripts', function () {
    console.log("scripts task");
-   return gulp.src(SCRIPTS_PATH)
+   return gulp.src(['public/scripts/wand.js', SCRIPTS_PATH])
       .pipe(plumber(function (err) {
          console.log('Scripts Task Error ' + err);
          this.emit('end');
       }))
       .pipe(sourcemaps.init())
       .pipe(babel({
-         presets: ['es2015', 'react']
+         presets: ['es2015']
       }))
       .pipe(uglify())
       .pipe(concat('scripts.js'))
