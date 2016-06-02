@@ -1,0 +1,29 @@
+[
+   {
+      "name": "Linear",
+      "equation": "3x+2",
+      "window": {
+         "x": {
+            "min": -10,
+            "max": 10
+         },
+         "y": {
+            "min": -10,
+            "max": 10
+         }
+      }
+   }, {
+      "name": "Cubic",
+      "equation": "2x^(3)+5",
+      "window": {
+         "x": {
+            "min": -10,
+            "max": 10
+         },
+         "y": {
+            "min": -10,
+            "max": 10
+         }
+      }
+   }
+]
