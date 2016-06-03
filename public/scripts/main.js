@@ -13,7 +13,7 @@
         input,
         rowCount = 15;
 
-    for (var j = 1; j <= 15; j++) {
+    for (var j = 1; j <= rowCount; j++) {
         input = wand.crtElm("input");
         td1 = wand.crtElm("td");
         td2 = wand.crtElm("td");
@@ -25,15 +25,20 @@
     }
 
     /****DROPDOWN MAKER****/
-    wand.querApndr('#dropdown', 'select');
-
     var mathfunc = [
-          'x^2',
-          'x^3'
+          `x^2`,
+          `x^2`,
+          `x^2`,
+          `x^2`,
+          `x^2`,
+          `x^3`
        ];
 
     for (var i = 0; i < mathfunc.length; i++) {
-        wand.querApndr('select', 'option', mathfunc[i]);
+        var equDiv = wand.crtElm("div");
+        katex.render(mathfunc[i], equDiv);
+        var dropdown = wand.querApndr("#dropdown");
+        wand.apndr(dropdown, equDiv);
     }
 
     /****DOCUMENT ONCHANGE EVENT HANDLER****/
