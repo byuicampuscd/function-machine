@@ -36,6 +36,7 @@
 
     for (var i = 0; i < mathfunc.length; i++) {
         var equDiv = wand.crtElm("div");
+        equDiv.id = "equation" + i;
         katex.render(mathfunc[i], equDiv);
         var dropdown = wand.querApndr("#dropdown");
         wand.apndr(dropdown, equDiv);
@@ -43,9 +44,16 @@
 
     /****DOCUMENT ONCHANGE EVENT HANDLER****/
     document.onchange = function (e) {
-        console.log(e);
         if (e.target.localName === "select") {
             changePlot(e.target.value);
+        }
+    }
+
+    /*****DOCUMENT CLICK HANDLER*****/
+    document.onclick = function (e) {
+        console.log(e.target);
+        if (e.target.id.indexOf('equation') > 0) {
+            console.log(e.target.id);
         }
     }
 }());

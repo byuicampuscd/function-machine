@@ -22,3 +22,22 @@ td {
 tr td:nth-of-type(2){
     width: 100px;
 }
+
+#dropdown div {
+    z-index: 100;
+    background-color: #F0F0F0;
+    width: 100px;
+    border: 1px #dadada solid;
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#dropdown div::after {
+    position: relative;
+    content: "";
+    z-index: 200;
+    width: 100px;
+    height: 50px;
+}
