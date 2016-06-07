@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Function Machine</title>
 
-<!--    KATEX-->
+    <!--    KATEX-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
 
-<!--    STYLESHEET-->
+    <!--    STYLESHEET-->
     <link rel="stylesheet" href="./dist/styles.css">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
@@ -18,17 +18,8 @@
 <body>
 
     <main>
-        <aside id="statusConfig">
-            <div id="status"></div>
-            <div id="checks">
-                <label>Animation <input type="checkbox" id="animate"></label>
-                <label>Show Graph <input type="checkbox" id="showGraph"></label>
-            </div>
-            <div id="dropdown">
-            </div>
-        </aside>
 
-        <aside>
+        <aside id="table">
             <input type="button" value="Go!">
 
             <table>
@@ -40,12 +31,38 @@
                 </tbody>
             </table>
         </aside>
+        <article>
+            <aside>
+                <div id="functionMachine">
+                    <p>function machine filler</p>
+                    <div id="standardEqu"></div>
+                    <div id="xreplace"></div>
+                    <div id="reduced"></div>
+                </div>
+            </aside>
 
-        <aside>
-            <div id="functionMachine">
-                <p>function machine filler</p>
-            </div>
-        </aside>
+            <aside id="statusConfig">
+                <div id="status"></div>
+                <div id="checks">
+                    <label>Animation
+                        <input type="checkbox" id="animate">
+                    </label>
+                    <label>Show Graph
+                        <input type="checkbox" id="showGraph">
+                    </label>
+                </div>
+                <div id="dropdown">
+                </div>
+            </aside>
+        </article>
+
+        <article>
+            <aside id="graph">
+                <div id="graphFiller">
+                    <h2>Graph filler</h2>
+                </div>
+            </aside>
+        </article>
     </main>
 
     <footer>

@@ -1,0 +1,12 @@
+/*****TABLE*****/
+table {
+    border: 1px #0F0F0F solid;
+}
+
+td {
+    border: 1px #0F0F0F solid;
+}
+
+tr td:nth-of-type(2){
+    width: 100px;
+}

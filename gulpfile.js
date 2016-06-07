@@ -35,7 +35,7 @@ gulp.task('styles', function () {
 //Scripts
 gulp.task('scripts', function () {
    console.log("scripts task");
-   return gulp.src(['public/scripts/wand.js', SCRIPTS_PATH])
+   return gulp.src(['public/scripts/wand.js', 'public/scripts/ajax.js',SCRIPTS_PATH])
       .pipe(plumber(function (err) {
          console.log('Scripts Task Error ' + err);
          this.emit('end');
