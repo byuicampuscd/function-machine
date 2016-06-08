@@ -14,7 +14,7 @@
       }
    }, {
       "name": "Cubic",
-      "equation": "2x^(3)+5",
+      "equation": "2x^3+5",
       "window": {
          "x": {
             "min": -10,

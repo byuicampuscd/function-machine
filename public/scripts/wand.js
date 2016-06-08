@@ -1,3 +1,9 @@
+/***************************************
+
+This is a custom library that I made to make DOM manipulation a little bit faster
+
+*****************************************/
+
 (function (glo, lib) {
     glo.wand = lib();
 }(typeof window !== "undefined" ? window : this, function () {

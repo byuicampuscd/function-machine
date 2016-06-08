@@ -1,13 +1,16 @@
-    var config;
+    var config,
+        globalEqu;
 
+//Dipslay Katex equation
     function changePlot(val) {
         var equPara = wand.querApndr("#functionMachine p");
         equPara.innerText = "";
         katex.render(val, equPara);
+        globalEqu = val;
     }
 
     /*AJAX REQUEST TO FUNCMACHINESETTINGS.JS AND LOAD*/
-    function disConfig(c) {
+    function dispConfig(c) {
         var parsedObj = JSON.parse(c),
             select = wand.crtElm("select");
         select.name = "equDrop";
@@ -23,6 +26,7 @@
         }
     }
 
+//Load in the configuration file
     function loadConfig(func, search) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -31,8 +35,8 @@
                 func(config);
             }
         };
-        xhttp.open("GET", search, false);
+        xhttp.open("GET", search, true);
         xhttp.send();
     }
 
-    loadConfig(disConfig, "../funcMachineSettings.json");
+    loadConfig(dispConfig, "../funcMachineSettings.json");
