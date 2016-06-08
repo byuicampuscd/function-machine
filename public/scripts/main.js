@@ -1,11 +1,6 @@
 (function () {
     "use strict";
 
-    /****CHANGE PLOT****/
-    function changePlot(a) {
-        console.log(a);
-    }
-
     /****TABLE MAKER****/
     var tbody = wand.querApndr("tbody"),
         td1,
@@ -19,6 +14,9 @@
         td1 = wand.crtElm("td");
         td2 = wand.crtElm("td");
         tr = wand.crtElm("tr");
+
+        input.name = `input${j}`;
+        input.type = 'number';
 
         wand.apndr(td1, input);
         wand.apndr(tr, [td1, td2]);

@@ -53,5 +53,12 @@ article:nth-of-type(2){
     width: 340px;
     height: 100px;
     margin-right: 10px;
-    background-color: #606366;
+    background-color: #e4e4e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mord {
+    font-size: 60px;
 }
