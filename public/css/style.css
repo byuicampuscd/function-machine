@@ -9,7 +9,8 @@ input,
 button,
 label,
 option,
-select{
+select,
+p{
     font-family: Helvetica, sans-serif;
 }
 

@@ -1,32 +1,30 @@
 var lastSheet = document.styleSheets[document.styleSheets.length - 1];
 
-    function animator(aw) {
-        var numContainer = wand.querApndr("#numContainer");
-        numContainer.innerHTML = "";
+var alphaid = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p'];
 
-        for (var i = 0; i < aw.length; i++) {
-            console.log(aw[i].num, aw[i]);
-            var nume = wand.crtElm("p", aw[i].num);
+function modifyAnimeToFunc(nume, aw, numContainer, id, delay) {
+    var leftCoorOff = aw.right - 50,
+        topCoorOff = aw.top + 7;
 
-            nume.style.position = "absolute";
-            nume.style.top = `${aw[i].coorData.top + 7}px`;
-            nume.style.left = `${aw[i].coorData.right + 46}px`;
+    nume.style.position = "absolute";
+    nume.style.top = `${topCoorOff}px`;
+    nume.style.left = `${leftCoorOff}px`;
 
-            lastSheet.insertRule(`@keyframes toFuncMachine {
+    lastSheet.insertRule(`@keyframes toFuncMachine${id} {
                             0% {
                                 opacity: 0;
-                                top: ${aw[i].coorData.top + 7}px;
-                                left: ${aw[i].coorData.right + 46}px;
+                                top: ${topCoorOff}px;
+                                left: ${leftCoorOff}px;
                             }
                             10% {
                                 opacity: 1;
                             }
                             33% {
-                                top: ${aw[i].coorData.top + 7}px;
+                                top: ${topCoorOff}px;
                                 left: 240px;
                             }
                             66% {
-                                top: 45px;
+                                top: 55px;
                                 left: 240px;
                             }
                             90% {
@@ -34,16 +32,26 @@ var lastSheet = document.styleSheets[document.styleSheets.length - 1];
                             }
                             100% {
                                 opacity: 0;
-                                top: 45px;
+                                top: 55px;
                                 left: 300px;
                             }
                         }`, lastSheet.cssRules.length);
-            console.log(lastSheet);
 
-            nume.style.animation = 'toFuncMachine 3s ease-in-out 0.25s 1';
-            nume.style.opacity = '0';
-            nume.style.zIndex = '100';
+    nume.style.animation = `toFuncMachine${id} 3s ease-in-out ${delay[0]}s 1`;
 
-            wand.apndr(numContainer, nume);
-        }
+    nume.style.opacity = '0';
+    nume.style.zIndex = '100';
+
+    wand.apndr(numContainer, nume);
+}
+
+function animator(aw) {
+    var numContainer = wand.querApndr("#numContainer");
+    numContainer.innerHTML = "";
+
+    for (var i = 0; i < aw.length; i++) {
+        var nume = wand.crtElm("p", aw[i].num);
+
+        modifyAnimeToFunc(nume, aw[i].coorData, numContainer, alphaid[i], [i]);
     }
+}
