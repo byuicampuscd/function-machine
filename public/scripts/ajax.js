@@ -12,7 +12,6 @@
             select = wand.crtElm("select");
         select.name = "equDrop";
         for (var i = 0; i < parsedObj.length; i++) {
-            console.log(parsedObj[i]);
             var opt = wand.crtElm("option", parsedObj[i].name);
             opt.value = parsedObj[i].equation;
 //          opt.class = JSON.stringify(parsedObj[i].window);
