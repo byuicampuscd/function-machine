@@ -1,19 +1,18 @@
 /*****INPUTS AND SELECT*****/
 
 select {
-    font-size: 18px;
+    font-size: 16.5px;
     border: 1px #d9d9d9 solid;
     margin: 0px;
     padding: 2.5px;
     width: 120px;
-    border-radius: 2.5px;
+    border-radius: 2px;
 }
 
 input:not([type='checkbox']),
-label{
+label {
     appearance: none;
-    border: #d9d9d9 1px solid;
-    border-radius: 2.5px;
+    border-radius: 2px;
     display: block;
     margin: 0px;
     padding: 5px;
@@ -26,5 +25,5 @@ input[type='button'] {
 }
 
 label {
-    margin-bottom: 7px;
+    margin-bottom: 2.5px;
 }

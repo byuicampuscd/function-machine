@@ -33,15 +33,11 @@
         <article>
             <aside>
                 <div id="functionMachine">
-                    <p>Select an Equation...</p>
-                    <div id="standardEqu"></div>
-                    <div id="xreplace"></div>
-                    <div id="reduced"></div>
+                    <p></p>
                 </div>
             </aside>
 
             <aside id="statusConfig">
-                <div id="status"></div>
                 <div id="checks">
                     <label>Animation
                         <input type="checkbox" id="animate">
@@ -51,6 +47,9 @@
                     </label>
                 </div>
                 <div id="dropdown">
+                </div>
+                <div id="status">
+                    <p></p>
                 </div>
             </aside>
         </article>
@@ -65,6 +64,13 @@
     </main>
 
     <footer>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.min.js"></script>
+        <!-----------------------------------
+NOTE-------
+Script code is minified and compiled through gulp.js.  If changes are needed, please look to the open-sourced code at this link.
+
+https://github.com/byuicampuscd/function-machine
+---------------------------------->
         <script src="./dist/scripts.js"></script>
         <script src="http://localhost:35729/livereload.js"></script>
     </footer>

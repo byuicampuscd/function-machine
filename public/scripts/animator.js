@@ -1,21 +1,29 @@
 var lastSheet = document.styleSheets[document.styleSheets.length - 1];
 
-//Alpha ID is to identify the 15 different animations that could happen in the application
-var alphaid = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'p'];
+//TODO: Function machine in
+//TODO: status area for what the machine is doing.
 
-//Evaluate the math expression and animate it
-function evaluate(equ) {
-    console.log(eval(equ));
-}
+//Alpha ID is to identify the 15 different animations that could happen in the application
+var alphaid = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'],
+    statusBar = wand.querApndr("#status p");
 
 //Change the Katex equation from the selected input box.
 function toFuncMachEnd(e) {
-    //globalEqu assign in ajax.js
-    var equPara = wand.querApndr("#functionMachine p"),
-        changeEqu = globalEqu.replace("x", `*${e.target.innerText}`);
+    //globalEqu and equPara assigned in ajax.js
+    var changeEqu = globalEqu.replace("x", `*${e.target.innerText}`);
     equPara.innerText = "";
-    katex.render(changeEqu, equPara);
-    evaluate(changeEqu);
+    katex.render(`y = ${changeEqu}`, equPara);
+
+    console.log(statusBar);
+//    status.innerText = "";
+    wand.apndr(statusBar, "Calculating");
+
+    setTimeout(function () {
+        //Evaluate the math expression and animate it
+        var evalNum = math.eval(changeEqu);
+        equPara.innerText = "";
+        katex.render(`y = ${evalNum.toString()}`, equPara);
+    }, 2000);
 }
 
 //Dynamically modify the CSS animations of the 15 input boxes

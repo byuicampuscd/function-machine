@@ -1,11 +1,11 @@
     var config,
-        globalEqu;
+        globalEqu,
+        equPara = wand.querApndr("#functionMachine p");
 
 //Dipslay Katex equation
     function changePlot(val) {
-        var equPara = wand.querApndr("#functionMachine p");
         equPara.innerText = "";
-        katex.render(val, equPara);
+        katex.render(`y = ${val}`, equPara);
         globalEqu = val;
     }
 

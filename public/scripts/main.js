@@ -7,7 +7,7 @@
         td2,
         tr,
         input,
-        rowCount = 15;
+        rowCount = 19;
 
     for (var j = 1; j <= rowCount; j++) {
         input = wand.crtElm("input");
