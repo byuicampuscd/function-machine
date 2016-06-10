@@ -73,7 +73,7 @@ article:nth-of-type(2){
 /*****STATUS BAR*****/
 #status {
     display: flex;
-    justify-content: center;
+    padding-left: 20px;
     align-items: center;
 }
 

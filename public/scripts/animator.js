@@ -1,7 +1,6 @@
 var lastSheet = document.styleSheets[document.styleSheets.length - 1];
 
 //TODO: Function machine in
-//TODO: status area for what the machine is doing.
 
 //Alpha ID is to identify the 15 different animations that could happen in the application
 var alphaid = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'],
@@ -16,7 +15,7 @@ function toFuncMachEnd(e) {
 
     console.log(statusBar);
 //    status.innerText = "";
-    wand.apndr(statusBar, "Calculating");
+    wand.apndr(statusBar, ">> Calculating");
 
     setTimeout(function () {
         //Evaluate the math expression and animate it
