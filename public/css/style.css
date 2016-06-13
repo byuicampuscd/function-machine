@@ -90,6 +90,9 @@ article:nth-of-type(2) {
     0% {
         opacity: 1;
     }
+    80% {
+        opacity: 1;
+    }
     100% {
         opacity: 0;
     }
@@ -97,6 +100,9 @@ article:nth-of-type(2) {
 
 @keyframes textAppear {
     0% {
+        opacity: 0;
+    }
+    20% {
         opacity: 0;
     }
     100% {

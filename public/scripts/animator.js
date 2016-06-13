@@ -7,17 +7,17 @@ var lastSheet = document.styleSheets[document.styleSheets.length - 1];
 var alphaid = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'],
     statusBar = wand.querApndr("#status p");
 
-function textAnimeDisappear(ele, changeEqu, func, state) {
+function equAnimeDisappear(ele, changeEqu, func, state) {
     "use strict";
     var e = ele;
-    e.style.animation = 'textDisappear 1s ease-in-out';
+    e.style.animation = 'textDisappear 1.5s ease-in-out';
     ele.addEventListener("animationend", function () {
         equPara.innerText = "";
         func(e, changeEqu, state);
     });
 }
 
-function textAnimeAppear(ele, changeEqu, state) {
+function equAnimeAppear(ele, changeEqu, state) {
     "use strict";
     var e = ele;
     e.style.opacity = 0;
@@ -26,14 +26,15 @@ function textAnimeAppear(ele, changeEqu, state) {
     e.addEventListener("animationend", function () {
         e.style.opacity = 1;
 
-        if (state !== "stop") {
-            var evalNum = math.eval(changeEqu);
-            textAnimeDisappear(ele, evalNum, textAnimeAppear, "stop");
-        } else if (state === "final") {
-            console.log("back to normal");
+        if (state === "final") {
+            statusBar.innerText = "";
+            wand.apndr(statusBar, ">> Finished Calculations");
             return;
+        } else if (state !== "stop") {
+            var evalNum = math.eval(changeEqu);
+            equAnimeDisappear(ele, evalNum, equAnimeAppear, "stop");
         } else {
-            textAnimeDisappear(ele, globalEqu, textAnimeAppear, "final");
+            equAnimeDisappear(ele, globalEqu, equAnimeAppear, "final");
         }
     })
 }
@@ -43,7 +44,7 @@ function toFuncMachEnd(e) {
     "use strict";
     //globalEqu and equPara assigned in ajax.js
     var changeEqu = globalEqu.replace("x", `*${e.target.innerText}`);
-    textAnimeDisappear(equPara, changeEqu, textAnimeAppear);
+    equAnimeDisappear(equPara, changeEqu, equAnimeAppear);
 
     wand.apndr(statusBar, "");
     wand.apndr(statusBar, ">> Calculating");
