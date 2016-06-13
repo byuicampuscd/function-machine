@@ -1,40 +1,63 @@
 var lastSheet = document.styleSheets[document.styleSheets.length - 1];
 
-//TODO: Function machine in
+// TODO: Function machine in
+// TODO: Make sure the do the animations on the text
 
 //Alpha ID is to identify the 15 different animations that could happen in the application
 var alphaid = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'],
     statusBar = wand.querApndr("#status p");
 
+function textAnimeDisappear(ele, changeEqu, func, state) {
+    "use strict";
+    var e = ele;
+    e.style.animation = 'textDisappear 1s ease-in-out';
+    ele.addEventListener("animationend", function () {
+        equPara.innerText = "";
+        func(e, changeEqu, state);
+    });
+}
+
+function textAnimeAppear(ele, changeEqu, state) {
+    "use strict";
+    var e = ele;
+    e.style.opacity = 0;
+    katex.render(`y = ${changeEqu}`, equPara);
+    e.style.animation = 'textAppear 1s ease-in-out';
+    e.addEventListener("animationend", function () {
+        e.style.opacity = 1;
+
+        if (state !== "stop") {
+            var evalNum = math.eval(changeEqu);
+            textAnimeDisappear(ele, evalNum, textAnimeAppear, "stop");
+        } else if (state === "final") {
+            console.log("back to normal");
+            return;
+        } else {
+            textAnimeDisappear(ele, globalEqu, textAnimeAppear, "final");
+        }
+    })
+}
+
 //Change the Katex equation from the selected input box.
 function toFuncMachEnd(e) {
+    "use strict";
     //globalEqu and equPara assigned in ajax.js
     var changeEqu = globalEqu.replace("x", `*${e.target.innerText}`);
-    equPara.innerText = "";
-    katex.render(`y = ${changeEqu}`, equPara);
+    textAnimeDisappear(equPara, changeEqu, textAnimeAppear);
 
-    console.log(statusBar);
-//    status.innerText = "";
+    wand.apndr(statusBar, "");
     wand.apndr(statusBar, ">> Calculating");
-
-    setTimeout(function () {
-        //Evaluate the math expression and animate it
-        var evalNum = math.eval(changeEqu);
-        equPara.innerText = "";
-        katex.render(`y = ${evalNum.toString()}`, equPara);
-    }, 2000);
 }
 
 //Dynamically modify the CSS animations of the 15 input boxes
 function animeToFuncMach(nume, aw, id, delay) {
+    "use strict";
     var leftCoorOff = aw.right - 50,
         topCoorOff = aw.top + 7;
-
     nume.style.position = "absolute";
     nume.style.top = `${topCoorOff}px`;
     nume.style.left = `${leftCoorOff}px`;
     nume.className = `anime${id}`
-
     lastSheet.insertRule(`@keyframes toFuncMachine${id} {
                             0% {
                                 opacity: 0;
@@ -61,19 +84,16 @@ function animeToFuncMach(nume, aw, id, delay) {
                                 left: 300px;
                             }
                         }`, lastSheet.cssRules.length);
-
-    nume.style.animation = `toFuncMachine${id} 3s ease-in-out ${delay[0]}s 1`;
-
+    nume.style.animation = `toFuncMachine${id} 3s ease-in-out ${delay[0]*7}s 1`;
     nume.style.opacity = '0';
     nume.style.zIndex = '100';
-
     nume.addEventListener("animationend", toFuncMachEnd);
-
     return nume;
 }
 
 //Handle all CSS animations
 function animator(aw) {
+    "use strict";
     var numContainer = wand.querApndr("#numContainer");
     numContainer.innerHTML = "";
 
