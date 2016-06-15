@@ -131,7 +131,12 @@ function createAns(ans) {
                     top: 55,
                     right: 300
                 },
-                animateConfig = aniConfig(funcMachCoor, startingData[0], num, 'zz', 0);
+                endCoorData = {};
+
+            endCoorData.top = startingData[0].top + 5;
+            endCoorData.right = startingData[0].right;
+
+            var animateConfig = aniConfig(funcMachCoor, endCoorData, num, 'zz', 0);
 
             startingData.pop();
             resolve(animateConfig);
@@ -139,30 +144,32 @@ function createAns(ans) {
     });
 }
 
+function animate(i, aw) {
+    var num = wand.crtElm("p", aw[i].num),
+        funcMachCoor = {
+            top: 55,
+            right: 300
+        },
+        animateConfig = aniConfig(aw[i].coorData, funcMachCoor, num, alphaid[i], i);
+
+    startingData.push(aw[i].coorData);
+
+    animationTemplate(animateConfig)
+        .then(equAnimeDisappear)
+        .then(equAppear)
+        .then(equAnimeDisappear)
+        .then(equAppear)
+        .then(createAns)
+        .then(animationTemplate);
+}
+
 //Handle all CSS animations
-function animatorControl(aw) {
+function animatorControl(aw, ani) {
     "use strict";
     var numContainer = wand.querApndr("#numContainer");
     numContainer.innerHTML = "";
 
     for (var i = 0; i < aw.length; i++) {
-        var num = wand.crtElm("p", aw[i].num),
-            funcMachCoor = {
-                top: 55,
-                right: 300
-            },
-            animateConfig = aniConfig(aw[i].coorData, funcMachCoor, num, alphaid[i], i);
-
-        startingData.push(aw[i].coorData);
-
-        animationTemplate(animateConfig)
-            .then(equAnimeDisappear)
-            .then(equAppear)
-            .then(equAnimeDisappear)
-            .then(equAppear)
-            .then(createAns)
-            .then(animationTemplate);
-
-        console.log(startingData);
+        animate(i, aw);
     }
 }
