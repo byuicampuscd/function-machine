@@ -4,8 +4,70 @@ var lastSheet = document.styleSheets[document.styleSheets.length - 1];
 
 //Alpha ID is to identify the different animations that could happen in the application
 var alphaid = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'],
-    statusBar = wand.querApndr("#status p");
+    statusBar = wand.querApndr("#status p"),
+    startingData = [];
 
+/********"CONSTRUCTOR" (not exactly) functions**********/
+function aniConfig(begCoorData, endCoorData, num, alphaid, i) {
+    var animateConfig = {};
+    animateConfig.begCoorData = begCoorData;
+    animateConfig.endCoorData = endCoorData;
+    animateConfig.num = num;
+    animateConfig.alphaid = alphaid;
+    animateConfig.delay = i;
+    return animateConfig;
+}
+
+function animationTemplate(animateConfig) {
+    "use strict";
+    var startTopOff = animateConfig.begCoorData.top + 5,
+        startRightOff = animateConfig.begCoorData.right - 30,
+        endTopOff = animateConfig.endCoorData.top,
+        endRightOff = animateConfig.endCoorData.right,
+        highwayPath = 246,
+        numContainer = wand.querApndr("#numContainer");
+    animateConfig.num.style.position = "absolute";
+    animateConfig.num.style.top = `${startTopOff}px`;
+    animateConfig.num.style.left = `${startRightOff}px`;
+    wand.apndr(numContainer, animateConfig.num);
+    lastSheet.insertRule(`@keyframes toFuncMachine${animateConfig.alphaid} {
+                            0% {
+                                opacity: 0;
+                                top: ${startTopOff}px;
+                                left: ${startRightOff}px;
+                            }
+                            10% {
+                                opacity: 1;
+                            }
+                            33% {
+                                top: ${startTopOff}px;
+                                left: ${highwayPath}px;
+                            }
+                            66% {
+                                top: ${endTopOff}px;
+                                left: ${highwayPath}px;
+                            }
+                            90% {
+                                opacity: 1;
+                            }
+                            100% {
+                                opacity: 0;
+                                top: ${endTopOff}px;
+                                left: ${endRightOff}px;
+                            }
+                        }`, lastSheet.cssRules.length);
+    animateConfig.num.style.animation = `toFuncMachine${animateConfig.alphaid} 3s ease-in-out ${animateConfig.delay*10}s`;
+    animateConfig.num.style.opacity = '0';
+    animateConfig.num.style.zIndex = '100';
+
+    return new Promise(function (resolve) {
+        window.setTimeout(function () {
+            resolve(animateConfig.num);
+        }, animateConfig.delay * 3000);
+    });
+}
+
+/************ANIMATION FUNCTIONS**********************/
 function animateToStatusBar() {
     console.log("Animate to status bar and pass the information to the graph function");
 
@@ -41,60 +103,39 @@ function equAnimeDisappear(num) {
 
             statusBar.innerText = "";
             statusBar.innerText = ">> Calculating";
+
+            setTimeout(function () {
+                equPara.style.animation = 'textDisappear 1.5s ease-in-out';
+                resolve(changeEqu);
+            }, 1500);
         } else if (typeof num === "string") {
             changeEqu = math.eval(num);
-        }
 
-        setTimeout(function () {
-            equPara.style.animation = 'textDisappear 1.5s ease-in-out';
-            resolve(changeEqu);
-        }, 3000);
+            setTimeout(function () {
+                equPara.style.animation = 'textDisappear 1.5s ease-in-out';
+                resolve(changeEqu);
+            }, 1500);
+        }
     });
 }
 
-function animationTemplate(startingCoor, endingCoor, num, alphaid, delay) {
+function createAns(ans) {
     "use strict";
+    var numContainer = wand.querApndr("#numContainer"),
+        num = wand.crtElm("p", ans.toString());
+    numContainer.innerHTML = "";
+
     return new Promise(function (resolve) {
-        var startTopOff = startingCoor.top + 5,
-            startRightOff = startingCoor.right - 30,
-            endTopOff = endingCoor.top,
-            endRightOff = endingCoor.right,
-            highwayPath = 246;
-        num.style.position = "absolute";
-        num.style.top = `${startTopOff}px`;
-        num.style.left = `${startRightOff}px`;
-        lastSheet.insertRule(`@keyframes toFuncMachine${alphaid} {
-                            0% {
-                                opacity: 0;
-                                top: ${startTopOff}px;
-                                left: ${startRightOff}px;
-                            }
-                            10% {
-                                opacity: 1;
-                            }
-                            33% {
-                                top: ${startTopOff}px;
-                                left: ${highwayPath}px;
-                            }
-                            66% {
-                                top: ${endTopOff}px;
-                                left: ${highwayPath}px;
-                            }
-                            90% {
-                                opacity: 1;
-                            }
-                            100% {
-                                opacity: 0;
-                                top: ${endTopOff}px;
-                                left: ${endRightOff}px;
-                            }
-                        }`, lastSheet.cssRules.length);
-        num.style.animation = `toFuncMachine${alphaid} 3s ease-in-out ${delay*7}s`;
-        num.style.opacity = '0';
-        num.style.zIndex = '100';
-        window.setTimeout(function () {
-            resolve(num);
-        }, delay * 3000);
+        setTimeout(function () {
+            var funcMachCoor = {
+                    top: 55,
+                    right: 300
+                },
+                animateConfig = aniConfig(funcMachCoor, startingData[0], num, 'zz', 0);
+
+            startingData.pop();
+            resolve(animateConfig);
+        }, 1500);
     });
 }
 
@@ -105,18 +146,23 @@ function animatorControl(aw) {
     numContainer.innerHTML = "";
 
     for (var i = 0; i < aw.length; i++) {
-        var num = wand.crtElm("p", aw[i].num);
-        var endingCoor = {
-            top: 55,
-            right: 300
-        };
+        var num = wand.crtElm("p", aw[i].num),
+            funcMachCoor = {
+                top: 55,
+                right: 300
+            },
+            animateConfig = aniConfig(aw[i].coorData, funcMachCoor, num, alphaid[i], i);
 
-        animationTemplate(aw[i].coorData, endingCoor, num, alphaid[i], i)
+        startingData.push(aw[i].coorData);
+
+        animationTemplate(animateConfig)
             .then(equAnimeDisappear)
             .then(equAppear)
             .then(equAnimeDisappear)
-            .then(equAppear);
+            .then(equAppear)
+            .then(createAns)
+            .then(animationTemplate);
 
-        wand.apndr(numContainer, num);
+        console.log(startingData);
     }
 }
