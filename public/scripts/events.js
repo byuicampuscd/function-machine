@@ -10,7 +10,6 @@
         if (e.target.localName === "select") {
             //changePlot function in ajax.js
             changePlot(e.target.value);
-            console.log(globalEqu);
         }
     };
 
@@ -25,9 +24,12 @@
                     aniData.coorData = input.getBoundingClientRect();
                     aniData.num = input.value;
                     animateWait.push(aniData);
+
+                    //graphConfig located in AJAX.js
+                    graphConfig.aniData = aniData
                 }
             }
-            animator(animateWait);
+            animatorControl(animateWait);
         }
     };
 }());

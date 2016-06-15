@@ -1,12 +1,17 @@
     var config,
         globalEqu,
-        equPara = wand.querApndr("#functionMachine p");
+        equPara = wand.querApndr("#functionMachine p"),
+        graphConfig = {};
 
-//Dipslay Katex equation
+    //Dipslay Katex equation
     function changePlot(val) {
         equPara.innerText = "";
-        katex.render(`y = ${val}`, equPara);
+        var equat = `y = ${val}`
+        katex.render(equat, equPara);
         globalEqu = val;
+
+        //graphConfig located in animator.js line 9
+        graphConfig.equation = equat;
     }
 
     /*AJAX REQUEST TO FUNCMACHINESETTINGS.JS AND LOAD*/
@@ -17,7 +22,7 @@
         for (var i = 0; i < parsedObj.length; i++) {
             var opt = wand.crtElm("option", parsedObj[i].name);
             opt.value = parsedObj[i].equation;
-//          opt.class = JSON.stringify(parsedObj[i].window);
+            //          opt.class = JSON.stringify(parsedObj[i].window);
             wand.apndr(select, opt);
             wand.querApndr("#dropdown", select);
             if (i === 0) {
@@ -26,13 +31,14 @@
         }
     }
 
-//Load in the configuration file
+    //Load in the configuration file
     function loadConfig(func, search) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 config = xhttp.responseText;
                 func(config);
+                graphConfig.appConfig = JSON.parse(config);
             }
         };
         xhttp.open("GET", search, true);
