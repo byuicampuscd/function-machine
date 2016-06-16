@@ -139,7 +139,7 @@ function createAns(ans) {
                 },
                 endCoorData = {};
 
-            endCoorData.top = startingData[0].top + 5;
+            endCoorData.top = startingData[0].top + 7.5;
             endCoorData.right = startingData[0].right;
 
             var animateConfig = aniConfig(funcMachCoor, endCoorData, num, 'zz', 0);

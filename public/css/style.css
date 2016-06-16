@@ -11,7 +11,8 @@ button,
 label,
 option,
 select,
-p {
+p,
+td {
     font-family: Helvetica, sans-serif;
 }
 
