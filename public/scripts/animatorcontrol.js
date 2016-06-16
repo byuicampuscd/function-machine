@@ -85,7 +85,7 @@ function equAppear(changeEqu) {
         setTimeout(function () {
             equPara.innerHTML = "";
             equPara.style.opacity = 0;
-            katex.render(`y = ${changeEqu}`, equPara);
+            katex.render(`${changeEqu}`, equPara);
             equPara.style.animation = 'textAppear 1s ease-in-out';
             equPara.style.opacity = 1;
             resolve(changeEqu);
@@ -99,7 +99,7 @@ function equAnimeDisappear(num) {
         var changeEqu;
 
         if (typeof num === "object") {
-            changeEqu = globalEqu.replace("x", `*${num.innerText}`);
+            changeEqu = globalEqu.replace("x", `*(${num.innerText})`);
 
             statusBar.innerText = "";
             statusBar.innerText = ">> Calculating";
