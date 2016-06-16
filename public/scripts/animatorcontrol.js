@@ -83,6 +83,10 @@ function animateToStatusBar() {
 function equAppear(changeEqu) {
     return new Promise(function (resolve) {
         setTimeout(function () {
+            if (typeof changeEqu === "number") {
+                statusBar.innerText = "";
+                statusBar.innerText = ">> Returning answer.";
+            }
             equPara.innerHTML = "";
             equPara.style.opacity = 0;
             katex.render(`${changeEqu}`, equPara);
@@ -115,6 +119,8 @@ function equAnimeDisappear(num) {
                 equPara.style.animation = 'textDisappear 1.5s ease-in-out';
                 resolve(changeEqu);
             }, 1500);
+        } else {
+            return;
         }
     });
 }
@@ -160,6 +166,33 @@ function animate(i, aw) {
         .then(equAnimeDisappear)
         .then(equAppear)
         .then(createAns)
+        .then(animationTemplate)
+        .then(function (yval) {
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    var td = wand.querApndr(`#row${i+1} td:nth-child(2)`),
+                        y = `y = `,
+                        equat = `${globalEqu}`,
+                        yvalue = yval.innerText,
+                        statusBarCoor = {
+                            top: 175,
+                            right: 300
+                        }
+                    animateConfig;
+
+                    katex.render(y, yPara);
+                    katex.render(equat, equPara);
+                    wand.apndr(td, yvalue);
+
+                    animateConfig = aniConfig(aw[i].coorData, statusBarCoor, yval, "za", 0);
+
+                    statusBar.innerText = "";
+                    statusBar.innerText = ">> Plotting answer.";
+
+                    resolve(animateConfig);
+                }, 3000);
+            });
+        })
         .then(animationTemplate);
 }
 

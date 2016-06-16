@@ -15,6 +15,8 @@
         td2 = wand.crtElm("td");
         tr = wand.crtElm("tr");
 
+        tr.id = `row${j}`;
+
         input.name = `input${j}`;
         input.type = 'number';
 
