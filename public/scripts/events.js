@@ -22,6 +22,13 @@
         animatorControl(animateWait);
     }
 
+    /*****DOCUMENT onchange EVENT HANDLER*****/
+    document.onchange = function(e) {
+        if (e.target.localName === "select") {
+            changePlot(e.target.value);
+        }
+    }
+
     /****DOCUMENT keydown EVENT HANDLER****/
     document.onkeydown = function (e) {
         if (e.keyCode === 13) {

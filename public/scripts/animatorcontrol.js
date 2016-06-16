@@ -56,7 +56,7 @@ function animationTemplate(animateConfig) {
                                 left: ${endRightOff}px;
                             }
                         }`, lastSheet.cssRules.length);
-    animateConfig.num.style.animation = `toFuncMachine${animateConfig.alphaid} 3s ease-in-out ${animateConfig.delay*10}s`;
+    animateConfig.num.style.animation = `toFuncMachine${animateConfig.alphaid} 3s ease-in-out ${animateConfig.delay*14}s`;
     animateConfig.num.style.opacity = '0';
     animateConfig.num.style.zIndex = '100';
 
@@ -175,8 +175,8 @@ function animate(i, aw) {
                         equat = `${globalEqu}`,
                         yvalue = yval.innerText,
                         statusBarCoor = {
-                            top: 175,
-                            right: 300
+                            top: 150,
+                            right: 400
                         }
                     animateConfig;
 
