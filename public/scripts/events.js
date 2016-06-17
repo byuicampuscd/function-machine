@@ -13,6 +13,7 @@
                 var aniData = {};
                 aniData.coorData = input.getBoundingClientRect();
                 aniData.num = input.value;
+                aniData.inputTag = input;
                 animateWait.push(aniData);
 
                 //graphConfig located in AJAX.js

@@ -156,7 +156,8 @@ function animate(i, aw) {
             top: 55,
             right: 300
         },
-        animateConfig = aniConfig(aw[i].coorData, funcMachCoor, num, alphaid[i], i);
+        animateConfig = aniConfig(aw[i].coorData, funcMachCoor, num, alphaid[i], i),
+        numberInput = aw[i].inputTag.name.match(/\d+/);
 
     startingData.push(aw[i].coorData);
 
@@ -170,7 +171,7 @@ function animate(i, aw) {
         .then(function (yval) {
             return new Promise(function (resolve) {
                 setTimeout(function () {
-                    var td = wand.querApndr(`#row${i+1} td:nth-child(2)`),
+                    var td = wand.querApndr(`#row${(numberInput[0]*1)} td:nth-child(2)`),
                         y = `y = `,
                         equat = `${globalEqu}`,
                         yvalue = yval.innerText,
