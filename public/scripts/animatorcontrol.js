@@ -127,9 +127,9 @@ function equAnimeDisappear(num) {
 
 function createAns(ans) {
     "use strict";
-    var numContainer = wand.querApndr("#numContainer"),
+    var ansContainer = wand.querApndr("#ansContainer"),
         num = wand.crtElm("p", ans.toString());
-    numContainer.innerHTML = "";
+    ansContainer.innerHTML = "";
 
     return new Promise(function (resolve) {
         setTimeout(function () {
