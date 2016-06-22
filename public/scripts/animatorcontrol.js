@@ -103,7 +103,7 @@ function equAnimeDisappear(num) {
         var changeEqu;
 
         if (typeof num === "object") {
-            changeEqu = globalEqu.replace("x", `*(${num.innerText})`);
+            changeEqu = globalEqu.replace("x", `(${num.innerText})`);
 
             statusBar.innerText = "";
             statusBar.innerText = ">> Calculating";
@@ -151,6 +151,7 @@ function createAns(ans) {
 }
 
 function animate(i, aw) {
+    console.log(i, aw[i]);
     var num = wand.crtElm("p", aw[i].num),
         funcMachCoor = {
             top: 55,
@@ -161,6 +162,10 @@ function animate(i, aw) {
 
     startingData.push(aw[i].coorData);
 
+    /*BUG FIX*/
+    /*when running through a loop this promise chain is all running simultaneously*/
+    /*The timing is going to have to change because the setTimeouts are running right after the loop makes the execution stack*/
+    /*The timing is all messed up.*/
     animationTemplate(animateConfig)
         .then(equAnimeDisappear)
         .then(equAppear)
@@ -178,8 +183,7 @@ function animate(i, aw) {
                         statusBarCoor = {
                             top: 150,
                             right: 400
-                        }
-                    animateConfig;
+                        };
 
                     katex.render(y, yPara);
                     katex.render(equat, equPara);
@@ -195,15 +199,33 @@ function animate(i, aw) {
             });
         })
         .then(animationTemplate);
+
+        /*TODO: evaluate the array in order to continue the array animation;*/
+        /**  WITH PROMISES pass an object throughout the chain and evaluate it if it is done.
+        //**  The graph will need all the information
+        /** Animate true or false.
+        /*TODO: if already animated can not reanimate again.*/
+
 }
 
 //Handle all CSS animations
-function animatorControl(aw, ani) {
+function animatorControl(aw, func) {
     "use strict";
-    var numContainer = wand.querApndr("#numContainer");
+    var numContainer = wand.querApndr("#numContainer"),
+        runCounter = -1;
     numContainer.innerHTML = "";
 
-    for (var i = 0; i < aw.length; i++) {
-        animate(i, aw);
-    }
+//    var interval = setInterval(function () {
+//        runCounter += 1;
+//        if (runCounter === 19) {
+//            clearInterval(interval);
+//            console.log("stop");
+//        }
+//        animate(runCounter, aw);
+//        console.log(runCounter, aw);
+//    }, 14000);
+
+        for (var i = 0; i < aw.length; i++) {
+            animate(i, aw);
+        }
 }
