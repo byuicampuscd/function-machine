@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
 
+   <!--JQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    <!--MATHJS-->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.min.js"></script>
+
     <!--    STYLESHEET-->
     <link rel="stylesheet" href="./dist/styles.css">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -41,14 +47,15 @@
 
             <aside id="statusConfig">
                 <div id="checks">
-                    <label>Animation
+                    <label>Hide Animation
                         <input type="checkbox" id="animate">
                     </label>
-                    <label>Show Graph
+                    <label>Hide Graph
                         <input type="checkbox" id="showGraph">
                     </label>
                 </div>
                 <div id="dropdown">
+                    <select name="equDrop"></select>
                 </div>
                 <div id="status">
                     <p></p>
@@ -66,7 +73,6 @@
     </main>
 
     <footer>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.min.js"></script>
         <!-----------------------------------
 NOTE-------
 Script code is minified and compiled through gulp.js.  If changes are needed, please look to the open-sourced code at this link.

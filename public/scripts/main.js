@@ -2,7 +2,7 @@
     "use strict";
 
     /****TABLE MAKER****/
-    var tbody = wand.querApndr("tbody"),
+    var tbody = $("tbody"),
         td1,
         td2,
         tr,
@@ -10,18 +10,17 @@
         rowCount = 19;
 
     for (var j = 1; j <= rowCount; j++) {
-        input = wand.crtElm("input");
-        td1 = wand.crtElm("td");
-        td2 = wand.crtElm("td");
-        tr = wand.crtElm("tr");
+        input = $("<input>");
+        td1 = $("<td></td>");
+        td2 = $("<td></td>");
+        tr = $("<tr></tr>");
 
-        tr.id = `row${j}`;
+        $(tr).attr("id", `row${j}`);
 
-        input.name = `input${j}`;
-        input.type = 'number';
+        $(input).attr("name", `input${j}`).attr("type", "number");
 
-        wand.apndr(td1, input);
-        wand.apndr(tr, [td1, td2]);
-        wand.apndr(tbody, tr);
+        $(td1).append(input);
+        $(tr).append(td1).append(td2);
+        $(tbody).append(tr);
     }
 }());
