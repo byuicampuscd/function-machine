@@ -1,4 +1,5 @@
 function startFuncMach() {
+
     var xinputs = $("input[type='number']"),
         graphConfig = [],
         hideAnimationChecked = $("#animate:checked").length > 0,
@@ -22,7 +23,7 @@ function startFuncMach() {
 
     console.log(hideAnimationChecked, hideGraphChecked);
 
-    $.each(xinputs, function (i, val) {
+    $.each(xinputs, function(i, val) {
         console.log(i, $(val).val() * 1);
         var graphOpt = {
             data: [{
@@ -41,6 +42,16 @@ function startFuncMach() {
 
 //Dipslay Katex equation
 function changePlot(val) {
+
+    console.log(professorConfigFile[0].equation, val);
+
+    $.each(professorConfigFile, function(i, item) {
+        console.log(item.equation, val)
+        if (item.equation === val){
+
+        }
+    })
+
     $(equPara).empty("");
     var y = `y = `,
         equat = `${val}`,
