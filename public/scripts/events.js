@@ -23,7 +23,7 @@ function startFuncMach() {
 
     console.log(hideAnimationChecked, hideGraphChecked);
 
-    $.each(xinputs, function(i, val) {
+    $.each(xinputs, function (i, val) {
         console.log(i, $(val).val() * 1);
         var graphOpt = {
             data: [{
@@ -40,17 +40,22 @@ function startFuncMach() {
 
 }
 
+function checkConfig(val) {
+    var profOpt;
+    $.each(professorConfigFile, function (i, item) {
+        if (item.equation === val) {
+            profOpt = item;
+        }
+    })
+    return profOpt;
+}
+
 //Dipslay Katex equation
 function changePlot(val) {
 
-    console.log(professorConfigFile[0].equation, val);
+    window.profOpt = checkConfig(val);
 
-    $.each(professorConfigFile, function(i, item) {
-        console.log(item.equation, val)
-        if (item.equation === val){
-
-        }
-    })
+    console.log(profOpt);
 
     $(equPara).empty("");
     var y = `y = `,

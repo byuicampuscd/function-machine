@@ -1,4 +1,5 @@
 {
+    //what was the callback again?
     callback: fun,
     showGraph: true,
     equation: '3x+2',
