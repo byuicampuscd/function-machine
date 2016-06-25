@@ -1,43 +1,36 @@
 function startFuncMach() {
 
     var xinputs = $("input[type='number']"),
-        graphConfig = [],
         hideAnimationChecked = $("#animate:checked").length > 0,
         hideGraphChecked = $("#showGraph:checked").length > 0,
         graphOpt = {
-            callback: fun,
+            callback: function () {
+                return new Promise(function (resolve) {
+                    resolve("Graph animation is done!");
+                });
+            },
             animate: hideAnimationChecked,
             showGraph: hideGraphChecked,
-            equation: '3x+2',
-            window: {
-                x: {
-                    min: -10,
-                    max: 10
-                },
-                y: {
-                    min: -10,
-                    max: 10
-                }
-            },
-        };
-
-    console.log(hideAnimationChecked, hideGraphChecked);
+            equation: profOpt.equation
+        },
+        datapoints = [];
 
     $.each(xinputs, function (i, val) {
-        console.log(i, $(val).val() * 1);
-        var graphOpt = {
-            data: [{
-                x: 5,
-                y: 17,
-                updatePoint: true
-                }, {
-                x: 2,
-                y: 8,
-                updatePoint: true
-            }]
-        };
-    });
+        var xval = $(val).val(),
+            equation = profOpt.equation;
 
+        if (xval) {
+            var replaceX = equation.replace("x", `(${xval})`),
+                yval = math.eval(replaceX),
+                point = {
+                    x: xval,
+                    y: yval,
+                    updatePoint: true
+                };
+
+            datapoints.push(point);
+        }
+    });
 }
 
 function checkConfig(val) {
@@ -54,8 +47,6 @@ function checkConfig(val) {
 function changePlot(val) {
 
     window.profOpt = checkConfig(val);
-
-    console.log(profOpt);
 
     $(equPara).empty("");
     var y = `y = `,
