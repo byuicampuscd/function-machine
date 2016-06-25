@@ -22,15 +22,21 @@ function startFuncMach() {
         if (xval) {
             var replaceX = equation.replace("x", `(${xval})`),
                 yval = math.eval(replaceX),
+                inputCoor = val.getBoundingClientRect(),
                 point = {
                     x: xval,
                     y: yval,
+                    beginCoor: {
+                        top: inputCoor.top,
+                        left: inputCoor.left
+                    },
                     updatePoint: true
                 };
-
             datapoints.push(point);
         }
     });
+
+    animatorControl(datapoints);
 }
 
 function checkConfig(val) {

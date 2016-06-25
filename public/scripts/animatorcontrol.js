@@ -150,82 +150,72 @@
 //    });
 //}
 //
-//function animate(i, aw) {
-//    console.log(i, aw[i]);
-//    var num = wand.crtElm("p", aw[i].num),
-//        funcMachCoor = {
-//            top: 55,
-//            right: 300
-//        },
-//        animateConfig = aniConfig(aw[i].coorData, funcMachCoor, num, alphaid[i], i),
-//        numberInput = aw[i].inputTag.name.match(/\d+/);
-//
-//    startingData.push(aw[i].coorData);
-//
-//    /*BUG FIX*/
-//    /*when running through a loop this promise chain is all running simultaneously*/
-//    /*The timing is going to have to change because the setTimeouts are running right after the loop makes the execution stack*/
-//    /*The timing is all messed up.*/
-//    animationTemplate(animateConfig)
-//        .then(equAnimeDisappear)
-//        .then(equAppear)
-//        .then(equAnimeDisappear)
-//        .then(equAppear)
-//        .then(createAns)
-//        .then(animationTemplate)
-//        .then(function (yval) {
-//            return new Promise(function (resolve) {
-//                setTimeout(function () {
-//                    var td = wand.querApndr(`#row${(numberInput[0]*1)} td:nth-child(2)`),
-//                        y = `y = `,
-//                        equat = `${globalEqu}`,
-//                        yvalue = yval.innerText,
-//                        statusBarCoor = {
-//                            top: 150,
-//                            right: 400
-//                        };
-//
-//                    katex.render(y, yPara);
-//                    katex.render(equat, equPara);
-//                    wand.apndr(td, yvalue);
-//
-//                    animateConfig = aniConfig(aw[i].coorData, statusBarCoor, yval, "za", 0);
-//
-//                    statusBar.innerText = "";
-//                    statusBar.innerText = ">> Plotting answer.";
-//
-//                    resolve(animateConfig);
-//                }, 3000);
-//            });
-//        })
-//        .then(animationTemplate);
-//
-//        /*TODO: evaluate the array in order to continue the array animation;*/
-//        /**  WITH PROMISES pass an object throughout the chain and evaluate it if it is done.
-//        //**  The graph will need all the information
-//        /** Animate true or false.
-//        /*TODO: if already animated can not reanimate again.*/
-//
-//}
-//
+function animate(i, aw) {
+
+    var num = $("<p></p>").append(aw[i].num),
+        funcMachCoor = {
+            top: 55,
+            right: 300
+        },
+        animateConfig = aniConfig(aw[i].coorData, funcMachCoor, num, alphaid[i], i),
+        numberInput = aw[i].inputTag.name.match(/\d+/);
+
+    startingData.push(aw[i].coorData);
+
+    /*BUG FIX*/
+    /*when running through a loop this promise chain is all running simultaneously*/
+    /*The timing is going to have to change because the setTimeouts are running right after the loop makes the execution stack*/
+    /*The timing is all messed up.*/
+    animationTemplate(animateConfig)
+        .then(equAnimeDisappear)
+        .then(equAppear)
+        .then(equAnimeDisappear)
+        .then(equAppear)
+        .then(createAns)
+        .then(animationTemplate)
+        .then(function (yval) {
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    var td = wand.querApndr(`#row${(numberInput[0]*1)} td:nth-child(2)`),
+                        y = `y = `,
+                        equat = `${globalEqu}`,
+                        yvalue = yval.innerText,
+                        statusBarCoor = {
+                            top: 150,
+                            right: 400
+                        };
+
+                    katex.render(y, yPara);
+                    katex.render(equat, equPara);
+                    wand.apndr(td, yvalue);
+
+                    animateConfig = aniConfig(aw[i].coorData, statusBarCoor, yval, "za", 0);
+
+                    statusBar.innerText = "";
+                    statusBar.innerText = ">> Plotting answer.";
+
+                    resolve(animateConfig);
+                }, 3000);
+            });
+        })
+        .then(animationTemplate);
+
+    /*TODO: evaluate the array in order to continue the array animation;*/
+    /**  WITH PROMISES pass an object throughout the chain and evaluate it if it is done.
+    //**  The graph will need all the information
+    /** Animate true or false.
+    /*TODO: if already animated can not reanimate again.*/
+
+}
+
 ////Handle all CSS animations
-//function animatorControl(aw, func) {
-//    "use strict";
-//    var numContainer = wand.querApndr("#numContainer"),
-//        runCounter = -1;
-//    numContainer.innerHTML = "";
-//
-////    var interval = setInterval(function () {
-////        runCounter += 1;
-////        if (runCounter === 19) {
-////            clearInterval(interval);
-////            console.log("stop");
-////        }
-////        animate(runCounter, aw);
-////        console.log(runCounter, aw);
-////    }, 14000);
-//
-//        for (var i = 0; i < aw.length; i++) {
-//            animate(i, aw);
-//        }
-//}
+function animatorControl(dps) {
+    "use strict";
+    var numContainer = $("#numContainer");
+
+    numContainer.innerHTML = "";
+
+    for (var i = 0; i < dps.length; i++) {
+        console.log(dps);
+    }
+}
