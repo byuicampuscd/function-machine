@@ -26,11 +26,16 @@ function startFuncMach() {
                 point = {
                     x: xval,
                     y: yval,
+                    updatePoint: true,
+                    element: $(`<p>${xval}</p>`)[0],
                     beginCoor: {
                         top: inputCoor.top,
                         left: inputCoor.left
                     },
-                    updatePoint: true
+                    endCoor: {
+                        top: 55,
+                        right: 300
+                    }
                 };
             datapoints.push(point);
         }
