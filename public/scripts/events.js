@@ -5,15 +5,16 @@ function startFuncMach() {
         hideGraphChecked = $("#showGraph:checked").length > 0,
         graphOpt = {
             callback: function () {
-                return new Promise(function (resolve) {
-                    resolve("Graph animation is done!");
-                });
+                return Promise.resolve(console.log("Done!"));
             },
             animate: hideAnimationChecked,
             showGraph: hideGraphChecked,
             equation: profOpt.equation
         },
-        datapoints = [];
+        aniSettings = {
+            datapoints: [],
+            currentRound: 0
+        };
 
     $.each(xinputs, function (i, val) {
         var xval = $(val).val(),
@@ -26,22 +27,20 @@ function startFuncMach() {
                 point = {
                     x: xval,
                     y: yval,
+                    id: i,
+                    changeEqu: profOpt.equation.replace("x", `(${xval})`),
                     updatePoint: true,
                     element: $(`<p>${xval}</p>`)[0],
                     beginCoor: {
                         top: inputCoor.top,
                         left: inputCoor.left
-                    },
-                    endCoor: {
-                        top: 55,
-                        right: 300
                     }
                 };
-            datapoints.push(point);
+            aniSettings.datapoints.push(point);
         }
     });
 
-    animatorControl(datapoints);
+    animatorControl(aniSettings);
 }
 
 function checkConfig(val) {
@@ -59,14 +58,15 @@ function changePlot(val) {
 
     window.profOpt = checkConfig(val);
 
-    $(equPara).empty("");
     var y = `y = `,
         equat = `${val}`,
-        equPara = $("#functionMachine #equ"),
+        equPara = $("#functionMachine #equ")[0],
         yPara = $("#functionMachine #y");
 
+    $(equPara).empty("");
+
     katex.render(y, yPara[0]);
-    katex.render(equat, equPara[0]);
+    katex.render(equat, equPara);
 }
 
 /*****DOCUMENT onchange EVENT HANDLER*****/
