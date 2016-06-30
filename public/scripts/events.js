@@ -1,3 +1,5 @@
+var xMemory = [];
+
 function startFuncMach() {
 
     var xinputs = $("input[type='number']"),
@@ -40,10 +42,41 @@ function startFuncMach() {
                         left: 300
                     }
                 };
+            // COMMENTED OUT code is meant to set up an array that anaylzes
+            // whether or not if a number needs to be animated again.  It almost
+            // works and probably needs to be put somewhere else in the code.  In
+            // its  current placement it is just one behind.
+/*
+
+            if (xMemory[i] === xval) {
+                point.updatePoint = false;
+            }
+*/
+
+
             aniSettings.datapoints.push(point);
         }
     });
+/*
+    if (xMemory.length === 0) {
+        $.each(xinputs, function (i, val) {
+            var xvalue = $(val).val();
+            xMemory.push(xvalue);
+            console.log(xvalue);
+        });
+    } else {
+        for (var i = 0; i < xinputs.length; i++) {
+            var xer = $(xinputs[i]).val(),
+                xMem = +xMemory[i];
 
+            console.log(+xer, xMem);
+
+            if (+xer !== xMem) {
+                xMemory[i] = +xer;
+            }
+        }
+    }
+    */
     animatorControl(aniSettings);
 }
 
@@ -87,5 +120,11 @@ $(document).keypress(function (e) {
 
 /*****GO! Click*****/
 $("input[type='button'][value='Go!']").click(function () {
+
+    //TODO: Most likely to detect if an animation is occurring it would be best to check of a specific animation class exists on the webpage.
+
+    //    if ($(':animated').length === 0) {
     startFuncMach();
+    //    }
+
 });

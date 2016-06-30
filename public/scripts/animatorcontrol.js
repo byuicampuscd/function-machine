@@ -58,12 +58,14 @@ function animationTemplate(aniSettings) {
 }
 
 function updateRound(aniSettings) {
-    //make sure that the updatePoint is also showEvaluateEqud.
+
+    var placeholder = aniSettings.datapoints[aniSettings.currentRound];
+
     return new Promise(function (resolve) {
         aniSettings.currentRound += 1;
-        resolve(aniSettings);
+        placeholder.updatePoint = false;
 
-        console.log(aniSettings);
+        resolve(aniSettings);
     });
 };
 
@@ -73,7 +75,7 @@ function replaceXEqu(data) {
     return new Promise(function (resolve) {
         $(statusBar)
             .html("")
-            .html("<p>>> Calculating</p>");
+            .html("<p>Calculating</p>");
 
         $(equPara)
             .css("animation", "textDisappear 2s ease-in-out")
@@ -94,7 +96,7 @@ function showEvaluateEqu(aniSettings) {
         if (typeof pointData.y === "number") {
             $(statusBar)
                 .html("")
-                .html("<p>>> Returning answer.</p>");
+                .html("<p>Returning answer.</p>");
         }
 
         katex.render(`${changeEqu}`, equPara);
@@ -129,6 +131,11 @@ function showYAns(aniSettings) {
     pointData.element.innerText = pointData.y
 
     return new Promise(function (resolve) {
+
+        $(statusBar)
+            .html("")
+            .html("<p>Sending answer</p>");
+
         $(equPara)
             .css("animation", 'textDisappear 2s ease-in-out')
             .bind("animationend", function (e) {
@@ -160,9 +167,12 @@ function placeYValue(aniSettings) {
         left: 300
     }
 
-    console.log(aniSettings);
-
     return new Promise(function (resolve) {
+
+        $(statusBar)
+            .html("")
+            .html("<p>Plotting...</p>");
+
         var input = $(`td#yval${pointData.id + 1}`)[0];
         $(input).html("");
         $(input).append(`<p>${pointData.y}</p>`);
@@ -181,7 +191,7 @@ function resetRound(aniSettings) {
 
                 $(statusBar)
                     .html("")
-                    .html("<p>>> Resetting...</p>");
+                    .html("<p>Resetting...</p>");
 
                 $(equPara).css("opacity", 0);
                 katex.render(`${profOpt.equation}`, equPara);
@@ -206,14 +216,18 @@ function animatorControl(dps) {
     numContainer.innerHTML = "";
 
     for (var i = 0; i < dps.datapoints.length; i++) {
-        chain = chain.then(animationTemplate)
-            .then(replaceXEqu)
-            .then(showEvaluateEqu)
-            .then(showYAns)
-            .then(animationTemplate)
-            .then(placeYValue)
-            .then(animationTemplate)
-            .then(resetRound)
-            .then(updateRound);
+
+        if (dps.datapoints[i].updatePoint === true) {
+            chain = chain.then(animationTemplate)
+                .then(replaceXEqu)
+                .then(showEvaluateEqu)
+                .then(showYAns)
+                .then(animationTemplate)
+                .then(placeYValue)
+                .then(animationTemplate)
+                .then(resetRound);
+                //            .then(plotter)
+        }
+        chain = chain.then(updateRound);
     }
 }
