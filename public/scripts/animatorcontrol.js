@@ -62,6 +62,8 @@ function updateRound(aniSettings) {
     return new Promise(function (resolve) {
         aniSettings.currentRound += 1;
         resolve(aniSettings);
+
+        console.log(aniSettings);
     });
 };
 
@@ -144,10 +146,25 @@ function showYAns(aniSettings) {
 
 function placeYValue(aniSettings) {
 
-    var pointData = aniSettings.datapoints[aniSettings.currentRound];
+    var pointData = aniSettings.datapoints[aniSettings.currentRound],
+        newBeginTop = pointData.endCoor.top,
+        newBeginLeft = pointData.endCoor.left;
+
+    pointData.beginCoor = {
+        top: newBeginTop,
+        left: newBeginLeft
+    }
+
+    pointData.endCoor = {
+        top: 150,
+        left: 300
+    }
+
+    console.log(aniSettings);
 
     return new Promise(function (resolve) {
         var input = $(`td#yval${pointData.id + 1}`)[0];
+        $(input).html("");
         $(input).append(`<p>${pointData.y}</p>`);
         resolve(aniSettings);
     });
@@ -195,6 +212,7 @@ function animatorControl(dps) {
             .then(showYAns)
             .then(animationTemplate)
             .then(placeYValue)
+            .then(animationTemplate)
             .then(resetRound)
             .then(updateRound);
     }
