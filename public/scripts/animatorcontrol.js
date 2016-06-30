@@ -1,30 +1,15 @@
 var statusBar = $("#status p"),
     lastSheet = document.styleSheets[document.styleSheets.length - 1],
-    equPara = $("#functionMachine #equ")[0],
-    machineCoor = {
-        top: 55,
-        left: 300
-    },
-    statusCoor = {
-        top: 255,
-        left: 300
-    };
+    equPara = $("#functionMachine #equ")[0];
 
 function animationTemplate(aniSettings) {
 
-    var pointData;
-
-    if (typeof aniSettings.currentRound === "number") {
-        pointData = aniSettings.datapoints[aniSettings.currentRound];
-    } else {
-        pointData = aniSettings;
-    }
-
-    var startTopOff = pointData.beginCoor.top + 5,
+    var pointData = aniSettings.datapoints[aniSettings.currentRound],
+        startTopOff = pointData.beginCoor.top + 5,
         startLeftOff = pointData.beginCoor.left + 30,
-        endTopOff = machineCoor.top,
-        endLeftOff = machineCoor.left,
-        highwayPath = pointData.beginCoor.left + 225,
+        endTopOff = pointData.endCoor.top + 5,
+        endLeftOff = pointData.endCoor.left + 30,
+        highwayPath = 246.5,
         id = pointData.id.toString(),
         numContainer = $("#numContainer"),
         numPara = pointData.element;
@@ -67,7 +52,7 @@ function animationTemplate(aniSettings) {
             .css("opacity", `0`)
             .css("zIndex", `100`)
             .bind('animationend', function (e) {
-                resolve(pointData);
+                resolve(aniSettings);
             });
     })
 }
@@ -99,11 +84,12 @@ function replaceXEqu(data) {
 
 function showEvaluateEqu(aniSettings) {
 
-    var changeEqu = aniSettings.changeEqu;
+    var pointData = aniSettings.datapoints[aniSettings.currentRound],
+        changeEqu = pointData.changeEqu;
 
     return new Promise(function (resolve) {
 
-        if (typeof aniSettings.y === "number") {
+        if (typeof pointData.y === "number") {
             $(statusBar)
                 .html("")
                 .html("<p>>> Returning answer.</p>");
@@ -122,39 +108,72 @@ function showEvaluateEqu(aniSettings) {
 
 function showYAns(aniSettings) {
 
-    /*the ending coordinates need to be changed */
+    var pointData = aniSettings.datapoints[aniSettings.currentRound],
+        newEndTop = pointData.beginCoor.top,
+        newEndLeft = pointData.beginCoor.left + 100,
+        newBeginTop = pointData.endCoor.top,
+        newBeginLeft = pointData.endCoor.left;
 
-    /*console.log(aniSettings);
-
-    var newBeginTop = aniSettings.endCoor.top,
-        newBeginLeft = aniSettings.endCoor.left,
-        newEndTop = aniSettings.beginCoor.top,
-        newEndLeft = aniSettings.beginCoor.left;
-
-    console.log(aniSettings);
-
-    aniSettings.endCoor = {
-        top: newBeginTop,
-        left: newBeginLeft
-    };
-
-    aniSettings.beginCoor = {
+    pointData.endCoor = {
         top: newEndTop,
         left: newEndLeft
     };
 
-    console.log(aniSettings);*/
+    pointData.beginCoor = {
+        top: newBeginTop,
+        left: newBeginLeft
+    };
+
+    pointData.element.innerText = pointData.y
 
     return new Promise(function (resolve) {
         $(equPara)
             .css("animation", 'textDisappear 2s ease-in-out')
             .bind("animationend", function (e) {
                 $(equPara).css("opacity", 0);
-                katex.render(`${aniSettings.y}`, equPara);
+                katex.render(`${pointData.y}`, equPara);
                 $(equPara)
                     .css("animation", 'textAppear 1s ease-in-out')
                     .bind("animationend", function (e) {
                         $(equPara).css("opacity", 1);
+                    });
+                resolve(aniSettings);
+            });
+    });
+}
+
+function placeYValue(aniSettings) {
+
+    var pointData = aniSettings.datapoints[aniSettings.currentRound];
+
+    return new Promise(function (resolve) {
+        var input = $(`td#yval${pointData.id + 1}`)[0];
+        $(input).append(`<p>${pointData.y}</p>`);
+        resolve(aniSettings);
+    });
+}
+
+function resetRound(aniSettings) {
+
+    var pointData = aniSettings.datapoints[aniSettings.currentRound];
+
+    return new Promise(function (resolve) {
+        $(equPara)
+            .css("animation", 'textDisappear 2s ease-in-out')
+            .bind("animationend", function (e) {
+
+                $(statusBar)
+                    .html("")
+                    .html("<p>>> Resetting...</p>");
+
+                $(equPara).css("opacity", 0);
+                katex.render(`${profOpt.equation}`, equPara);
+                $(equPara)
+                    .css("animation", 'textAppear 1s ease-in-out')
+                    .bind("animationend", function (e) {
+                        $(equPara).css("opacity", 1);
+                        $(statusBar)
+                            .html("");
                     });
                 resolve(aniSettings);
             });
@@ -175,6 +194,8 @@ function animatorControl(dps) {
             .then(showEvaluateEqu)
             .then(showYAns)
             .then(animationTemplate)
-            //            .then(updateRound);
+            .then(placeYValue)
+            .then(resetRound)
+            .then(updateRound);
     }
 }

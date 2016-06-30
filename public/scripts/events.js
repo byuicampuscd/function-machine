@@ -34,6 +34,10 @@ function startFuncMach() {
                     beginCoor: {
                         top: inputCoor.top,
                         left: inputCoor.left
+                    },
+                    endCoor: {
+                        top: 55,
+                        left: 300
                     }
                 };
             aniSettings.datapoints.push(point);

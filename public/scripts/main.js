@@ -19,6 +19,8 @@
 
         $(input).attr("name", `input${j}`).attr("type", "number");
 
+        $(td2).attr("id", `yval${j}`);
+
         $(td1).append(input);
         $(tr).append(td1).append(td2);
         $(tbody).append(tr);
