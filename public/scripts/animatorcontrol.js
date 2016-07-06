@@ -1,9 +1,15 @@
 var statusBar = $("#status p"),
     lastSheet = document.styleSheets[document.styleSheets.length - 1],
-    equPara = $("#functionMachine #equ")[0];
+    equPara = $("#functionMachine #equ")[0],
+    aniDur = 1,
+    aniDuration = 3;
 
 function animationTemplate(aniSettings) {
+    "use strict";
 
+    /*
+    Get all the coordinate data, elements and containers in order to make the animation work
+    */
     var pointData = aniSettings.datapoints[aniSettings.currentRound],
         startTopOff = pointData.beginCoor.top + 5,
         startLeftOff = pointData.beginCoor.left + 30,
@@ -14,6 +20,9 @@ function animationTemplate(aniSettings) {
         numContainer = $("#numContainer"),
         numPara = pointData.element;
 
+    /*
+    Dynamically insert a unique animation keyframe for each input
+    */
     lastSheet.insertRule(`@keyframes animationPath${id} {
                             0% {
                                 opacity: 0;
@@ -41,16 +50,24 @@ function animationTemplate(aniSettings) {
                             }
                         }`, lastSheet.cssRules.length);
 
+    /*
+    Attach the number
+    */
     $(numContainer).append(numPara);
 
+    /*
+    Make the promise that when the dynamic animation is done then this promise is finished
+    */
     return new Promise(function (resolve) {
         $(numPara)
-            .css("position", "absolute")
-            .css("top", `${startTopOff}px`)
-            .css("left", `${startLeftOff}px`)
-            .css("animation", `animationPath${id} 4s ease-in-out`)
-            .css("opacity", `0`)
-            .css("zIndex", `100`)
+            .css({
+                "position": "absolute",
+                "top": `${startTopOff}px`,
+                "left": `${startLeftOff}px`,
+                "animation": `animationPath${id} ${aniDuration}s ease-in-out`,
+                "opacity": `0`,
+                "zIndex": `100`
+            })
             .bind('animationend', function (e) {
                 resolve(aniSettings);
             });
@@ -58,6 +75,7 @@ function animationTemplate(aniSettings) {
 }
 
 function updateRound(aniSettings) {
+    "use strict";
 
     var placeholder = aniSettings.datapoints[aniSettings.currentRound];
 
@@ -72,13 +90,15 @@ function updateRound(aniSettings) {
 function replaceXEqu(data) {
     "use strict";
 
+    /*
+    Replace the x in the disappeared equation without having the y disappear.
+    */
     return new Promise(function (resolve) {
         $(statusBar)
-            .html("")
             .html("<p>Calculating</p>");
 
         $(equPara)
-            .css("animation", "textDisappear 2s ease-in-out")
+            .css("animation", `textDisappear ${aniDur}s ease-in-out`)
             .bind("animationend", function (e) {
                 $(equPara).css("opacity", 0);
                 resolve(data);
@@ -87,22 +107,22 @@ function replaceXEqu(data) {
 }
 
 function showEvaluateEqu(aniSettings) {
+    "use strict";
 
+    /*
+    Get the y answer and the x-changed equation
+    */
     var pointData = aniSettings.datapoints[aniSettings.currentRound],
         changeEqu = pointData.changeEqu;
 
+    /*
+    Show the new equation with the replaced x-value equation
+    */
     return new Promise(function (resolve) {
-
-        if (typeof pointData.y === "number") {
-            $(statusBar)
-                .html("")
-                .html("<p>Returning answer.</p>");
-        }
-
         katex.render(`${changeEqu}`, equPara);
 
         $(equPara)
-            .css("animation", 'textAppear 1s ease-in-out')
+            .css("animation", `textAppear ${aniDur}s ease-in-out`)
             .bind("animationend", function (e) {
                 $(equPara).css("opacity", 1);
                 resolve(aniSettings);
@@ -111,13 +131,21 @@ function showEvaluateEqu(aniSettings) {
 }
 
 function showYAns(aniSettings) {
+    "use strict";
 
+    /*
+    Get the original x-input box coordinates
+    */
     var pointData = aniSettings.datapoints[aniSettings.currentRound],
         newEndTop = pointData.beginCoor.top,
         newEndLeft = pointData.beginCoor.left + 100,
         newBeginTop = pointData.endCoor.top,
         newBeginLeft = pointData.endCoor.left;
 
+    /*
+    Change the coordinates in the aniSettings so that the animation path
+    starts in the machine and ends in coordinated y column
+    */
     pointData.endCoor = {
         top: newEndTop,
         left: newEndLeft
@@ -128,16 +156,18 @@ function showYAns(aniSettings) {
         left: newBeginLeft
     };
 
+    /*
+    The new paragraph tag to be animated is the y value
+    */
     pointData.element.innerText = pointData.y
 
+    /*
+    Animate the new y value to the coordinated y column and once
+    animation is done then return the promise
+    */
     return new Promise(function (resolve) {
-
-        $(statusBar)
-            .html("")
-            .html("<p>Sending answer</p>");
-
         $(equPara)
-            .css("animation", 'textDisappear 2s ease-in-out')
+            .css("animation", `textDisappear ${aniDur}s ease-in-out`)
             .bind("animationend", function (e) {
                 $(equPara).css("opacity", 0);
                 katex.render(`${pointData.y}`, equPara);
@@ -145,14 +175,18 @@ function showYAns(aniSettings) {
                     .css("animation", 'textAppear 1s ease-in-out')
                     .bind("animationend", function (e) {
                         $(equPara).css("opacity", 1);
+                        resolve(aniSettings);
                     });
-                resolve(aniSettings);
             });
     });
 }
 
 function placeYValue(aniSettings) {
+    "use strict";
 
+    /*
+    Get the current round, the y-column coordinates, and the status bar coordinates
+    */
     var pointData = aniSettings.datapoints[aniSettings.currentRound],
         newBeginTop = pointData.endCoor.top,
         newBeginLeft = pointData.endCoor.left;
@@ -167,12 +201,10 @@ function placeYValue(aniSettings) {
         left: 300
     }
 
+    /*
+    Once the y-value appears in the correct y-column then fulfill the promise.
+    */
     return new Promise(function (resolve) {
-
-        $(statusBar)
-            .html("")
-            .html("<p>Plotting...</p>");
-
         var input = $(`td#yval${pointData.id + 1}`)[0];
         $(input).html("");
         $(input).append(`<p>${pointData.y}</p>`);
@@ -181,30 +213,38 @@ function placeYValue(aniSettings) {
 }
 
 function resetRound(aniSettings) {
+    "use strict";
 
+    /*
+    Get the current round and current data points
+    */
     var pointData = aniSettings.datapoints[aniSettings.currentRound];
 
+    /*
+    Once the equation is cleared and reset to the default equation
+    then fulfill the promise
+    */
     return new Promise(function (resolve) {
         $(equPara)
-            .css("animation", 'textDisappear 2s ease-in-out')
+            .css("animation", `textDisappear ${aniDur}s ease-in-out`)
             .bind("animationend", function (e) {
-
-                $(statusBar)
-                    .html("")
-                    .html("<p>Resetting...</p>");
-
                 $(equPara).css("opacity", 0);
                 katex.render(`${profOpt.equation}`, equPara);
                 $(equPara)
-                    .css("animation", 'textAppear 1s ease-in-out')
+                    .css("animation", `textAppear ${aniDur}s ease-in-out`)
                     .bind("animationend", function (e) {
                         $(equPara).css("opacity", 1);
                         $(statusBar)
                             .html("");
+                        resolve(aniSettings);
                     });
-                resolve(aniSettings);
             });
     });
+}
+
+function plotter(aniSettings) {
+    "use strict";
+    aniSettings.graphOpt.callback();
 }
 
 //Handle all CSS animations
@@ -217,6 +257,9 @@ function animatorControl(dps) {
 
     for (var i = 0; i < dps.datapoints.length; i++) {
 
+        //TODO: Send the x-value and the y-value together.
+        //TODO: Check to see what I can take out in order to make functions.
+
         if (dps.datapoints[i].updatePoint === true) {
             chain = chain.then(animationTemplate)
                 .then(replaceXEqu)
@@ -225,8 +268,8 @@ function animatorControl(dps) {
                 .then(animationTemplate)
                 .then(placeYValue)
                 .then(animationTemplate)
-                .then(resetRound);
-                //            .then(plotter)
+                .then(resetRound)
+                //                .then(plotter);
         }
         chain = chain.then(updateRound);
     }

@@ -1,4 +1,10 @@
-var xMemory = [];
+var xMemory = [],
+    inputs = document.querySelectorAll("input[type='number']"),
+    inputCount = inputs.length;
+
+for (var i = 0; i < inputCount; i++) {
+    xMemory[i] = null;
+}
 
 function startFuncMach() {
 
@@ -6,32 +12,36 @@ function startFuncMach() {
         hideAnimationChecked = $("#animate:checked").length > 0,
         hideGraphChecked = $("#showGraph:checked").length > 0,
         graphOpt = {
-            callback: function () {
-                return Promise.resolve(console.log("Done!"));
+            callback: function (aniSettings) {
+                return new Promise(function (resolve) {
+                    console.log("finished!");
+                    resolve(aniSettings);
+                });
             },
-            animate: hideAnimationChecked,
-            showGraph: hideGraphChecked,
+            animateHide: hideAnimationChecked,
+            graphHide: hideGraphChecked,
             equation: profOpt.equation
         },
         aniSettings = {
             datapoints: [],
-            currentRound: 0
+            currentRound: 0,
+            graphOpt: graphOpt
         };
 
-    $.each(xinputs, function (i, val) {
-        var xval = $(val).val(),
+    xinputs.each(function (i) {
+        var xval = +$(this).val(),
             equation = profOpt.equation;
 
         if (xval) {
             var replaceX = equation.replace("x", `(${xval})`),
                 yval = math.eval(replaceX),
-                inputCoor = val.getBoundingClientRect(),
+                inputCoor = this.getBoundingClientRect(),
                 point = {
                     x: xval,
                     y: yval,
                     id: i,
                     changeEqu: profOpt.equation.replace("x", `(${xval})`),
-                    updatePoint: true,
+                    updatePoint: xMemory[i] !== xval,
                     element: $(`<p>${xval}</p>`)[0],
                     beginCoor: {
                         top: inputCoor.top,
@@ -42,41 +52,21 @@ function startFuncMach() {
                         left: 300
                     }
                 };
-            // COMMENTED OUT code is meant to set up an array that anaylzes
-            // whether or not if a number needs to be animated again.  It almost
-            // works and probably needs to be put somewhere else in the code.  In
-            // its  current placement it is just one behind.
-/*
 
-            if (xMemory[i] === xval) {
-                point.updatePoint = false;
+            /*
+            Clear out the Ys when they don't equal each other and need to be updated
+            */
+            if (point.updatePoint) {
+                $(`td#yval${i + 1}`).html("");
             }
-*/
 
+            /*Update the xmemory*/
+            xMemory[i] = xval;
 
             aniSettings.datapoints.push(point);
         }
     });
-/*
-    if (xMemory.length === 0) {
-        $.each(xinputs, function (i, val) {
-            var xvalue = $(val).val();
-            xMemory.push(xvalue);
-            console.log(xvalue);
-        });
-    } else {
-        for (var i = 0; i < xinputs.length; i++) {
-            var xer = $(xinputs[i]).val(),
-                xMem = +xMemory[i];
 
-            console.log(+xer, xMem);
-
-            if (+xer !== xMem) {
-                xMemory[i] = +xer;
-            }
-        }
-    }
-    */
     animatorControl(aniSettings);
 }
 
