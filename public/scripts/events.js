@@ -1,10 +1,81 @@
 var xMemory = [],
     inputs = document.querySelectorAll("input[type='number']"),
-    inputCount = inputs.length;
+    inputCount = inputs.length,
+    lastSheet = document.styleSheets[document.styleSheets.length - 1];
+
+function stairStep(options) {
+    var highwayPath = 246.5;
+    lastSheet.insertRule(`@keyframes ${options.name} {
+                            0% {
+                                opacity: 0;
+                                top: ${options.startTopOff}px;
+                                left: ${options.startLeftOff}px;
+                            }
+                            10% {
+                                opacity: 1;
+                            }
+                            33% {
+                                top: ${options.startTopOff}px;
+                                left: ${highwayPath}px;
+                            }
+                            66% {
+                                top: ${options.endTopOff}px;
+                                left: ${highwayPath}px;
+                            }
+                            90% {
+                                opacity: 1;
+                            }
+                            100% {
+                                opacity: 0;
+                                top: ${options.endTopOff}px;
+                                left: ${options.endLeftOff}px;
+                            }
+                        }`, lastSheet.cssRules.length);
+
+}
+
+function makeXToMachine(inputCords, index) {
+    stairStep({
+        startTopOff: inputCords.top + 5,
+        startLeftOff: inputCords.left + 30,
+        endTopOff: 55,
+        endLeftOff: 300,
+        name: `xToMachine${index}`
+    });
+}
+
+function makeMachineToY(inputCords, index) {
+    stairStep({
+        startTopOff: 55,
+        startLeftOff: 300,
+        endTopOff: inputCords.top + 5,
+        endLeftOff: inputCords.right + 5,
+        name: `machineToY${index}`
+    });
+}
+
+function makeYToStatusBar(inputCords, index) {
+    stairStep({
+        startTopOff: inputCords.top ,
+        startLeftOff: inputCords.right + 10,
+        endTopOff: 150,
+        endLeftOff: 300,
+        name: `yToStatusBar${index}`
+    });
+}
 
 for (var i = 0; i < inputCount; i++) {
     xMemory[i] = null;
+
+    var inputCoor = inputs[i].getBoundingClientRect();
+
+    makeXToMachine(inputCoor,i);
+    makeMachineToY(inputCoor,i);
+    makeYToStatusBar(inputCoor,i);
+    $("#numContainer").append($(`<p></p>`));
 }
+
+
 
 function startFuncMach() {
 
@@ -42,7 +113,7 @@ function startFuncMach() {
                     id: i,
                     changeEqu: profOpt.equation.replace("x", `(${xval})`),
                     updatePoint: xMemory[i] !== xval,
-                    element: $(`<p>${xval}</p>`)[0],
+                    element: $("#numContainer p").get(i),
                     beginCoor: {
                         top: inputCoor.top,
                         left: inputCoor.left

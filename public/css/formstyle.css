@@ -28,3 +28,9 @@ label {
     margin-bottom: 2.5px;
     font-size: 13px;
 }
+
+#numContainer p {
+    position: absolute;
+    opacity: 0;
+    z-index: 100;
+}
