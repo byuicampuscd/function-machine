@@ -2,7 +2,7 @@
    {
       "name": "Linear",
       "equation": "3x+2",
-      "window": {
+      "view": {
          "x": {
             "min": -10,
             "max": 10
@@ -15,7 +15,7 @@
    }, {
       "name": "Cubic",
       "equation": "2x^3+5",
-      "window": {
+      "view": {
          "x": {
             "min": -10,
             "max": 10
