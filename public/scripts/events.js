@@ -3,6 +3,9 @@ var xMemory = [],
     inputCount = inputs.length,
     lastSheet = document.styleSheets[document.styleSheets.length - 1];
 
+/*
+Animation path for the stairstep
+*/
 function stairStep(options) {
     var highwayPath = 246.5;
     lastSheet.insertRule(`@keyframes ${options.name} {
@@ -31,9 +34,12 @@ function stairStep(options) {
                                 left: ${options.endLeftOff}px;
                             }
                         }`, lastSheet.cssRules.length);
-
 }
 
+/*
+A set of functions using the stairstep animation template
+to create pathways with coordinate data
+*/
 function makeXToMachine(inputCords, index) {
     stairStep({
         startTopOff: inputCords.top + 5,
@@ -56,7 +62,7 @@ function makeMachineToY(inputCords, index) {
 
 function makeYToStatusBar(inputCords, index) {
     stairStep({
-        startTopOff: inputCords.top ,
+        startTopOff: inputCords.top + 5,
         startLeftOff: inputCords.right + 10,
         endTopOff: 150,
         endLeftOff: 300,
@@ -64,6 +70,9 @@ function makeYToStatusBar(inputCords, index) {
     });
 }
 
+/*
+Set up the xMemory array and the animation paths for each input box
+*/
 for (var i = 0; i < inputCount; i++) {
     xMemory[i] = null;
 
@@ -75,8 +84,10 @@ for (var i = 0; i < inputCount; i++) {
     $("#numContainer").append($(`<p></p>`));
 }
 
-
-
+/*
+Set all the data to an array of objects to be iterated
+over by the promise chain in animatorcontrol.js
+*/
 function startFuncMach() {
 
     var xinputs = $("input[type='number']"),
@@ -141,6 +152,7 @@ function startFuncMach() {
     animatorControl(aniSettings);
 }
 
+//Why do I have this function?
 function checkConfig(val) {
     var profOpt;
     $.each(professorConfigFile, function (i, item) {
@@ -167,19 +179,25 @@ function changePlot(val) {
     katex.render(equat, equPara);
 }
 
-/*****DOCUMENT onchange EVENT HANDLER*****/
+/*
+DOCUMENT onchange EVENT HANDLER
+*/
 $("select").change(function (e) {
     changePlot(e.target.value);
 });
 
-/****DOCUMENT keydown EVENT HANDLER****/
+/*
+DOCUMENT keydown EVENT HANDLER
+*/
 $(document).keypress(function (e) {
     if (e.which == 13) {
         startFuncMach();
     }
 });
 
-/*****GO! Click*****/
+/*
+GO! Click
+*/
 $("input[type='button'][value='Go!']").click(function () {
 
     //TODO: Most likely to detect if an animation is occurring it would be best to check of a specific animation class exists on the webpage.

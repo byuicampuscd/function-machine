@@ -3,19 +3,33 @@ var statusBar = $("#status p"),
     equPara = $("#functionMachine #equ")[0],
     aniDuration = 2;
 
+function runAnimation(name, value) {
+    /*
+    This is a function factory which will grab the
+    necessary data and then return the function promise
+    */
+    return function animation(aniSettings) {
+        "use strict";
+        var datapoint = aniSettings.datapoints[aniSettings.currentRound],
+            numPara = datapoint.element;
 
-function updateRound(aniSettings) {
-    "use strict";
+        /*
+        Make the promise that when the dynamic
+        animation path is done then this promise is finished
+        */
+        return new Promise(function (resolve) {
+            $(numPara)
+                .html(value)
+                .css({
+                    "animation": `${name}${aniSettings.currentRound} ${aniDuration}s ease-in-out`,
+                })
+                .one('animationend', function (e) {
+                    resolve(aniSettings);
+                });
+        });
 
-    var placeholder = aniSettings.datapoints[aniSettings.currentRound];
-
-    return new Promise(function (resolve) {
-        aniSettings.currentRound += 1;
-        placeholder.updatePoint = false;
-
-        resolve(aniSettings);
-    });
-};
+    };
+}
 
 function replaceXEqu(data) {
     "use strict";
@@ -74,10 +88,10 @@ function showYAns(aniSettings) {
         $(equPara)
             .css("animation", `textDisappear ${aniDuration}s ease-in-out`)
             .one("animationend", function () {
-                    $(equPara).css("opacity", 0);
-                    katex.render(`${pointData.y}`, equPara);
-                    resolve(aniSettings);
-                });
+                $(equPara).css("opacity", 0);
+                katex.render(`${pointData.y}`, equPara);
+                resolve(aniSettings);
+            });
     });
 }
 
@@ -125,44 +139,25 @@ function resetRound(aniSettings) {
             .one("animationend", function (e) {
                 $(equPara).css("opacity", 0);
                 katex.render(`${profOpt.equation}`, equPara);
-                $(equPara)
-                    .css("animation", `textAppear ${aniDuration}s ease-in-out`)
-                    .one("animationend", function (e) {
-                        $(equPara).css("opacity", 1);
-                        $(statusBar)
-                            .html("");
-                        resolve(aniSettings);
-                    });
+                resolve(aniSettings);
             });
     });
 }
 
-function runAnimation(name, value) {
+function showDefaultEqu(aniSettings) {
     /*
-    This is a function factory which will grab the
-    necessary data and then return the function promise
+    Return to default beginning point for the next animation or for the end
     */
-    return function animation(aniSettings) {
-        "use strict";
-        var datapoint = aniSettings.datapoints[aniSettings.currentRound],
-            numPara = datapoint.element;
-
-        /*
-        Make the promise that when the dynamic
-        animation path is done then this promise is finished
-        */
-        return new Promise(function (resolve) {
-            $(numPara)
-                .html(value)
-                .css({
-                    "animation": `${name}${aniSettings.currentRound} ${aniDuration}s ease-in-out`,
-                })
-                .one('animationend', function (e) {
-                    resolve(aniSettings);
-                });
-        });
-
-    };
+    return new Promise(function (resolve) {
+        $(equPara)
+            .css("animation", `textAppear ${aniDuration}s ease-in-out`)
+            .one("animationend", function (e) {
+                $(equPara).css("opacity", 1);
+                $(statusBar)
+                    .html("");
+                resolve(aniSettings);
+            });
+    });
 }
 
 function plotter(aniSettings) {
@@ -170,7 +165,27 @@ function plotter(aniSettings) {
     aniSettings.graphOpt.callback();
 }
 
-//Handle all CSS animations
+function updateRound(aniSettings) {
+    "use strict";
+
+    var placeholder = aniSettings.datapoints[aniSettings.currentRound];
+
+    /*
+    This function acts as an iterator so that the promise chain knows which
+    datapoint to handle and to animate
+    */
+
+    return new Promise(function (resolve) {
+        aniSettings.currentRound += 1;
+        placeholder.updatePoint = false;
+
+        resolve(aniSettings);
+    });
+};
+
+/*
+Handle all CSS animations by creating a Promise chain through a for loop.
+*/
 function animatorControl(dps) {
     "use strict";
     var numContainer = $("#numContainer"),
@@ -191,6 +206,7 @@ function animatorControl(dps) {
                 .then(placeYValue)
                 .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
                 .then(resetRound)
+                .then(showDefaultEqu)
                 //                                .then(plotter);
         }
         chain = chain.then(updateRound);

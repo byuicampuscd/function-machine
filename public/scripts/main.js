@@ -1,7 +1,9 @@
 (function () {
     "use strict";
 
-    /****TABLE MAKER****/
+    /*
+    Make the whole table and cells for the input boxes and user interaction.
+    */
     var tbody = $("tbody"),
         td1,
         td2,
