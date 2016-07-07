@@ -86,6 +86,13 @@ article:nth-of-type(2) {
     font-size: 30px;
 }
 
+/*Animation paragraphs*/
+#numContainer p {
+    position: absolute;
+    opacity: 0;
+    z-index: 100;
+}
+
 /*******TEXT ANIMATIONS*******/
 @keyframes textDisappear {
     0% {

@@ -3,6 +3,13 @@ var statusBar = $("#status p"),
     equPara = $("#functionMachine #equ")[0],
     aniDuration = 2;
 
+//TODO: Fix Table header CSS to a fixed width
+//TODO: Style the whole thing.
+//TODO: Get the function machine in there.
+//TODO: Clear (recreate the table) out the x values when equation is changed.
+//TODO: Validate x values within the set domain of the profOpt
+//TODO: Check browser compatibility (Promises in IE).
+
 function runAnimation(name, value) {
     /*
     This is a function factory which will grab the
@@ -31,6 +38,21 @@ function runAnimation(name, value) {
     };
 }
 
+function statusMessage(message) {
+    "use strict";
+    /*
+    This is a function factory which will grab the
+    necessary data and then return the function promise
+    */
+    return function (aniSettings) {
+        return new Promise(function (resolve) {
+            statusBar.html(`<p>${message}</p>`);
+            resolve(aniSettings);
+        });
+
+    };
+}
+
 function replaceXEqu(data) {
     "use strict";
 
@@ -38,9 +60,6 @@ function replaceXEqu(data) {
     Replace the x in the disappeared equation without having the y disappear.
     */
     return new Promise(function (resolve) {
-        $(statusBar)
-            .html("<p>Calculating</p>");
-
         $(equPara)
             .css("animation", `textDisappear ${aniDuration}s ease-in-out`)
             .one("animationend", function (e) {
@@ -84,7 +103,6 @@ function showYAns(aniSettings) {
     var pointData = aniSettings.datapoints[aniSettings.currentRound];
 
     return new Promise(function (resolve) {
-
         $(equPara)
             .css("animation", `textDisappear ${aniDuration}s ease-in-out`)
             .one("animationend", function () {
@@ -146,23 +164,29 @@ function resetRound(aniSettings) {
 
 function showDefaultEqu(aniSettings) {
     /*
-    Return to default beginning point for the next animation or for the end
+    Return to default beginning equation for the next animation or for the end
     */
     return new Promise(function (resolve) {
         $(equPara)
             .css("animation", `textAppear ${aniDuration}s ease-in-out`)
             .one("animationend", function (e) {
                 $(equPara).css("opacity", 1);
-                $(statusBar)
-                    .html("");
                 resolve(aniSettings);
             });
     });
 }
 
+/*
+Accept the datapoint and its iterator and plot that point being passed through
+*/
 function plotter(aniSettings) {
     "use strict";
-    aniSettings.graphOpt.callback();
+    var pointData = aniSettings.datapoints[aniSettings.currentRound];
+
+    return new Promise(function (resolve) {
+        aniSettings.graphOpt.callback();
+        resolve(aniSettings);
+    });
 }
 
 function updateRound(aniSettings) {
@@ -183,6 +207,40 @@ function updateRound(aniSettings) {
     });
 };
 
+function aniPromiseChain(dps, chain) {
+    dps.datapoints.forEach(function (datapoint) {
+        if (datapoint.updatePoint === true) {
+            chain = chain
+                .then(runAnimation("xToMachine", datapoint.x))
+                .then(statusMessage("Calculating"))
+                .then(replaceXEqu)
+                .then(showEvaluateEqu)
+                .then(showYAns)
+                .then(showEquationAgain)
+                .then(runAnimation("machineToY", datapoint.y))
+                .then(placeYValue)
+                .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
+                .then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
+                .then(plotter)
+                .then(resetRound)
+                .then(statusMessage(``))
+                .then(showDefaultEqu);
+        }
+        chain = chain.then(updateRound);
+    });
+}
+
+function noAniPromiseChain(dps, chain) {
+    dps.datapoints.forEach(function (datapoint) {
+        if (datapoint.updatePoint === true) {
+            chain = chain
+                .then(placeYValue)
+                .then(plotter);
+        }
+        chain = chain.then(updateRound);
+    });
+}
+
 /*
 Handle all CSS animations by creating a Promise chain through a for loop.
 */
@@ -193,22 +251,11 @@ function animatorControl(dps) {
 
     numContainer.innerHTML = "";
 
-    for (var i = 0; i < dps.datapoints.length; i++) {
-        var datapoint = dps.datapoints[i];
-        if (datapoint.updatePoint === true) {
-            chain = chain
-                .then(runAnimation("xToMachine", datapoint.x))
-                .then(replaceXEqu)
-                .then(showEvaluateEqu)
-                .then(showYAns)
-                .then(showEquationAgain)
-                .then(runAnimation("machineToY", datapoint.y))
-                .then(placeYValue)
-                .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
-                .then(resetRound)
-                .then(showDefaultEqu)
-                //                                .then(plotter);
-        }
-        chain = chain.then(updateRound);
+    console.log(dps)
+
+    if (dps.graphOpt.animateHide) {
+        noAniPromiseChain(dps, chain);
+    } else {
+        aniPromiseChain(dps, chain);
     }
 }

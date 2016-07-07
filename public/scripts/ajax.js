@@ -1,5 +1,17 @@
 $(document).ready(function () {
 
+    function showProfOptions (field) {
+            /*
+            Append the professor's chosen equations to the application
+            */
+
+            var opt = $("<option></option>").append(field.name);
+
+            $(opt).val(field.equation);
+
+            $("select").append(opt);
+    }
+
     /*
     Load the professor configuration file
     */
@@ -10,15 +22,7 @@ $(document).ready(function () {
 
         $.each(result, function (i, field) {
 
-            /*
-            Append the professor's chosen equations to the application
-            */
-
-            var opt = $("<option></option>").append(field.name);
-
-            $(opt).val(field.equation);
-
-            $("select").append(opt);
+            showProfOptions(field);
 
             /*
             Display the default equation to the function machine
