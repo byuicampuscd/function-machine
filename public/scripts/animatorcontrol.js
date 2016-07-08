@@ -1,7 +1,7 @@
 var statusBar = $("#status p"),
     lastSheet = document.styleSheets[document.styleSheets.length - 1],
     equPara = $("#functionMachine #equ")[0],
-    aniDuration = 2;
+    aniDuration = 1;
 
 //TODO: Style the whole thing.
 //TODO: Get the function machine in there.
@@ -208,21 +208,22 @@ function updateRound(aniSettings) {
 function aniPromiseChain(dps, chain) {
     dps.datapoints.forEach(function (datapoint) {
         if (datapoint.updatePoint === true) {
-            chain = chain
-                .then(runAnimation("xToMachine", datapoint.x))
-                .then(statusMessage("Calculating"))
-                .then(replaceXEqu)
-                .then(showEvaluateEqu)
-                .then(showYAns)
-                .then(showEquationAgain)
-                .then(runAnimation("machineToY", datapoint.y))
-                .then(placeYValue)
-                .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
-                .then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
-                .then(plotter)
-                .then(resetRound)
-                .then(statusMessage(``))
-                .then(showDefaultEqu);
+                chain = chain
+                    .then(runAnimation("xToMachine", datapoint.x))
+                    .then(statusMessage("Calculating"))
+                    .then(replaceXEqu)
+                    .then(showEvaluateEqu)
+                    .then(showYAns)
+                    .then(showEquationAgain)
+                    .then(runAnimation("machineToY", datapoint.y))
+                    .then(placeYValue)
+                    .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
+                    .then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
+                    .then(plotter)
+                    .then(resetRound)
+                    .then(statusMessage(``))
+                    .then(showDefaultEqu);
+
         }
         chain = chain.then(updateRound);
     });
@@ -244,6 +245,7 @@ Handle all CSS animations by creating a Promise chain through a for loop.
 */
 function animatorControl(dps) {
     "use strict";
+
     var numContainer = $("#numContainer"),
         chain = Promise.resolve(dps);
 

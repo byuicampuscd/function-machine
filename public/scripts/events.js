@@ -119,32 +119,37 @@
             };
 
         xinputs.each(function (i) {
-            var xval = +$(this).val();
+            var xvalue = $(this).val(),
+                xval;
 
-            if (xval) {
-                var replaceX = graphOpt.equation.replace("x", `(${xval})`),
-                    yval = math.eval(replaceX),
-                    inputCoor = this.getBoundingClientRect(),
-                    point = {
-                        x: xval,
-                        y: yval,
-                        id: i,
-                        changeEqu: profOpt.equation.replace("x", `(${xval})`),
-                        updatePoint: xMemory[i] !== xval,
-                        element: $("#numContainer p").get(i)
-                    };
+            if (xvalue) {
+                xval = +xvalue;
+                if (profOpt.view.x.min <= xval && xval <= profOpt.view.x.max) {
 
-                /*
-                Clear out the Ys when they don't equal each other and need to be updated
-                */
-                if (point.updatePoint) {
-                    $(`td#yval${i + 1}`).html("");
+                    var replaceX = graphOpt.equation.replace("x", `(${xval})`),
+                        yval = math.eval(replaceX),
+                        inputCoor = this.getBoundingClientRect(),
+                        point = {
+                            x: xval,
+                            y: yval,
+                            id: i,
+                            changeEqu: profOpt.equation.replace("x", `(${xval})`),
+                            updatePoint: xMemory[i] !== xval,
+                            element: $("#numContainer p").get(i)
+                        };
+
+                    /*
+                    Clear out the Ys when they don't equal each other and need to be updated
+                    */
+                    if (point.updatePoint) {
+                        $(`td#yval${i + 1}`).html("");
+                    }
+
+                    /*Update the xmemory*/
+                    xMemory[i] = xval;
+
+                    aniSettings.datapoints.push(point);
                 }
-
-                /*Update the xmemory*/
-                xMemory[i] = xval;
-
-                aniSettings.datapoints.push(point);
             }
 
         });
@@ -194,6 +199,22 @@
         katex.render(equat, equPara);
     }
 
+    var inputs = document.querySelectorAll("input[type='number']");
+    var run = true;
+
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].oninput = function (e) {
+            var xInputVal = e.srcElement.value;
+            if (profOpt.view.x.min <= xInputVal && xInputVal <= profOpt.view.x.max) {
+                run = true;
+                console.log("Validated!");
+            } else {
+                run = false;
+                $("input[type='button'][value='Go!']").prop("disabled", true);
+            }
+        };
+    }
+
     /*
     Onchange event handler for the select html element.
     */
@@ -205,7 +226,7 @@
     DOCUMENT keydown event handler
     */
     $(document).keypress(function (e) {
-        if (e.which == 13) {
+        if (e.which == 13 && run) {
             startFuncMach();
         }
     });

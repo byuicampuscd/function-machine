@@ -6,8 +6,6 @@ $(document).ready(function () {
     var queryString = location.search.substring(1),
         query = queryString.split("=")[1] + ".json";
 
-    console.log(query);
-
     function showProfOptions(field) {
         /*
         Append the professor's chosen equations to the application

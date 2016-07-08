@@ -28,6 +28,7 @@ input[type='button'] {
     margin-bottom: 10px;
     background-color: #4682B4;
     color: #f7f7f7;
+    cursor: pointer;
 }
 
 label {
