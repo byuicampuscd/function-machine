@@ -10,3 +10,11 @@ The numbers will animate around the screen to their corresponding places to demo
 
 ## Professor Use
 A professor will be able to set several options.  The graph limits setting, animate checkbox, and show graph checkbox will all be avaiable to modify for the professor.  With the graph limits setting, open the funcMachineSettings.js file for an example.  From there, the professor writes what type of graph that needs to be shown, the equations desired, and the limits on the graph.  In the application, check the animate or show graph checkboxes to allow further customization.
+
+In order to load the professor configuration file, type in a query string into the url.  For example if I want to load the funcMachineSettings.json file, I would type 
+
+`
+?file=funcMachineSettings
+`
+
+to the end of the url.  

@@ -1,22 +1,30 @@
 $(document).ready(function () {
 
-    function showProfOptions (field) {
-            /*
-            Append the professor's chosen equations to the application
-            */
+    /*
+    Load Query substring
+    */
+    var queryString = location.search.substring(1),
+        query = queryString.split("=")[1] + ".json";
 
-            var opt = $("<option></option>").append(field.name);
+    console.log(query);
 
-            $(opt).val(field.equation);
+    function showProfOptions(field) {
+        /*
+        Append the professor's chosen equations to the application
+        */
 
-            $("select").append(opt);
+        var opt = $("<option></option>").append(field.name);
+
+        $(opt).val(field.equation);
+
+        $("select").append(opt);
     }
 
     /*
     Load the professor configuration file
     */
 
-    $.getJSON("../funcMachineSettings.json", function (result) {
+    $.getJSON(query, function (result) {
 
         window.professorConfigFile = result;
 
