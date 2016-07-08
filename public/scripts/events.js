@@ -1,15 +1,15 @@
     var xMemory = [],
-       inputs = document.querySelectorAll("input[type='number']"),
-       inputCount = inputs.length,
-       lastSheet = document.styleSheets[document.styleSheets.length - 1];
+        inputs = document.querySelectorAll("input[type='number']"),
+        inputCount = inputs.length,
+        lastSheet = document.styleSheets[document.styleSheets.length - 1];
 
     /*
     Animation path for the stairstep
     */
     function stairStep(options) {
-       "use strict";
-       var highwayPath = 246.5;
-       lastSheet.insertRule(`@keyframes ${options.name} {
+        "use strict";
+        var highwayPath = 246.5;
+        lastSheet.insertRule(`@keyframes ${options.name} {
                             0% {
                                 opacity: 1;
                                 top: ${options.startTopOff}px;
@@ -42,36 +42,36 @@
     to create pathways with coordinate data
     */
     function makeXToMachine(inputCords, index) {
-       "use strict";
-       stairStep({
-          startTopOff: inputCords.top + 5,
-          startLeftOff: inputCords.left + 30,
-          endTopOff: 55,
-          endLeftOff: 300,
-          name: `xToMachine${index}`
-       });
+        "use strict";
+        stairStep({
+            startTopOff: inputCords.top + 5,
+            startLeftOff: inputCords.left + 30,
+            endTopOff: 55,
+            endLeftOff: 300,
+            name: `xToMachine${index}`
+        });
     }
 
     function makeMachineToY(inputCords, index) {
-       "use strict";
-       stairStep({
-          startTopOff: 55,
-          startLeftOff: 300,
-          endTopOff: inputCords.top + 5,
-          endLeftOff: inputCords.right + 5,
-          name: `machineToY${index}`
-       });
+        "use strict";
+        stairStep({
+            startTopOff: 55,
+            startLeftOff: 300,
+            endTopOff: inputCords.top + 5,
+            endLeftOff: inputCords.right + 5,
+            name: `machineToY${index}`
+        });
     }
 
     function makeYToStatusBar(inputCords, index) {
-       "use strict";
-       stairStep({
-          startTopOff: inputCords.top + 5,
-          startLeftOff: inputCords.right + 10,
-          endTopOff: 150,
-          endLeftOff: 300,
-          name: `yToStatusBar${index}`
-       });
+        "use strict";
+        stairStep({
+            startTopOff: inputCords.top + 5,
+            startLeftOff: inputCords.right + 10,
+            endTopOff: 150,
+            endLeftOff: 300,
+            name: `yToStatusBar${index}`
+        });
     }
 
     /*
@@ -81,14 +81,14 @@
           are repeated by multiple clicks on the "Go!" button.
     */
     for (var i = 0; i < inputCount; i++) {
-       xMemory[i] = null;
+        xMemory[i] = null;
 
-       var inputCoor = inputs[i].getBoundingClientRect();
+        var inputCoor = inputs[i].getBoundingClientRect();
 
-       makeXToMachine(inputCoor, i);
-       makeMachineToY(inputCoor, i);
-       makeYToStatusBar(inputCoor, i);
-       $("#numContainer").append($(`<p></p>`));
+        makeXToMachine(inputCoor, i);
+        makeMachineToY(inputCoor, i);
+        makeYToStatusBar(inputCoor, i);
+        $("#numContainer").append($(`<p></p>`));
     }
 
     /*
@@ -97,107 +97,122 @@
     */
     function startFuncMach() {
 
-       var xinputs = $("input[type='number']"),
-          hideAnimationChecked = $("#animate:checked").length > 0,
-          hideGraphChecked = $("#showGraph:checked").length > 0,
-          graphOpt = {
-             callback: function (aniSettings) {
-                return new Promise(function (resolve) {
-                   console.log("finished plotting datapoint!");
-                   resolve(aniSettings);
-                });
-             },
-             animateHide: hideAnimationChecked,
-             graphHide: hideGraphChecked,
-             equation: profOpt.equation,
-             view: profOpt.view
-          },
-          aniSettings = {
-             datapoints: [],
-             currentRound: 0,
-             graphOpt: graphOpt
-          };
+        var xinputs = $("input[type='number']"),
+            hideAnimationChecked = $("#animate:checked").length > 0,
+            hideGraphChecked = $("#showGraph:checked").length > 0,
+            graphOpt = {
+                callback: function (aniSettings) {
+                    return new Promise(function (resolve) {
+                        console.log("finished plotting datapoint!");
+                        resolve(aniSettings);
+                    });
+                },
+                animateHide: hideAnimationChecked,
+                graphHide: hideGraphChecked,
+                equation: profOpt.equation,
+                view: profOpt.view
+            },
+            aniSettings = {
+                datapoints: [],
+                currentRound: 0,
+                graphOpt: graphOpt
+            };
 
-       xinputs.each(function (i) {
-          var xval = +$(this).val();
-          //                equation = profOpt.equation;
+        xinputs.each(function (i) {
+            var xval = +$(this).val();
 
-          if (xval) {
-             var replaceX = graphOpt.equation.replace("x", `(${xval})`),
-                yval = math.eval(replaceX),
-                inputCoor = this.getBoundingClientRect(),
-                point = {
-                   x: xval,
-                   y: yval,
-                   id: i,
-                   changeEqu: profOpt.equation.replace("x", `(${xval})`),
-                   updatePoint: xMemory[i] !== xval,
-                   element: $("#numContainer p").get(i)
-                };
+            if (xval) {
+                var replaceX = graphOpt.equation.replace("x", `(${xval})`),
+                    yval = math.eval(replaceX),
+                    inputCoor = this.getBoundingClientRect(),
+                    point = {
+                        x: xval,
+                        y: yval,
+                        id: i,
+                        changeEqu: profOpt.equation.replace("x", `(${xval})`),
+                        updatePoint: xMemory[i] !== xval,
+                        element: $("#numContainer p").get(i)
+                    };
 
-             /*
-             Clear out the Ys when they don't equal each other and need to be updated
-             */
-             if (point.updatePoint) {
-                $(`td#yval${i + 1}`).html("");
-             }
+                /*
+                Clear out the Ys when they don't equal each other and need to be updated
+                */
+                if (point.updatePoint) {
+                    $(`td#yval${i + 1}`).html("");
+                }
 
-             /*Update the xmemory*/
-             xMemory[i] = xval;
+                /*Update the xmemory*/
+                xMemory[i] = xval;
 
-             aniSettings.datapoints.push(point);
-          }
-       });
+                aniSettings.datapoints.push(point);
+            }
 
-       animatorControl(aniSettings);
+        });
+
+        animatorControl(aniSettings);
     }
 
     //Function to select the chosen equation with its name and graph window boundaries.
     function checkConfig(val) {
-       var profOpt;
-       $.each(professorConfigFile, function (i, item) {
-          if (item.equation === val) {
-             profOpt = item;
-          }
-       })
-       return profOpt;
+        var profOpt;
+        $.each(professorConfigFile, function (i, item) {
+            if (item.equation === val) {
+                profOpt = item;
+            }
+        })
+        return profOpt;
+    }
+
+    function clearValues() {
+        var xinputs = $("input[type='number']"),
+            yinputs = $(`tr td:nth-of-type(2)`);
+
+        xinputs.each(function (i, item) {
+            item.value = "";
+        });
+
+        yinputs.each(function (i, item) {
+            item.innerHTML = "";
+        });
     }
 
     //Dipslay Katex equation
     function changePlot(val) {
 
-       window.profOpt = checkConfig(val);
+        clearValues();
 
-       var y = `y = `,
-          equat = `${val}`,
-          equPara = $("#functionMachine #equ")[0],
-          yPara = $("#functionMachine #y");
+        window.profOpt = checkConfig(val);
 
-       $(equPara).empty("");
+        var y = `y = `,
+            equat = `${val}`,
+            equPara = $("#functionMachine #equ")[0],
+            yPara = $("#functionMachine #y");
 
-       katex.render(y, yPara[0]);
-       katex.render(equat, equPara);
+        $(equPara).empty("");
+
+        katex.render(y, yPara[0]);
+        katex.render(equat, equPara);
     }
 
     /*
     Onchange event handler for the select html element.
     */
     $("select").change(function (e) {
-       changePlot(e.target.value);
+        changePlot(e.target.value);
     });
 
     /*
     DOCUMENT keydown event handler
     */
     $(document).keypress(function (e) {
-       if (e.which == 13) {
-          startFuncMach();
-       }
+        if (e.which == 13) {
+            startFuncMach();
+        }
     });
 
     /*
     GO! Click event handler
     */
     $("input[type='button'][value='Go!']").click(function () {
-       startFuncMach();
+        startFuncMach();
     });

@@ -12,7 +12,8 @@ label,
 option,
 select,
 p,
-td {
+td,
+th{
     font-family: Helvetica, sans-serif;
 }
 
@@ -49,13 +50,15 @@ article:nth-of-type(2) {
     right: 0px;
     width: 470px;
     height: 100px;
-    background-color: #e4e4e4;
+    background-color: #4682B4;
+    color: #f7f7f7;
 }
 
 #graphFiller {
     width: 470px;
     height: 402.5px;
-    background-color: #e4e4e4;
+    background-color: #4682B4;
+    color: #f7f7f7;
 }
 
 /******FUNCTION MACHINE*****/
@@ -65,7 +68,8 @@ article:nth-of-type(2) {
     height: 89px;
     margin-right: 10px;
     padding-left: 20px;
-    background-color: #e4e4e4;
+    background-color: #4682B4;
+    color: #f7f7f7;
     display: flex;
     align-items: center;
 }

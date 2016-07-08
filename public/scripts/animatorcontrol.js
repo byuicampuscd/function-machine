@@ -3,10 +3,8 @@ var statusBar = $("#status p"),
     equPara = $("#functionMachine #equ")[0],
     aniDuration = 2;
 
-//TODO: Fix Table header CSS to a fixed width
 //TODO: Style the whole thing.
 //TODO: Get the function machine in there.
-//TODO: Clear (recreate the table) out the x values when equation is changed.
 //TODO: Validate x values within the set domain of the profOpt
 //TODO: Check browser compatibility (Promises in IE).
 
@@ -250,8 +248,6 @@ function animatorControl(dps) {
         chain = Promise.resolve(dps);
 
     numContainer.innerHTML = "";
-
-    console.log(dps)
 
     if (dps.graphOpt.animateHide) {
         noAniPromiseChain(dps, chain);
