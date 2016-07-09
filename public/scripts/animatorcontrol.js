@@ -4,7 +4,6 @@ var statusBar = $("#status p"),
     aniDuration = 1;
 
 //TODO: Get the function machine in there.
-//TODO: Validate x values within the set domain of the profOpt
 //TODO: Check browser compatibility (Promises in IE).
 
 function runAnimation(name, value) {
@@ -204,24 +203,44 @@ function updateRound(aniSettings) {
     });
 };
 
+function animateGif(aniSettings) {
+    return new Promise(function (resolve) {
+        $("#functionMachine").css({
+            "background-image": "url(../functionMachineAni.gif)"
+        })
+        resolve(aniSettings)
+    });
+}
+
+function stopAniGif(aniSettings) {
+    return new Promise(function (resolve) {
+        $("#functionMachine").css({
+            "background-image": "url(../functionMachineStill.gif)"
+        })
+        resolve(aniSettings)
+    });
+}
+
 function aniPromiseChain(dps, chain) {
     dps.datapoints.forEach(function (datapoint) {
         if (datapoint.updatePoint === true) {
-                chain = chain
-                    .then(runAnimation("xToMachine", datapoint.x))
-                    .then(statusMessage("Calculating"))
-                    .then(replaceXEqu)
-                    .then(showEvaluateEqu)
-                    .then(showYAns)
-                    .then(showEquationAgain)
-                    .then(runAnimation("machineToY", datapoint.y))
-                    .then(placeYValue)
-                    .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
-                    .then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
-                    .then(plotter)
-                    .then(resetRound)
-                    .then(statusMessage(``))
-                    .then(showDefaultEqu);
+            chain = chain
+                .then(runAnimation("xToMachine", datapoint.x))
+                .then(animateGif)
+                .then(statusMessage("Calculating"))
+                .then(replaceXEqu)
+                .then(showEvaluateEqu)
+                .then(showYAns)
+                .then(showEquationAgain)
+                .then(stopAniGif)
+                .then(runAnimation("machineToY", datapoint.y))
+                .then(placeYValue)
+                .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
+                .then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
+                .then(plotter)
+                .then(resetRound)
+                .then(statusMessage(``))
+                .then(showDefaultEqu);
 
         }
         chain = chain.then(updateRound);

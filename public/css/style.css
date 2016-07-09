@@ -67,15 +67,16 @@ article:nth-of-type(2) {
     width: 340px;
     height: 89px;
     margin-right: 10px;
-    padding-left: 20px;
-    background-color: #4682B4;
-    color: #f7f7f7;
+    padding-left: 80px;
+    padding-top: 5px;
+    background-image: url(../functionMachineStill.gif);
+    color: #3e3e3e;
     display: flex;
     align-items: center;
 }
 
 .katex {
-    font-size: 40px;
+    font-size: 25px;
 }
 
 /*****STATUS BAR*****/

@@ -211,11 +211,19 @@
             var xInputVal = e.srcElement.value;
             if (profOpt.view.x.min <= xInputVal && xInputVal <= profOpt.view.x.max) {
                 run = true;
-                $("input[type='button'][value='Go!']").prop("disabled", false);
+                $("input[type='button'][value='Go!']")
+                    .prop("disabled", false)
+                    .css({
+                        "cursor": "pointer"
+                    });
                 console.log("Validated!");
             } else {
                 run = false;
-                $("input[type='button'][value='Go!']").prop("disabled", true);
+                $("input[type='button'][value='Go!']")
+                    .prop("disabled", true)
+                    .css({
+                        "cursor": "not-allowed"
+                    });
                 $("#status p").html(`<p>${xInputVal} x-value out of domains.</p>`);
                 console.log("Not Validated!");
             }
