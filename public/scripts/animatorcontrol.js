@@ -3,9 +3,6 @@ var statusBar = $("#status p"),
     equPara = $("#functionMachine #equ")[0],
     aniDuration = 1;
 
-//TODO: Get the function machine in there.
-//TODO: Check browser compatibility (Promises in IE).
-
 function runAnimation(name, value) {
     /*
     This is a function factory which will grab the
@@ -221,6 +218,35 @@ function stopAniGif(aniSettings) {
     });
 }
 
+function miniAni(aniSettings) {
+    return new Promise(function (resolve) {
+
+        var placeholder = aniSettings.datapoints[aniSettings.currentRound],
+            yvalue = placeholder.y,
+            para = $(`<p>${yvalue}</p>`);
+
+        $("body").append(para);
+
+        para
+            .css({
+                position: "absolute",
+                opacity: 0,
+                left: 550,
+                top: 50
+            })
+            .animate({
+                opacity: 1,
+                top: 100
+            }, function (e) {
+                para.css({
+                    display: "none"
+                });
+                resolve(aniSettings);
+            });
+
+    });
+}
+
 function aniPromiseChain(dps, chain) {
     dps.datapoints.forEach(function (datapoint) {
         if (datapoint.updatePoint === true) {
@@ -233,6 +259,7 @@ function aniPromiseChain(dps, chain) {
                 .then(showYAns)
                 .then(showEquationAgain)
                 .then(stopAniGif)
+                .then(miniAni)
                 .then(runAnimation("machineToY", datapoint.y))
                 .then(placeYValue)
                 .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))

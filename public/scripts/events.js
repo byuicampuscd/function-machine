@@ -55,8 +55,8 @@
     function makeMachineToY(inputCords, index) {
         "use strict";
         stairStep({
-            startTopOff: 55,
-            startLeftOff: 300,
+            startTopOff: 100,
+            startLeftOff: 530,
             endTopOff: inputCords.top + 5,
             endLeftOff: inputCords.right + 5,
             name: `machineToY${index}`
