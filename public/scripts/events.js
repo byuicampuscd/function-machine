@@ -184,6 +184,8 @@
     //Dipslay Katex equation
     function changePlot(val) {
 
+        xMemory = [];
+
         clearValues();
 
         window.profOpt = checkConfig(val);
@@ -199,20 +201,27 @@
         katex.render(equat, equPara);
     }
 
-    var inputs = document.querySelectorAll("input[type='number']");
-    var run = true;
+    var inputs = document.querySelectorAll("input[type='number']"),
+        run = true;
 
     for (var i = 0; i < inputs.length; i++) {
+
         inputs[i].oninput = function (e) {
+
             var xInputVal = e.srcElement.value;
             if (profOpt.view.x.min <= xInputVal && xInputVal <= profOpt.view.x.max) {
                 run = true;
+                $("input[type='button'][value='Go!']").prop("disabled", false);
                 console.log("Validated!");
             } else {
                 run = false;
                 $("input[type='button'][value='Go!']").prop("disabled", true);
+                $("#status p").html(`<p>${xInputVal} x-value out of domains.</p>`);
+                console.log("Not Validated!");
             }
+
         };
+
     }
 
     /*

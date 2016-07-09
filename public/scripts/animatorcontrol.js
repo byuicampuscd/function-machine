@@ -3,7 +3,6 @@ var statusBar = $("#status p"),
     equPara = $("#functionMachine #equ")[0],
     aniDuration = 1;
 
-//TODO: Style the whole thing.
 //TODO: Get the function machine in there.
 //TODO: Validate x values within the set domain of the profOpt
 //TODO: Check browser compatibility (Promises in IE).
