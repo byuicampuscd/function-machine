@@ -216,6 +216,7 @@
                     .css({
                         "cursor": "pointer"
                     });
+                $("#status p").html(``);
                 console.log("Validated!");
             } else {
                 run = false;
