@@ -1,29 +1,31 @@
 [
-   {
-      "name": "Linear",
-      "equation": "3x+2",
-      "view": {
-         "x": {
-            "min": -10,
-            "max": 10
-         },
-         "y": {
-            "min": -10,
-            "max": 10
-         }
-      }
+    {
+        "name": "Linear",
+        "equation": "3x+2",
+        "rounding": 2,
+        "view": {
+            "x": {
+                "min": -10,
+                "max": 10
+            },
+            "y": {
+                "min": -10,
+                "max": 10
+            }
+        }
    }, {
-      "name": "Cubic",
-      "equation": "2x^3+5",
-      "view": {
-         "x": {
-            "min": -10,
-            "max": 10
-         },
-         "y": {
-            "min": -10,
-            "max": 10
-         }
-      }
+        "name": "Cubic",
+        "equation": "2x^3+5",
+        "rounding": 2,
+        "view": {
+            "x": {
+                "min": -10,
+                "max": 10
+            },
+            "y": {
+                "min": -10,
+                "max": 10
+            }
+        }
    }
 ]

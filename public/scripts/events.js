@@ -120,21 +120,26 @@
 
         xinputs.each(function (i) {
             var xvalue = $(this).val(),
-                xval;
+                xval,
+                roundit;
 
             if (xvalue) {
                 xval = +xvalue;
-                if (profOpt.view.x.min <= xval && xval <= profOpt.view.x.max) {
+                roundit = xval.toFixed(profOpt.rounding);
 
-                    var replaceX = graphOpt.equation.replace("x", `(${xval})`),
+                $(this).val(roundit);
+
+                if (profOpt.view.x.min <= roundit && roundit <= profOpt.view.x.max) {
+
+                    var replaceX = graphOpt.equation.replace("x", `(${roundit})`),
                         yval = math.eval(replaceX),
                         inputCoor = this.getBoundingClientRect(),
                         point = {
-                            x: xval,
-                            y: yval.toFixed(2),
+                            x: roundit,
+                            y: yval.toFixed(profOpt.rounding),
                             id: i,
-                            changeEqu: profOpt.equation.replace("x", `(${xval})`),
-                            updatePoint: xMemory[i] !== xval,
+                            changeEqu: profOpt.equation.replace("x", `(${roundit})`),
+                            updatePoint: xMemory[i] !== roundit,
                             element: $("#numContainer p").get(i)
                         };
 
@@ -146,7 +151,7 @@
                     }
 
                     /*Update the xmemory*/
-                    xMemory[i] = xval;
+                    xMemory[i] = roundit;
 
                     aniSettings.datapoints.push(point);
                 }
