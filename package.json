@@ -2,13 +2,14 @@
   "name": "function-machine",
   "version": "1.0.0",
   "description": "A web application to demonstrate how a student would plot a graph using a math equation.",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andrew Gremlich",
   "license": "MIT",
   "devDependencies": {
+    "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
     "del": "^2.2.1",
     "gulp": "^3.9.1",

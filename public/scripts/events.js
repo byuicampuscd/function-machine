@@ -131,7 +131,7 @@
                         inputCoor = this.getBoundingClientRect(),
                         point = {
                             x: xval,
-                            y: yval,
+                            y: yval.toFixed(2),
                             id: i,
                             changeEqu: profOpt.equation.replace("x", `(${xval})`),
                             updatePoint: xMemory[i] !== xval,
@@ -217,7 +217,6 @@
                         "cursor": "pointer"
                     });
                 $("#status p").html(``);
-                console.log("Validated!");
             } else {
                 run = false;
                 $("input[type='button'][value='Go!']")
@@ -226,7 +225,6 @@
                         "cursor": "not-allowed"
                     });
                 $("#status p").html(`<p>${xInputVal} x-value out of domains.</p>`);
-                console.log("Not Validated!");
             }
 
         };

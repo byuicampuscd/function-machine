@@ -11,10 +11,11 @@ A professor will be able to set several options.  The graph limits setting, anim
 In order to load the professor configuration file, type in a query string into the url.  For example if I want to load the funcMachineSettings.json file, I would type the following to the end of the url.  
 
 `
-?file=funcMachineSettings`
+?file=funcMachineSettings
+`
 
 ### Feature
 The numbers will animate around the screen to their corresponding places to demonstrate how plotting an equation works.
 
 ### Browser Support
-As of July 2016, Function Machine works best in Google Chrome.  It also works in Firefox, but it doesn't work as well as in Chrome.  Function Machine does not work in Internet Explorer.
+As of July 2016, Function Machine works best in Google Chrome.  It also works in Internet Explorer, Microsoft Edge, and Mozilla Firefox; however, there is one bug that needs to fixed in Firefox browser.

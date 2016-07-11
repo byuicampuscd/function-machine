@@ -46,7 +46,7 @@ function statusMessage(message) {
     };
 }
 
-function replaceXEqu(data) {
+function replaceXEqu(aniSettings) {
     "use strict";
 
     /*
@@ -57,7 +57,7 @@ function replaceXEqu(data) {
             .css("animation", `textDisappear ${aniDuration}s ease-in-out`)
             .one("animationend", function (e) {
                 $(equPara).css("opacity", 0);
-                resolve(data);
+                resolve(aniSettings);
             });
     });
 }
