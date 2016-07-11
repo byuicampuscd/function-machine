@@ -19,3 +19,12 @@ The numbers will animate around the screen to their corresponding places to demo
 
 ### Browser Support
 As of July 2016, Function Machine works best in Google Chrome.  It also works in Internet Explorer, Microsoft Edge, and Mozilla Firefox; however, there is one bug that needs to fixed in Firefox browser.
+
+### For the Developer
+
+Function Machine was developed using ES6 compiled through Gulpjs.  The Gulpjs configuration has all the JS and CSS files being compiled into a "dist" folder.  If any changes are needed for this application, the following instructions will show you how to set up the development environment.
+
+1. Clone the repository using the `git clone https://github.com/byuicampuscd/function-machine.git` command.
+2. 
+
+Once the development has been setup, only make the changes in the "scripts" or "css" folder.  Once the changes are made, running Gulpjs will compile them newly into the "dist" folder.
