@@ -40,6 +40,8 @@ $(document).ready(function () {
 
         });
 
-    });
+    }).fail(function() {
+        $("#status p").append("To load your equations, add a query string to the URL with the name of your file.")
+    });;
 
 });

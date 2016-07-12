@@ -44,16 +44,6 @@ article:nth-of-type(2) {
 
 /*****GRAPH AREA****/
 
-#status {
-    position: absolute;
-    top: 96px;
-    right: 0px;
-    width: 470px;
-    height: 100px;
-    background-color: #4682B4;
-    color: #f7f7f7;
-}
-
 #graphFiller {
     width: 470px;
     height: 402.5px;
@@ -81,6 +71,16 @@ article:nth-of-type(2) {
 
 /*****STATUS BAR*****/
 
+#status {
+    position: absolute;
+    top: 96px;
+    right: 0px;
+    width: 470px;
+    height: 100px;
+    background-color: #4682B4;
+    color: #f7f7f7;
+}
+
 #statusConfig {
     margin-top: 5px;
 }
@@ -92,7 +92,7 @@ article:nth-of-type(2) {
 }
 
 #status p {
-    font-size: 30px;
+    font-size: 23px;
 }
 
 /*Animation paragraphs*/

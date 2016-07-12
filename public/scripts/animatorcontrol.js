@@ -1,7 +1,7 @@
 var statusBar = $("#status p"),
     lastSheet = document.styleSheets[document.styleSheets.length - 1],
     equPara = $("#functionMachine #equ")[0],
-    aniDuration = 1;
+    aniDuration = 2;
 
 function runAnimation(name, value) {
     /*
@@ -203,7 +203,7 @@ function updateRound(aniSettings) {
 function animateGif(aniSettings) {
     return new Promise(function (resolve) {
         $("#functionMachine").css({
-            "background-image": "url(../functionMachineAni.gif)"
+            "background-image": "url(./functionMachineAni.gif)"
         })
         resolve(aniSettings)
     });
@@ -212,7 +212,7 @@ function animateGif(aniSettings) {
 function stopAniGif(aniSettings) {
     return new Promise(function (resolve) {
         $("#functionMachine").css({
-            "background-image": "url(../functionMachineStill.gif)"
+            "background-image": "url(./functionMachineStill.gif)"
         })
         resolve(aniSettings)
     });

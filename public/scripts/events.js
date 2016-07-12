@@ -194,7 +194,6 @@
         clearValues();
 
         window.profOpt = checkConfig(val);
-
         var y = `y = `,
             equat = `${val}`,
             equPara = $("#functionMachine #equ")[0],
