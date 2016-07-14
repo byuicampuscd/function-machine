@@ -15,9 +15,11 @@ var SCRIPTS_PATH = 'public/scripts/**/*.js',
    CSS_PATH = 'public/css/**/*.css',
    DIST_PATH = 'public/dist';
 
+/*
+DEVELOPMENT TASKS
+*/
 //Styles
 gulp.task('styles', function () {
-   console.log("styles task");
    return gulp.src(['public/css/reset.css', CSS_PATH])
       .pipe(plumber(function (err) {
          console.log("Styles Error " + err)
@@ -34,7 +36,6 @@ gulp.task('styles', function () {
 
 //Scripts
 gulp.task('scripts', function () {
-   console.log("scripts task");
    return gulp.src(['public/scripts/main.js', 'public/scripts/ajax.js', 'public/scripts/events.js', SCRIPTS_PATH])
       .pipe(plumber(function (err) {
          console.log('Scripts Task Error ' + err);
@@ -51,17 +52,58 @@ gulp.task('scripts', function () {
       .pipe(livereload());
 });
 
+/*
+PRODUCTION TASKS WITH NO SOURCEMAPS
+*/
+//Styles
+gulp.task('stylesPro', function () {
+   return gulp.src(['public/css/reset.css', CSS_PATH])
+      .pipe(plumber(function (err) {
+         console.log("Styles Error " + err)
+         this.emit('end');
+      }))
+      .pipe(autoprefixer())
+      .pipe(concat('styles.css'))
+      .pipe(cleanCSS({compatibility: 'ie8'}))
+      .pipe(gulp.dest(DIST_PATH))
+      .pipe(livereload());
+});
+
+//Scripts
+gulp.task('scriptsPro', function () {
+   return gulp.src(['public/scripts/main.js', 'public/scripts/ajax.js', 'public/scripts/events.js', SCRIPTS_PATH])
+      .pipe(plumber(function (err) {
+         console.log('Scripts Task Error ' + err);
+         this.emit('end');
+      }))
+      .pipe(babel({
+         presets: ['es2015']
+      }))
+      .pipe(uglify())
+      .pipe(concat('scripts.js'))
+      .pipe(gulp.dest(DIST_PATH))
+      .pipe(livereload());
+});
+
+/*GENERAL TASKS*/
+//clean task
 gulp.task('clean', function () {
    return del.sync([
         DIST_PATH
     ]);
 });
 
-//General tasks
+//Production task - no sourcemapping
+gulp.task('product', ['clean', 'stylesPro', 'scriptsPro'], function () {
+   console.log("default task.");
+});
+
+//default dev task
 gulp.task('default', ['clean', 'styles', 'scripts'], function () {
    console.log("default task.");
 });
 
+//server task and live reload
 gulp.task('watch', ['default'], function () {
    console.log("watch task.");
    require('./server.js');
