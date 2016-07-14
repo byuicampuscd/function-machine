@@ -95,7 +95,7 @@ gulp.task('clean', function () {
 
 //Production task - no sourcemapping
 gulp.task('product', ['clean', 'stylesPro', 'scriptsPro'], function () {
-   console.log("default task.");
+   console.log("production task.");
 });
 
 //default dev task
