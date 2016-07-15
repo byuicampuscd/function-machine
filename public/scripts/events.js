@@ -228,7 +228,7 @@
                     .css({
                         "cursor": "not-allowed"
                     });
-                $("#status p").html(`<p>${xInputVal} x-value out of domains.</p>`);
+                $("#status p").html(`${xInputVal} x-value out of domains.`);
             }
 
         };

@@ -1,5 +1,4 @@
-var statusBar = $("#status p"),
-    lastSheet = document.styleSheets[document.styleSheets.length - 1],
+var lastSheet = document.styleSheets[document.styleSheets.length - 1],
     equPara = $("#functionMachine #equ")[0],
     aniDuration = 2;
 
@@ -37,9 +36,11 @@ function statusMessage(message) {
     This is a function factory which will grab the
     necessary data and then return the function promise
     */
+    var statusBar = $("#status p");
+
     return function (aniSettings) {
         return new Promise(function (resolve) {
-            statusBar.html(`<p>${message}</p>`);
+            statusBar.html(message);
             resolve(aniSettings);
         });
 
