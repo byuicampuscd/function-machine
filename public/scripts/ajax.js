@@ -6,14 +6,14 @@ $(document).ready(function () {
     var queryString = location.search.substring(1),
         query = queryString.split("=")[1] + ".json";
 
-    function showProfOptions(field) {
+    function showProfOptions(profOpt) {
         /*
         Append the professor's chosen equations to the application
         */
 
-        var opt = $("<option></option>").append(field.name);
+        var opt = $("<option></option>").append(profOpt.name);
 
-        $(opt).val(field.equation);
+        $(opt).val(profOpt.equation);
 
         $("select").append(opt);
     }
@@ -26,16 +26,17 @@ $(document).ready(function () {
 
         window.professorConfigFile = result;
 
-        $.each(result, function (i, field) {
+        $.each(result, function (i, profOpt) {
 
-            showProfOptions(field);
+            showProfOptions(profOpt);
 
             /*
             Display the default equation to the function machine
             */
 
             if (i === 0) {
-                changePlot(field.equation);
+                //in events.js
+                changePlot(profOpt.equation);
             }
 
         });
