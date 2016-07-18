@@ -4,7 +4,6 @@ Set up the basic variables.
 var xMemory = [],
     inputs = document.querySelectorAll("input[type='number']"),
     inputCount = inputs.length,
-    lastSheet = document.styleSheets[document.styleSheets.length - 1],
     run = true;
 
 /*
@@ -63,7 +62,8 @@ Animation path for the stairstep
 */
 function stairStep(options) {
     "use strict";
-    var highwayPath = 246.5;
+    var highwayPath = 246.5,
+        lastSheet = document.styleSheets[document.styleSheets.length - 1];
     lastSheet.insertRule(`@keyframes ${options.name} {
                             0% {
                                 opacity: 1;
@@ -273,5 +273,7 @@ $(document).keypress(function (e) {
 GO! Click event handler
 */
 $("input[type='button'][value='Go!']").click(function () {
-    startFuncMach();
+    if (run) {
+        startFuncMach();
+    }
 });

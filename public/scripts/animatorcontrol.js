@@ -1,5 +1,4 @@
-var lastSheet = document.styleSheets[document.styleSheets.length - 1],
-    equPara = $("#functionMachine #equ")[0],
+var equPara = $("#functionMachine #equ")[0],
     aniDuration = 2;
 
 function runAnimation(name, value) {
