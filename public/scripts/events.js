@@ -221,6 +221,10 @@ function startFuncMach() {
         };
 
     setUpObject(xinputs, graphOpt, aniSettings);
+
+    /*Set up the graph*/
+//    plotGraph.setup(aniSettings, "#graph");
+
     animatorControl(aniSettings);
 }
 
