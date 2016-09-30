@@ -127,7 +127,8 @@ var plotGraph = (function () {
             graphOptions = {
                 target: selector,
                 data: [{
-                    fn: optsIn.equation
+                    fn: optsIn.equation,
+                    skipTip: true
                 }],
                 xAxis: {
                     domain: [optsIn.view.x.min, optsIn.view.x.max]
@@ -136,6 +137,7 @@ var plotGraph = (function () {
                     domain: [optsIn.view.y.min, optsIn.view.y.max]
                 },
                 disableZoom: true,
+                grid: true
             };
 
         //save some things for later

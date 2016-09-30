@@ -261,6 +261,10 @@ function clearValues() {
 Onchange event handler for the select html element.
 */
 $("select").change(function (e) {
+    var selected = $(`option[value="${e.target.value}"]`),
+        profOpt = JSON.parse(selected.attr("data-profopt"));
+
+    plotGraph.setup(profOpt, "#graph")
     changePlot(e.target.value);
 });
 

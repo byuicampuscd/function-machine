@@ -13,9 +13,10 @@ option,
 select,
 p,
 td,
-th{
+th {
     font-family: Helvetica, sans-serif;
 }
+
 
 /*****MAIN DISPLAY*****/
 
@@ -42,6 +43,7 @@ article:nth-of-type(2) {
     left: 260px;
 }
 
+
 /*****GRAPH AREA****/
 
 #graphFiller {
@@ -50,6 +52,7 @@ article:nth-of-type(2) {
     background-color: #4682B4;
     color: #f7f7f7;
 }
+
 
 /******FUNCTION MACHINE*****/
 
@@ -69,6 +72,7 @@ article:nth-of-type(2) {
 .katex {
     font-size: 25px;
 }
+
 
 /*****STATUS BAR*****/
 
@@ -98,14 +102,26 @@ article:nth-of-type(2) {
     align-items: center;
 }
 
+
 /*Animation paragraphs*/
+
 #numContainer p {
     position: absolute;
     opacity: 0;
     z-index: 100;
 }
 
+/*Color for the point on the graph*/
+.point {
+    fill: #4682b4;
+}
+
+#graph * {
+    font-family: sans-serif;
+}
+
 /*******TEXT ANIMATIONS*******/
+
 @keyframes textDisappear {
     0% {
         opacity: 1;

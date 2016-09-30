@@ -6,16 +6,20 @@ $(document).ready(function () {
     var queryString = location.search.substring(1),
         query = queryString.split("=")[1] + ".json";
 
-    function showProfOptions(profOpt) {
+    function showProfOptions(profOpt, init) {
         /*
         Append the professor's chosen equations to the application
         */
 
-        var opt = $("<option></option>").append(profOpt.name);
+        var stringifiedData = JSON.stringify(init),
+            opt = $("<option></option>").append(profOpt.name);
 
-        $(opt).val(profOpt.equation);
+        $(opt)
+            .val(profOpt.equation)
+            .attr("data-profOpt", stringifiedData);
 
-        $("select").append(opt);
+        $("select")
+            .append(opt);
     }
 
     /*
@@ -28,7 +32,11 @@ $(document).ready(function () {
 
         $.each(result, function (i, profOpt) {
 
-            showProfOptions(profOpt);
+            var init = {
+                graphOpt: profOpt
+            };
+
+            showProfOptions(profOpt, init);
 
             /*
             Display the default equation to the function machine
@@ -36,6 +44,7 @@ $(document).ready(function () {
 
             if (i === 0) {
                 //in events.js
+                plotGraph.setup(init, "#graph")
                 changePlot(profOpt.equation);
             }
 
