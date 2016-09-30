@@ -205,11 +205,7 @@ function startFuncMach() {
         graphOpt = {
             callback: function (aniSettings) {
                 return new Promise(function (resolve) {
-
-
                     aniSettings.datapoints[aniSettings.currentRound].updatePoint = false;
-                    console.log('next:', aniSettings.currentRound);
-
                     resolve(aniSettings);
                 });
             },

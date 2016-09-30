@@ -134,7 +134,8 @@ var plotGraph = (function () {
                 },
                 yAxis: {
                     domain: [optsIn.view.y.min, optsIn.view.y.max]
-                }
+                },
+                disableZoom: true,
             };
 
         //save some things for later

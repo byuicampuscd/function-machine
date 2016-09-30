@@ -286,6 +286,7 @@ function aniPromiseChain(dps, chain) {
                 .then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
                 .then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
                 .then(plotter)
+                .then(statusMessage(`Resetting`))
                 .then(resetRound)
                 .then(statusMessage(``))
                 .then(showDefaultEqu);
@@ -298,12 +299,66 @@ function aniPromiseChain(dps, chain) {
 If the "Hide Animation" checkbox is checked then skip the whole animation
 promise chain and just append the y values
 */
-function noAniPromiseChain(dps, chain) {
+function animateHide(dps, chain) {
+
+    plotGraph.setup(dps, "#graph");
+
     dps.datapoints.forEach(function (datapoint) {
         if (datapoint.updatePoint === true) {
             chain = chain
                 .then(placeYValue)
-                .then(plotter);
+                .then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
+                .then(plotter)
+                .then(statusMessage(`Resetting`))
+                .then(resetRound)
+                .then(showDefaultEqu);
+        }
+        chain = chain.then(updateRound);
+    });
+}
+
+/*
+If no graph is checked, then do not include the graph plotting in the
+animation
+*/
+
+function noGraph(dps, chain) {
+
+    dps.datapoints.forEach(function (datapoint) {
+        if (datapoint.updatePoint === true) {
+            chain = chain
+                .then(runAnimation("xToMachine", datapoint.x))
+                .then(animateFuncMachine)
+                .then(statusMessage("Calculating"))
+                .then(replaceXEqu)
+                .then(showEvaluateEqu)
+                .then(showYAns)
+                .then(showEquationAgain)
+                .then(stopAniFuncMachine)
+                .then(miniAni)
+                .then(runAnimation("machineToY", datapoint.y))
+                .then(placeYValue)
+                .then(statusMessage(`Resetting`))
+                .then(resetRound)
+                .then(statusMessage(``))
+                .then(showDefaultEqu);
+        }
+        chain = chain.then(updateRound);
+    });
+}
+
+/*
+If no graph and no animation checkboxes are checked, then just place the Y values
+for the graph.
+*/
+
+
+function solveForY(dps, chain) {
+
+    dps.datapoints.forEach(function (datapoint) {
+        if (datapoint.updatePoint === true) {
+            chain = chain
+                .then(placeYValue);
         }
         chain = chain.then(updateRound);
     });
@@ -320,9 +375,14 @@ function animatorControl(dps) {
 
     numContainer.innerHTML = "";
 
-    if (dps.graphOpt.animateHide) {
-        noAniPromiseChain(dps, chain);
+    if (dps.graphOpt.graphHide && dps.graphOpt.animateHide) {
+        solveForY(dps, chain);
+    } else if (dps.graphOpt.animateHide) {
+        animateHide(dps, chain);
+    } else if (dps.graphOpt.graphHide) {
+        noGraph(dps, chain);
     } else {
         aniPromiseChain(dps, chain);
     }
+
 }
