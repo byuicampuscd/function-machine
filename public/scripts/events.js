@@ -268,6 +268,20 @@ $("select").change(function (e) {
     changePlot(e.target.value);
 });
 
+/*Checkbox onclick event*/
+if ($("input#showGraph[type='checkbox']").attr("checked") === "checked") {
+    $("#graph").hide();
+}
+
+$("input#showGraph[type='checkbox']").click(e => {
+    var checked = e.target.checked
+    if (checked) {
+        $("#graph").hide(1000);
+    } else {
+        $("#graph").show(1000);
+    }
+})
+
 /*
 DOCUMENT keydown event handler
 */
