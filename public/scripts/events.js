@@ -205,7 +205,11 @@ function startFuncMach() {
         graphOpt = {
             callback: function (aniSettings) {
                 return new Promise(function (resolve) {
-                    console.log("finished plotting datapoint!");
+
+
+                    aniSettings.datapoints[aniSettings.currentRound].updatePoint = false;
+                    console.log('next:', aniSettings.currentRound);
+
                     resolve(aniSettings);
                 });
             },
@@ -223,7 +227,7 @@ function startFuncMach() {
     setUpObject(xinputs, graphOpt, aniSettings);
 
     /*Set up the graph*/
-//    plotGraph.setup(aniSettings, "#graph");
+    //    plotGraph.setup(aniSettings, "#graph");
 
     animatorControl(aniSettings);
 }

@@ -6,7 +6,7 @@ select {
     margin: 0px;
     width: 120px;
     border-radius: 2px;
-    background-color: #f1f1f1;
+    background-color: #e8e8e8;
 }
 
 input:not([type='checkbox']) {

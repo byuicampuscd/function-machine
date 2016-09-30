@@ -144,7 +144,7 @@ then fulfill the promise
 function resetRound(aniSettings) {
     "use strict";
 
-    var pointData = aniSettings.datapoints[aniSettings.currentRound];
+//    var pointData = aniSettings.datapoints[aniSettings.currentRound];
 
     return new Promise(function (resolve) {
         $(equPara)
@@ -179,7 +179,7 @@ function plotter(aniSettings) {
     var pointData = aniSettings.datapoints[aniSettings.currentRound];
 
     return new Promise(function (resolve) {
-        aniSettings.graphOpt.callback();
+        plotGraph.update(aniSettings, aniSettings.graphOpt.callback);
         resolve(aniSettings);
     });
 }
@@ -208,7 +208,7 @@ gif and backwards.
 function animateFuncMachine(aniSettings) {
     return new Promise(function (resolve) {
         $("#functionMachine").css({
-            "background-image": "url(./functionMachineAni.gif)"
+            "background-image": "url(../img/functionMachineAni.gif)"
         })
         resolve(aniSettings)
     });
@@ -217,7 +217,7 @@ function animateFuncMachine(aniSettings) {
 function stopAniFuncMachine(aniSettings) {
     return new Promise(function (resolve) {
         $("#functionMachine").css({
-            "background-image": "url(./functionMachineStill.gif)"
+            "background-image": "url(../img/functionMachineStill.gif)"
         })
         resolve(aniSettings)
     });
@@ -266,6 +266,9 @@ for a animation to end to start the next animation.
 */
 
 function aniPromiseChain(dps, chain) {
+
+    plotGraph.setup(dps, "#graph");
+
     dps.datapoints.forEach(function (datapoint) {
         if (datapoint.updatePoint === true) {
             chain = chain
@@ -286,7 +289,6 @@ function aniPromiseChain(dps, chain) {
                 .then(resetRound)
                 .then(statusMessage(``))
                 .then(showDefaultEqu);
-
         }
         chain = chain.then(updateRound);
     });
