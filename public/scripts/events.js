@@ -17,8 +17,14 @@ for (var i = 0; i < inputs.length; i++) {
 	inputs[i].onkeyup = e => {
 
 		var xInputVal = e.srcElement.value;
-		if (profOpt.view.x.min <= xInputVal && xInputVal <= profOpt.view.x.max) {
 
+		console.log(xInputVal);
+
+		if (e.which === 69) {
+			console.log(xInputVal);
+			e.target.value = "";
+			$("#status p").html(`Can't do that bro!`);
+		} else if (profOpt.view.x.min <= xInputVal && xInputVal <= profOpt.view.x.max) {
 			$("input[type='button'][value='Go!']")
 				.prop("disabled", false)
 				.css({
@@ -148,6 +154,7 @@ in animatorcontrol.
 */
 function setUpObject(xinputs, graphOpt, aniSettings) {
 	xinputs.each(function (i) {
+
 		var xvalue = $(this).val(),
 			xval,
 			roundit;
@@ -218,9 +225,6 @@ function startFuncMach() {
 
 	setUpObject(xinputs, graphOpt, aniSettings);
 
-	/*Set up the graph*/
-	//    plotGraph.setup(aniSettings, "#graph");
-
 	animatorControl(aniSettings);
 }
 
@@ -253,6 +257,28 @@ function clearValues() {
 	});
 }
 
+/*Before running the function machine, put all inputs next to each other.*/
+function cleanInputs() {
+	var xinputs = $("input[type='number']"),
+		inputArray = [];
+
+	xinputs.each(function (i) {
+		var inputValue = $(this).val();
+
+		inputArray.push(inputValue);
+		$(this).val("");
+
+	})
+
+	xinputs.each(function (i) {
+		if (i < inputArray.length) {
+			$(this).val(inputArray[i]);
+		} else {
+			return false;
+		}
+	})
+}
+
 /*
 Onchange event handler for the select html element.
 */
@@ -283,6 +309,7 @@ DOCUMENT keydown event handler
 */
 $(document).keypress(function (e) {
 	if (e.which == 13 && runMaster) {
+		cleanInputs();
 		startFuncMach();
 	}
 });
@@ -292,6 +319,7 @@ GO! Click event handler
 */
 $("input[type='button'][value='Go!']").click(function () {
 	if (runMaster) {
+		cleanInputs();
 		startFuncMach();
 	}
 });
