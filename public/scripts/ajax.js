@@ -6,15 +6,6 @@ $(document).ready(function () {
 	var queryString = location.search.substring(1),
 		query = queryString.split("=")[1] + ".json";
 
-	function showLineGraph() {
-		if ($("input#showGraph[type='checkbox']").attr("checked") === "checked") {
-			var graph = document.querySelector(".graph");
-			while (graph.firstChild) {
-				graph.removeChild(graph.firstChild)
-			}
-		}
-	}
-
 	function showProfOptions(profOpt, init) {
 		/*
 		Append the professor's chosen equations to the application
@@ -54,15 +45,15 @@ $(document).ready(function () {
 				//in events.js
 				plotGraph.setup(init, "#graph");
 
-				showLineGraph();
+				document.querySelector(".graph").firstChild.style.display = "none";
 
 				/*Checkbox onclick event*/
 				$("input#showGraph[type='checkbox']").click(e => {
-					var checked = e.target.checked
+					var checked = e.target.checked;
 					if (checked) {
-						showLineGraph();
+						document.querySelector(".graph").firstChild.style.display = "none";
 					} else {
-						plotGraph.setup(init, "#graph");
+						document.querySelector(".graph").firstChild.style.display = "block";
 					}
 				})
 
