@@ -9,7 +9,7 @@
         td2,
         tr,
         input,
-        rowCount = 19;
+        rowCount = 10;
 
     for (var j = 1; j <= rowCount; j++) {
         input = $("<input>");

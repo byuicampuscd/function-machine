@@ -1,7 +1,7 @@
 /*****INPUTS AND SELECT*****/
 
 select {
-    font-size: 14px;
+    font-size: 16px;
     border: 1px #d9d9d9 solid;
     margin: 0px;
     width: 120px;
@@ -16,6 +16,7 @@ input:not([type='checkbox']) {
     margin: 0px;
     padding: 5px;
     width: 120px;
+	height: 40px;
 }
 
 label {
@@ -32,6 +33,6 @@ input[type='button'] {
 }
 
 label {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 7.5px;
 }

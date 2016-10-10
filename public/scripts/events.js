@@ -62,7 +62,7 @@ Animation path for the stairstep
 */
 function stairStep(options) {
 	"use strict";
-	var highwayPath = 246.5,
+	var highwayPath = 270,
 		lastSheet = document.styleSheets[document.styleSheets.length - 1];
 	lastSheet.insertRule(`@keyframes ${options.name} {
                             0% {
