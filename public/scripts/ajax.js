@@ -1,57 +1,77 @@
 $(document).ready(function () {
 
-    /*
-    Load Query substring
-    */
-    var queryString = location.search.substring(1),
-        query = queryString.split("=")[1] + ".json";
+	/*
+	Load Query substring
+	*/
+	var queryString = location.search.substring(1),
+		query = queryString.split("=")[1] + ".json";
 
-    function showProfOptions(profOpt, init) {
-        /*
-        Append the professor's chosen equations to the application
-        */
+	function showLineGraph() {
+		if ($("input#showGraph[type='checkbox']").attr("checked") === "checked") {
+			var graph = document.querySelector(".graph");
+			while (graph.firstChild) {
+				graph.removeChild(graph.firstChild)
+			}
+		}
+	}
 
-        var stringifiedData = JSON.stringify(init),
-            opt = $("<option></option>").append(profOpt.name);
+	function showProfOptions(profOpt, init) {
+		/*
+		Append the professor's chosen equations to the application
+		*/
 
-        $(opt)
-            .val(profOpt.equation)
-            .attr("data-profOpt", stringifiedData);
+		var stringifiedData = JSON.stringify(init),
+			opt = $("<option></option>").append(profOpt.name);
 
-        $("select")
-            .append(opt);
-    }
+		$(opt)
+			.val(profOpt.equation)
+			.attr("data-profOpt", stringifiedData);
 
-    /*
-    Load the professor configuration file
-    */
+		$("select")
+			.append(opt);
+	}
 
-    $.getJSON(query, function (result) {
+	/*
+	Load the professor configuration file
+	*/
 
-        window.professorConfigFile = result;
+	$.getJSON(query, function (result) {
 
-        $.each(result, function (i, profOpt) {
+		window.professorConfigFile = result;
 
-            var init = {
-                graphOpt: profOpt
-            };
+		$.each(result, function (i, profOpt) {
 
-            showProfOptions(profOpt, init);
+			var init = {
+				graphOpt: profOpt
+			};
 
-            /*
-            Display the default equation to the function machine
-            */
+			showProfOptions(profOpt, init);
 
-            if (i === 0) {
-                //in events.js
-                plotGraph.setup(init, "#graph")
-                changePlot(profOpt.equation);
-            }
+			/*
+			Display the default equation to the function machine
+			*/
+			if (i === 0) {
+				//in events.js
+				plotGraph.setup(init, "#graph");
 
-        });
+				showLineGraph();
 
-    }).fail(function() {
-        $("#status p").append("Add a query string")
-    });;
+				/*Checkbox onclick event*/
+				$("input#showGraph[type='checkbox']").click(e => {
+					var checked = e.target.checked
+					if (checked) {
+						showLineGraph();
+					} else {
+						plotGraph.setup(init, "#graph");
+					}
+				})
+
+				changePlot(profOpt.equation);
+			}
+		});
+
+	}).fail(function () {
+		$("#status p").append("Add a query string")
+	});;
 
 });
