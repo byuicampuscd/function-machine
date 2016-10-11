@@ -33,14 +33,14 @@ article {
 article:nth-of-type(1) {
     position: absolute;
     top: 20px;
-    left: 390px;
+    left: 340px;
     display: flex;
 }
 
 article:nth-of-type(2) {
     position: absolute;
     top: 243px;
-    left: 390px;
+    left: 340px;
 }
 
 
@@ -91,6 +91,7 @@ article:nth-of-type(2) {
 
 #status p {
     margin-left: 37.5px;
+    margin-bottom: 20.5px;
     font-size: 24px;
 }
 
@@ -111,6 +112,10 @@ article:nth-of-type(2) {
     position: absolute;
     opacity: 0;
     z-index: 100;
+	font-size: 20px;
+	background-color: #c6c6c6;
+	padding: 5px;
+	border-radius: 15px;
 }
 
 /*Color for the point on the graph*/

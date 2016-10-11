@@ -37,6 +37,19 @@ for (var i = 0; i < inputs.length; i++) {
 }
 
 /*
+Function to select the chosen equation with its name and graph window boundaries.
+*/
+function checkConfig(val) {
+	var profOpt;
+	$.each(professorConfigFile, function (i, item) {
+		if (item.equation === val) {
+			profOpt = item;
+		}
+	})
+	return profOpt;
+}
+
+/*
 Dipslay Katex equation. ALSO used in ajax.js
 */
 function changePlot(val) {
@@ -46,15 +59,19 @@ function changePlot(val) {
 	clearValues();
 
 	window.profOpt = checkConfig(val);
+
 	var y = `y = `,
 		equat = `${val}`,
 		equPara = $("#functionMachine #equ")[0],
 		yPara = $("#functionMachine #y");
 
-	$(equPara).empty("");
+	$(equPara).empty();
+	$(yPara).empty();
 
-	katex.render(y, yPara[0]);
-	katex.render(equat, equPara);
+	if (window.profOpt.hideEquation === false) {
+		katex.render(y, yPara[0]);
+		katex.render(equat, equPara);
+	}
 }
 
 /*
@@ -62,7 +79,7 @@ Animation path for the stairstep
 */
 function stairStep(options) {
 	"use strict";
-	var highwayPath = 270,
+	var highwayPath = 280,
 		lastSheet = document.styleSheets[document.styleSheets.length - 1];
 	lastSheet.insertRule(`@keyframes ${options.name} {
                             0% {
@@ -99,10 +116,10 @@ to create pathways with coordinate data
 function makeXToMachine(inputCords, index) {
 	"use strict";
 	stairStep({
-		startTopOff: inputCords.top + 5,
+		startTopOff: inputCords.top + 10,
 		startLeftOff: inputCords.left + 30,
-		endTopOff: 55,
-		endLeftOff: 300,
+		endTopOff: 50,
+		endLeftOff: 400,
 		name: `xToMachine${index}`
 	});
 }
@@ -111,8 +128,8 @@ function makeMachineToY(inputCords, index) {
 	"use strict";
 	stairStep({
 		startTopOff: 100,
-		startLeftOff: 530,
-		endTopOff: inputCords.top + 5,
+		startLeftOff: 630,
+		endTopOff: inputCords.top + 10,
 		endLeftOff: inputCords.right + 5,
 		name: `machineToY${index}`
 	});
@@ -213,6 +230,7 @@ function startFuncMach() {
 			animateHide: hideAnimationChecked,
 			graphHide: hideGraphChecked,
 			equation: profOpt.equation,
+			hideEquation: profOpt.hideEquation,
 			view: profOpt.view
 		},
 		aniSettings = {
@@ -224,19 +242,6 @@ function startFuncMach() {
 	setUpObject(xinputs, graphOpt, aniSettings);
 
 	animatorControl(aniSettings);
-}
-
-/*
-Function to select the chosen equation with its name and graph window boundaries.
-*/
-function checkConfig(val) {
-	var profOpt;
-	$.each(professorConfigFile, function (i, item) {
-		if (item.equation === val) {
-			profOpt = item;
-		}
-	})
-	return profOpt;
 }
 
 /*

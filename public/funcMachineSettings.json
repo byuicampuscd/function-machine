@@ -2,6 +2,7 @@
     {
         "name": "Linear",
         "equation": "3x+2",
+		"hideEquation": true,
         "rounding": 2,
         "view": {
             "x": {
@@ -16,6 +17,7 @@
    }, {
         "name": "Cubic",
         "equation": "2x^3+5",
+		"hideEquation": false,
         "rounding": 2,
         "view": {
             "x": {
