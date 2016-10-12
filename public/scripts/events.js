@@ -182,17 +182,21 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 
 			if (profOpt.view.x.min <= roundit && roundit <= profOpt.view.x.max) {
 
-				var replaceX = graphOpt.equation.replace("x", `(${roundit})`),
-					yval = math.eval(replaceX),
-					inputCoor = this.getBoundingClientRect(),
-					point = {
-						x: roundit,
-						y: yval.toFixed(profOpt.rounding),
-						id: i,
-						changeEqu: profOpt.equation.replace("x", `(${roundit})`),
-						updatePoint: xMemory[i] !== roundit,
-						element: $("#numContainer p").get(i)
-					};
+				try {
+					var replaceX = graphOpt.equation.replace(/x/g, `(${roundit})`),
+						yval = math.eval(replaceX),
+						inputCoor = this.getBoundingClientRect(),
+						point = {
+							x: roundit,
+							y: yval.toFixed(profOpt.rounding),
+							id: i,
+							changeEqu: profOpt.equation.replace("x", `(${roundit})`),
+							updatePoint: xMemory[i] !== roundit,
+							element: $("#numContainer p").get(i)
+						};
+				} catch (e) {
+					$("#status p").html("Error! Not valid number");
+				}
 
 				/*
 				Clear out the Ys when they don't equal each other and need to be updated
