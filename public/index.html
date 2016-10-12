@@ -2,91 +2,113 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Function Machine</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Function Machine</title>
 
-    <!--KATEX-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+	<!--KATEX-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
 
-    <!--jQuery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<!--jQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <!--MATHJS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.min.js"></script>
+	<!--MATHJS-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.min.js"></script>
 
-    <!--D3-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.14/d3.min.js"></script>
-    <!--Function Plot-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/function-plot/1.17.0/function-plot.js"></script>
+	<!--D3-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.14/d3.min.js"></script>
+	<!--Function Plot-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/function-plot/1.17.0/function-plot.js"></script>
 
-    <!--STYLESHEET-->
-    <link rel="stylesheet" href="./dist/styles.css">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<!--STYLESHEET-->
+	<link rel="stylesheet" href="./dist/styles.css">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <main>
-        <div id="numContainer"></div>
-        <div id="ansContainer"></div>
-        <aside id="table">
-            <input type="button" value="Go!">
-            <table>
-                <tbody>
-                    <tr>
-                        <th>X</th>
-                        <th>Y</th>
-                    </tr>
-                </tbody>
-            </table>
-        </aside>
-        <article>
-            <aside>
-                <div id="functionMachine">
-                    <div id="y"></div>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <div id="equ"></div>
-                </div>
-            </aside>
 
-            <aside id="statusConfig">
-                <div id="checks">
-                    <label>No Animation
-                        <input type="checkbox" id="animate">
-                    </label>
-                    <label>Hide Graph
-                        <input type="checkbox" id="showGraph" checked>
-                    </label>
-                </div>
+	<div id="instructions">
 
-                <select name="equDrop"></select>
+		<h1>Function Machine</h1>
 
-                <div id="status">
-                    <p></p>
-                </div>
-            </aside>
-        </article>
+		<p>Welcome to the function machine!</p>
 
-        <article>
-            <aside id="graph">
+		<p>This application demonstrates how to solve an equation using a table, graph, and the actual equation. Follow the directions in order to operate the machine.</p>
 
-            </aside>
-        </article>
-    </main>
+		<p>Choose your equation in the selection drop down menu that is underneath the title "Options". Choose the other options if wanted.</p>
 
-    <footer>
-        <!--Babel-polyfill is used so that Internet Explorer recognizes the Promise object used in this application.-->
-        <script src="./external/babel-polyfill.js"></script>
-<!--------------------------------
+		<p>Once your options are chosen then input values into the "X" column. Once you have inputed the "X" values, click "Go!" and see how the function machines works!</p>
+
+		<button id="closeHelp">Close</button>
+
+	</div>
+
+	<div id="shade"></div>
+
+	<main>
+		<div id="numContainer"></div>
+		<div id="ansContainer"></div>
+		<aside id="table">
+			<input type="button" value="Go!">
+			<table>
+				<tbody>
+					<tr>
+						<th>X</th>
+						<th>Y</th>
+					</tr>
+				</tbody>
+			</table>
+
+					<button id="openHelp">Help!</button>
+		</aside>
+		<article>
+			<aside>
+				<div id="functionMachine">
+					<div id="y"></div>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<div id="equ"></div>
+				</div>
+			</aside>
+
+			<aside id="statusConfig">
+				<h2>Options</h2>
+				<div id="checks">
+					<label>No Animation
+						<input type="checkbox" id="animate">
+					</label>
+					<label>Hide Graph
+						<input type="checkbox" id="showGraph" checked>
+					</label>
+				</div>
+
+				<select name="equDrop"></select>
+
+				<div id="status">
+					<p></p>
+				</div>
+			</aside>
+		</article>
+
+		<article>
+			<aside id="graph">
+
+			</aside>
+		</article>
+	</main>
+
+	<footer>
+		<!--Babel-polyfill is used so that Internet Explorer recognizes the Promise object used in this application.-->
+		<script src="./external/babel-polyfill.js"></script>
+		<!--------------------------------
 NOTE
 Script code is minified and compiled through gulp.js.  If changes are needed, please look to the open-sourced code at this link.
 
 https://github.com/byuicampuscd/function-machine
 ---------------------------------->
-        <script src="./dist/scripts.js"></script>
-    </footer>
+		<script src="./dist/scripts.js"></script>
+	</footer>
 </body>
 
 </html>

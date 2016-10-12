@@ -283,6 +283,30 @@ function cleanInputs() {
 	})
 }
 
+$("#closeHelp").click(e => {
+	$(e.target.parentElement).fadeOut(100);
+	$("#shade").fadeOut(200);
+	localStorage['firsttime'] = false;
+});
+
+$("#openHelp").click(e => {
+	$("#instructions").fadeIn(100);
+	$("#shade").fadeIn(1000);
+});
+
+$(document).ready(e => {
+	try {
+		var firsttime = localStorage['firsttime'];
+	} catch (e) {
+		console.error(e);
+	}
+	if (firsttime === "false") {
+		$("#instructions").hide();
+		$("#shade").hide();
+	}
+})
+
+
 /*
 Onchange event handler for the select html element.
 */
@@ -294,11 +318,11 @@ $("select").change(function (e) {
 	changePlot(e.target.value);
 });
 
-/*Checkbox onclick event*/
-
+/*
+Checkbox onclick event
+*/
 $("input#showGraph[type='checkbox']").click(e => {
 	var checked = e.target.checked
-
 	console.log();
 })
 
