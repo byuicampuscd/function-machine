@@ -119,7 +119,7 @@ function makeXToMachine(inputCords, index) {
 		startTopOff: inputCords.top + 10,
 		startLeftOff: inputCords.left + 30,
 		endTopOff: 50,
-		endLeftOff: 400,
+		endLeftOff: 450,
 		name: `xToMachine${index}`
 	});
 }
@@ -290,7 +290,7 @@ function cleanInputs() {
 $("#closeHelp").click(e => {
 	$(e.target.parentElement).fadeOut(100);
 	$("#shade").fadeOut(200);
-	localStorage['firsttime'] = false;
+	localStorage['firstTimeFunctionMachine'] = false;
 });
 
 $("#openHelp").click(e => {
@@ -300,7 +300,7 @@ $("#openHelp").click(e => {
 
 $(document).ready(e => {
 	try {
-		var firsttime = localStorage['firsttime'];
+		var firsttime = localStorage['firstTimeFunctionMachine'];
 	} catch (e) {
 		console.error(e);
 	}

@@ -316,7 +316,7 @@ function aniPromiseChain(dps, chain) {
 				.then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
 				.then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
 				.then(plotter)
-				.then(statusMessage(`Resetting`))
+				.then(statusMessage(`Graphing`))
 				.then(resetRound)
 				.then(statusMessage(``))
 				.then(showDefaultEqu);
@@ -339,7 +339,7 @@ function animateHide(dps, chain) {
 				.then(placeYValue)
 				.then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
 				.then(plotter)
-				.then(statusMessage(`Resetting`))
+				.then(statusMessage(`Graphing`))
 				.then(resetRound)
 				.then(showDefaultEqu);
 		}
@@ -368,7 +368,7 @@ function noGraph(dps, chain) {
 				.then(miniAni)
 				.then(runAnimation("machineToY", datapoint.y))
 				.then(placeYValue)
-				.then(statusMessage(`Resetting`))
+				.then(statusMessage(`Graphing`))
 				.then(resetRound)
 				.then(statusMessage(``))
 				.then(showDefaultEqu);

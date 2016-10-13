@@ -100,9 +100,9 @@ article:nth-of-type(2) {
 }
 
 #status p {
-	margin-left: 37.5px;
-	margin-bottom: 20.5px;
-	font-size: 24px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	font-size: 16px;
 }
 
 #statusConfig {
