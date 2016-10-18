@@ -29,15 +29,10 @@ h2 {
 
 
 /*****MAIN DISPLAY*****/
-
 aside#table {
 	position: relative;
 	top: 20px;
 	left: 20px;
-}
-
-article {
-	position: relative;
 }
 
 article:nth-of-type(1) {
@@ -45,6 +40,8 @@ article:nth-of-type(1) {
 	top: 20px;
 	left: 340px;
 	display: flex;
+	flex-wrap: wrap;
+	width: 400px;
 }
 
 article:nth-of-type(2) {
@@ -53,19 +50,7 @@ article:nth-of-type(2) {
 	left: 340px;
 }
 
-
-/*****GRAPH AREA****/
-
-#graphFiller {
-	width: 470px;
-	height: 402.5px;
-	background-color: #4682B4;
-	color: #f7f7f7;
-}
-
-
 /******FUNCTION MACHINE*****/
-
 #functionMachine {
 	width: 340px;
 	height: 89px;
@@ -85,23 +70,24 @@ article:nth-of-type(2) {
 
 
 /*****STATUS BAR*****/
+#lowContain {
+	display: flex;
+	flex-wrap: nowrap;
+}
 
 #status {
-	position: absolute;
-	top: 120px;
-	right: 7.5px;
-	width: 470px;
-	height: 100px;
 	background-image: url(../img/monitor.gif);
 	background-size: 300px;
+	width: 300px;
+	height: 100px;
 	filter: grayscale(100%);
 	background-repeat: no-repeat;
 	color: #f7f7f7;
 }
 
 #status p {
-	margin-left: 20px;
-	margin-bottom: 20px;
+	margin-left: 40px;
+	margin-top: 30px;
 	font-size: 16px;
 }
 
@@ -114,13 +100,10 @@ article:nth-of-type(2) {
 }
 
 #status {
-	display: flex;
-	padding-left: 20px;
 	align-items: center;
 }
 
 /*Animation paragraphs*/
-
 #numContainer p {
 	position: absolute;
 	opacity: 0;
@@ -141,7 +124,6 @@ article:nth-of-type(2) {
 #graph * {
 	font-family: sans-serif;
 }
-
 
 /*
 INSTRUCTIONS MODAL
@@ -192,7 +174,7 @@ INSTRUCTIONS MODAL
 	0% {
 		opacity: 1;
 	}
-	80% {
+	85% {
 		opacity: 1;
 	}
 	100% {
@@ -204,8 +186,8 @@ INSTRUCTIONS MODAL
 	0% {
 		opacity: 0;
 	}
-	20% {
-		opacity: 0;
+	15% {
+		opacity: 1;
 	}
 	100% {
 		opacity: 1;

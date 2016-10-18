@@ -57,7 +57,7 @@ function replaceXEqu(aniSettings) {
 			resolve(aniSettings);
 		} else {
 			$(equPara)
-				.css("animation", `textDisappear ${aniDuration}s ease-in-out`)
+				.css("animation", `textDisappear ${aniDuration*0.5}s ease-in-out`)
 				.one("animationend", function (e) {
 					$(equPara).css("opacity", 0);
 					resolve(aniSettings);
@@ -84,7 +84,7 @@ function showEvaluateEqu(aniSettings) {
 		} else {
 			katex.render(`${changeEqu}`, equPara);
 			$(equPara)
-				.css("animation", `textAppear ${aniDuration}s ease-in-out`)
+				.css("animation", `textAppear ${aniDuration*0.5}s ease-in-out`)
 				.one("animationend", function (e) {
 					$(equPara).css("opacity", 1);
 					resolve(aniSettings);
@@ -110,7 +110,7 @@ function showYAns(aniSettings) {
 			resolve(aniSettings);
 		} else {
 			$(equPara)
-				.css("animation", `textDisappear ${aniDuration}s ease-in-out`)
+				.css("animation", `textDisappear ${aniDuration*0.5}s ease-in-out`)
 				.one("animationend", function () {
 					$(equPara).css("opacity", 0);
 					katex.render(`${pointData.y}`, equPara);
@@ -129,7 +129,7 @@ function showEquationAgain(aniSettings) {
 			resolve(aniSettings);
 		} else {
 			$(equPara)
-				.css("animation", `textAppear ${aniDuration}s ease-in-out`)
+				.css("animation", `textAppear ${aniDuration*0.5}s ease-in-out`)
 				.one("animationend", function (e) {
 					$(equPara).css("opacity", 1);
 					resolve(aniSettings);
@@ -166,7 +166,7 @@ function resetRound(aniSettings) {
 			resolve(aniSettings);
 		} else {
 			$(equPara)
-				.css("animation", `textDisappear ${aniDuration}s ease-in-out`)
+				.css("animation", `textDisappear ${aniDuration*0.15}s ease-in-out`)
 				.one("animationend", function (e) {
 					$(equPara).css("opacity", 0);
 					katex.render(`${profOpt.equation}`, equPara);
@@ -185,7 +185,7 @@ function showDefaultEqu(aniSettings) {
 			resolve(aniSettings);
 		} else {
 			$(equPara)
-				.css("animation", `textAppear ${aniDuration}s ease-in-out`)
+				.css("animation", `textAppear ${aniDuration*0.15}s ease-in-out`)
 				.one("animationend", function (e) {
 					$(equPara).css("opacity", 1);
 					resolve(aniSettings);
@@ -202,8 +202,9 @@ function plotter(aniSettings) {
 	var pointData = aniSettings.datapoints[aniSettings.currentRound];
 
 	return new Promise(function (resolve) {
-		plotGraph.update(aniSettings, aniSettings.graphOpt.callback);
-		resolve(aniSettings);
+		plotGraph.update(aniSettings, function () {
+			resolve(aniSettings);
+		});
 	});
 }
 
@@ -268,11 +269,11 @@ function miniAni(aniSettings) {
 				position: "absolute",
 				opacity: 0,
 				left: 630,
-				top: 50
+				top: 160
 			})
 			.animate({
 				opacity: 1,
-				top: 100
+				top: 200
 			}, function (e) {
 				para.css({
 					display: "none"
@@ -310,15 +311,15 @@ function aniPromiseChain(dps, chain) {
 				.then(showYAns)
 				.then(showEquationAgain)
 				.then(stopAniFuncMachine)
+				.then(statusMessage(""))
 				.then(miniAni)
 				.then(runAnimation("machineToY", datapoint.y))
 				.then(placeYValue)
 				.then(runAnimation("yToStatusBar", `(${datapoint.x},${datapoint.y})`))
 				.then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
 				.then(plotter)
-				.then(statusMessage(`Graphing`))
-				.then(resetRound)
 				.then(statusMessage(``))
+				.then(resetRound)
 				.then(showDefaultEqu);
 		}
 		chain = chain.then(updateRound);
@@ -338,49 +339,6 @@ function animateHide(dps, chain) {
 				.then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
 				.then(plotter)
 				.then(statusMessage(`Graphing`));
-		}
-		chain = chain.then(updateRound);
-	});
-}
-
-/*
-If no graph is checked, then do not include the graph plotting in the
-animation
-*/
-function noGraph(dps, chain) {
-	dps.datapoints.forEach(function (datapoint) {
-		if (datapoint.updatePoint === true) {
-			chain = chain
-				.then(runAnimation("xToMachine", datapoint.x))
-				.then(animateFuncMachine)
-				.then(statusMessage("Calculating"))
-				.then(replaceXEqu)
-				.then(showEvaluateEqu)
-				.then(showYAns)
-				.then(showEquationAgain)
-				.then(stopAniFuncMachine)
-				.then(miniAni)
-				.then(runAnimation("machineToY", datapoint.y))
-				.then(placeYValue)
-				.then(statusMessage(`Graphing`))
-				.then(resetRound)
-				.then(statusMessage(``))
-				.then(showDefaultEqu);
-		}
-		chain = chain.then(updateRound);
-	});
-}
-
-/*
-If no graph and no animation checkboxes are checked, then just place the Y values
-for the graph.
-*/
-function solveForY(dps, chain) {
-
-	dps.datapoints.forEach(function (datapoint) {
-		if (datapoint.updatePoint === true) {
-			chain = chain
-				.then(placeYValue);
 		}
 		chain = chain.then(updateRound);
 	});

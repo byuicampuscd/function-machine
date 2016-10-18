@@ -131,15 +131,20 @@ var plotGraph = (function () {
                     skipTip: true
                 }],
                 xAxis: {
-                    domain: [optsIn.view.x.min, optsIn.view.x.max],
-					label: "X Axis"
+                    domain: [optsIn.view.x.min, optsIn.view.x.max]
                 },
                 yAxis: {
-                    domain: [optsIn.view.y.min, optsIn.view.y.max],
-					label: "Y Axis"
+                    domain: [optsIn.view.y.min, optsIn.view.y.max]
                 },
                 disableZoom: true,
-                grid: true
+                grid: true,
+				annotations: [{
+					x: 0,
+					text: 'y axis'
+				}, {
+					y: 0,
+					text: 'x axis'
+				}]
             };
 
         //save some things for later

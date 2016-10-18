@@ -125,7 +125,7 @@ function makeXToMachine(inputCords, index) {
 	stairStep({
 		startTopOff: inputCords.top + 10,
 		startLeftOff: inputCords.left + 30,
-		endTopOff: 50,
+		endTopOff: 150,
 		endLeftOff: 450,
 		name: `xToMachine${index}`
 	});
@@ -134,7 +134,7 @@ function makeXToMachine(inputCords, index) {
 function makeMachineToY(inputCords, index) {
 	"use strict";
 	stairStep({
-		startTopOff: 100,
+		startTopOff: 200,
 		startLeftOff: 630,
 		endTopOff: inputCords.top + 10,
 		endLeftOff: inputCords.right + 5,
@@ -147,8 +147,8 @@ function makeYToStatusBar(inputCords, index) {
 	stairStep({
 		startTopOff: inputCords.top + 5,
 		startLeftOff: inputCords.right + 10,
-		endTopOff: 150,
-		endLeftOff: 300,
+		endTopOff: 50,
+		endLeftOff: 400,
 		name: `yToStatusBar${index}`
 	});
 }
@@ -231,12 +231,6 @@ function startFuncMach() {
 	var xinputs = $("input[type='number']"),
 		hideAnimationChecked = $("#animate:checked").length > 0,
 		graphOpt = {
-			callback: function (aniSettings) {
-				return new Promise(function (resolve) {
-					aniSettings.datapoints[aniSettings.currentRound].updatePoint = false;
-					resolve(aniSettings);
-				});
-			},
 			animateHide: hideAnimationChecked,
 			equation: profOpt.equation,
 			hideEquation: profOpt.hideEquation,
