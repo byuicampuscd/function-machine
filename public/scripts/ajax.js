@@ -51,9 +51,9 @@ $(document).ready(function () {
 				$("input#showGraph[type='checkbox']").click(e => {
 					var checked = e.target.checked;
 					if (checked) {
-						document.querySelector(".graph").firstChild.style.display = "none";
-					} else {
 						document.querySelector(".graph").firstChild.style.display = "block";
+					} else {
+						document.querySelector(".graph").firstChild.style.display = "none";
 					}
 				})
 

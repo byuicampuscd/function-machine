@@ -62,15 +62,22 @@ function changePlot(val) {
 
 	var y = `y = `,
 		equat = `${val}`,
-		equPara = $("#functionMachine #equ")[0],
-		yPara = $("#functionMachine #y");
+		equPara = $("#functionMachine #equ")[0];
+//		yPara = $("#functionMachine #y");
 
 	$(equPara).empty();
-	$(yPara).empty();
+//	$(yPara).empty();
 
 	if (window.profOpt.hideEquation === false) {
-		katex.render(y, yPara[0]);
+//		katex.render(y, yPara[0]);
 		katex.render(equat, equPara);
+	} else if (window.profOpt.hideEquation === true) {
+		$(equPara)
+			.append("<h2>Mystery Equation</h2>")
+			.css({
+				"paddingTop": "5px",
+			});
+
 	}
 }
 
@@ -223,7 +230,6 @@ function startFuncMach() {
 
 	var xinputs = $("input[type='number']"),
 		hideAnimationChecked = $("#animate:checked").length > 0,
-		hideGraphChecked = $("#showGraph:checked").length > 0,
 		graphOpt = {
 			callback: function (aniSettings) {
 				return new Promise(function (resolve) {
@@ -232,7 +238,6 @@ function startFuncMach() {
 				});
 			},
 			animateHide: hideAnimationChecked,
-			graphHide: hideGraphChecked,
 			equation: profOpt.equation,
 			hideEquation: profOpt.hideEquation,
 			view: profOpt.view
@@ -310,7 +315,6 @@ $(document).ready(e => {
 	}
 })
 
-
 /*
 Onchange event handler for the select html element.
 */
@@ -321,15 +325,6 @@ $("select").change(function (e) {
 	plotGraph.setup(profOpt, "#graph")
 	changePlot(e.target.value);
 });
-
-/*
-Checkbox onclick event
-*/
-$("input#showGraph[type='checkbox']").click(e => {
-	var checked = e.target.checked
-	console.log();
-})
-
 
 /*
 DOCUMENT keydown event handler

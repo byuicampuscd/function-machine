@@ -2,7 +2,7 @@
     {
         "name": "Linear",
         "equation": "3x+2",
-		"hideEquation": false,
+		"hideEquation": true,
         "rounding": 2,
         "view": {
             "x": {

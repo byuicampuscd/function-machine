@@ -330,18 +330,14 @@ If the "Hide Animation" checkbox is checked then skip the whole animation
 promise chain and just append the y values
 */
 function animateHide(dps, chain) {
-
 	plotGraph.setup(dps, "#graph");
-
 	dps.datapoints.forEach(function (datapoint) {
 		if (datapoint.updatePoint === true) {
 			chain = chain
 				.then(placeYValue)
 				.then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
 				.then(plotter)
-				.then(statusMessage(`Graphing`))
-				.then(resetRound)
-				.then(showDefaultEqu);
+				.then(statusMessage(`Graphing`));
 		}
 		chain = chain.then(updateRound);
 	});
@@ -351,9 +347,7 @@ function animateHide(dps, chain) {
 If no graph is checked, then do not include the graph plotting in the
 animation
 */
-
 function noGraph(dps, chain) {
-
 	dps.datapoints.forEach(function (datapoint) {
 		if (datapoint.updatePoint === true) {
 			chain = chain
@@ -381,8 +375,6 @@ function noGraph(dps, chain) {
 If no graph and no animation checkboxes are checked, then just place the Y values
 for the graph.
 */
-
-
 function solveForY(dps, chain) {
 
 	dps.datapoints.forEach(function (datapoint) {
@@ -405,12 +397,8 @@ function animatorControl(dps) {
 
 	numContainer.innerHTML = "";
 
-	if (dps.graphOpt.graphHide && dps.graphOpt.animateHide) {
-		solveForY(dps, chain);
-	} else if (dps.graphOpt.animateHide && !dps.graphOpt.graphHide) {
+	if (dps.graphOpt.animateHide) {
 		animateHide(dps, chain);
-	} else if (dps.graphOpt.graphHide && !dps.graphOpt.animateHide) {
-		noGraph(dps, chain);
 	} else {
 		aniPromiseChain(dps, chain);
 	}
