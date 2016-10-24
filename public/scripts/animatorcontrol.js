@@ -1,9 +1,9 @@
 var equPara = $("#functionMachine #equ")[0],
 	rangeSpeed = $("#animate").val(),
-	aniDuration = (1*3)/rangeSpeed;
+	aniDuration = (1*5)/rangeSpeed;
 
 $('#animate').change(e=> {
-	aniDuration = (1*3)/e.target.value;
+	aniDuration = (1*5)/e.target.value;
 	console.log(aniDuration);
 })
 
@@ -205,7 +205,7 @@ Accept the datapoint and its iterator and plot that point being passed through
 function plotter(aniSettings) {
 	"use strict";
 	var pointData = aniSettings.datapoints[aniSettings.currentRound];
-
+	console.log("inplot:",aniSettings);
 	return new Promise(function (resolve) {
 		plotGraph.update(aniSettings, function () {
 			resolve(aniSettings);
@@ -303,8 +303,6 @@ Default Promise Chain
 */
 function aniPromiseChain(dps, chain) {
 
-	plotGraph.setup(dps, "#graph");
-
 	dps.datapoints.forEach(function (datapoint) {
 		if (datapoint.updatePoint === true) {
 			chain = chain
@@ -336,7 +334,7 @@ If the "Hide Animation" checkbox is checked then skip the whole animation
 promise chain and just append the y values
 */
 function animateHide(dps, chain) {
-	plotGraph.setup(dps, "#graph");
+
 	dps.datapoints.forEach(function (datapoint) {
 		if (datapoint.updatePoint === true) {
 			chain = chain
@@ -360,7 +358,7 @@ function animatorControl(dps) {
 
 	numContainer.innerHTML = "";
 
-	if (aniDuration === 3) {
+	if (aniDuration === 0.5) {
 		animateHide(dps, chain);
 	} else {
 		aniPromiseChain(dps, chain);

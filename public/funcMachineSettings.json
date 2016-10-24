@@ -2,6 +2,7 @@
     {
         "name": "Linear",
         "equation": "3x+2",
+	   	"latex": "3x+2",
 		"hideEquation": false,
         "rounding": 2,
         "view": {
@@ -17,6 +18,7 @@
    }, {
         "name": "Cubic",
         "equation": "2x^3+5",
+	   	"latex": "2x^3+5",
 		"hideEquation": false,
         "rounding": 2,
         "view": {
@@ -32,6 +34,7 @@
    }, {
         "name": "Absolute",
         "equation": "abs(x)+5",
+	   	"latex": "|x|+5",
 		"hideEquation": false,
         "rounding": 1,
         "view": {
@@ -47,6 +50,7 @@
    }, {
         "name": "Horizontal",
         "equation": "2",
+	   	"latex": "2",
 		"hideEquation": false,
         "rounding": 1,
         "view": {
@@ -62,6 +66,7 @@
    }, {
         "name": "Quadratic",
         "equation": "x^2+x+1",
+	   	"latex": "x^2+x+1",
 		"hideEquation": false,
         "rounding": 1,
         "view": {
@@ -77,6 +82,7 @@
    }, {
         "name": "Square Root",
         "equation": "sqrt(4x)",
+	   	"latex": "\\sqrt{4x}",
 		"hideEquation": false,
         "rounding": 1,
         "view": {
@@ -86,6 +92,22 @@
             },
             "y": {
                 "min": -10,
+                "max": 10
+            }
+        }
+   }, {
+        "name": "Rational",
+        "equation": "1/x",
+	   	"latex": "\\frac{1}{x}",
+		"hideEquation": false,
+        "rounding": 1,
+        "view": {
+            "x": {
+                "min": -10,
+                "max": 10
+            },
+            "y": {
+                "min": -1,
                 "max": 10
             }
         }

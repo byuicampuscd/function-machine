@@ -64,9 +64,11 @@ var plotGraph = (function () {
             lineIsPlotted = document.querySelectorAll(dotLocation + ' .graph .line').length > 0,
             pointGroup,
             transition;
+		console.log("points:",aniOptions.datapoints);
 
         //clear any points that will get updated
         aniOptions.datapoints.forEach(function (point) {
+			console.log("in remove:",point.updatePoint);
             if (point.updatePoint) {
                 d3.select('#' + makePointId(point.id)).remove();
             }
@@ -88,7 +90,7 @@ var plotGraph = (function () {
             pointGroup = makePointGroup(currentPoint);
 
             //is animation on?
-            if (aniOptions.graphOpt.animateHide) {
+            if (aniOptions.graphOpt.duration <= 0.5) {
                 //move it into place without animation
                 pointGroup.attr('transform', 'translate(' + xScale(currentPoint.x) + ' ' + yScale(currentPoint.y) + ')');
                 //update the lable
@@ -101,7 +103,7 @@ var plotGraph = (function () {
                 //First transition - move the group in the X
                 transition = pointGroup
                     .transition()
-                    .duration(1500)
+                    .duration(aniOptions.graphOpt.duration * 1000)
                     .ease('cubic-out')
                     .attr('transform', 'translate(' + xScale(currentPoint.x) + ' ' + yScale(0) + ')');
                 //sub transition - update the label
@@ -110,7 +112,7 @@ var plotGraph = (function () {
                 //Second transition - move the group in the Y
                 //sub transition - update the label
                 transition.transition()
-                    .duration(1500)
+                    .duration(aniOptions.graphOpt.duration * 1000)
                     .ease('cubic-out')
                     .attr('transform', 'translate(' + xScale(currentPoint.x) + ' ' + yScale(currentPoint.y) + ')')
                     .each('end', function () {

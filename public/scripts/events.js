@@ -54,6 +54,22 @@ function checkConfig(val) {
 }
 
 /*
+Upon choosing another equation to graph, clear all the values
+*/
+function clearValues() {
+	var xinputs = $("input[type='number']"),
+		yinputs = $(`tr td:nth-of-type(2)`);
+
+	xinputs.each(function (i, item) {
+		item.value = "";
+	});
+
+	yinputs.each(function (i, item) {
+		item.innerHTML = "";
+	});
+}
+
+/*
 Dipslay Katex equation. ALSO used in ajax.js
 */
 function changePlot(val) {
@@ -64,21 +80,19 @@ function changePlot(val) {
 
 	window.profOpt = checkConfig(val);
 
-	var y = `y = `,
-		equat = `${val}`,
+	var equat = val,
 		equPara = $("#functionMachine #equ")[0];
 
 	$(equPara).empty();
 
 	if (window.profOpt.hideEquation === false) {
-		katex.render(equat, equPara);
+		katex.render(window.profOpt.latex, equPara);
 	} else if (window.profOpt.hideEquation === true) {
 		$(equPara)
 			.append("<h2>Mystery Equation</h2>")
 			.css({
 				"paddingTop": "5px",
 			});
-
 	}
 }
 
@@ -173,7 +187,7 @@ for (var i = 0; i < inputCount; i++) {
 
 /*
 Set up the object that will be passed through the promise chain
-in animatorcontrol.
+in animator control.
 */
 function setUpObject(xinputs, graphOpt, aniSettings) {
 	xinputs.each(function (i) {
@@ -189,6 +203,10 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 			$(this).val(roundit);
 
 			if (profOpt.view.x.min <= roundit && roundit <= profOpt.view.x.max) {
+console.log("xMemory ALL:",xMemory);
+console.log("xMemory i:",xMemory[i]);
+console.log("roundit:",roundit);
+console.log("xMemory[i] !== roundit",xMemory[i] !== roundit);
 
 				try {
 					var replaceX = graphOpt.equation.replace(/x/g, `(${roundit})`),
@@ -202,6 +220,7 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 							updatePoint: xMemory[i] !== roundit,
 							element: $("#numContainer p").get(i)
 						};
+
 				} catch (e) {
 					$("#status p").html(`Error! ${xvalue} is out of domain`);
 				}
@@ -218,6 +237,8 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 				aniSettings.datapoints.push(point);
 			}
 		}
+
+		console.log(aniSettings);
 	});
 }
 
@@ -233,7 +254,8 @@ function startFuncMach() {
 		graphOpt = {
 			equation: profOpt.equation,
 			hideEquation: profOpt.hideEquation,
-			view: profOpt.view
+			view: profOpt.view,
+			duration: aniDuration
 		},
 		aniSettings = {
 			datapoints: [],
@@ -244,22 +266,6 @@ function startFuncMach() {
 	setUpObject(xinputs, graphOpt, aniSettings);
 
 	animatorControl(aniSettings);
-}
-
-/*
-Upon choosing another equation to graph, clear all the values
-*/
-function clearValues() {
-	var xinputs = $("input[type='number']"),
-		yinputs = $(`tr td:nth-of-type(2)`);
-
-	xinputs.each(function (i, item) {
-		item.value = "";
-	});
-
-	yinputs.each(function (i, item) {
-		item.innerHTML = "";
-	});
 }
 
 /*Before running the function machine, put all inputs next to each other.*/
