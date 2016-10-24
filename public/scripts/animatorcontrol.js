@@ -1,5 +1,11 @@
 var equPara = $("#functionMachine #equ")[0],
-	aniDuration = 2;
+	rangeSpeed = $("#animate").val(),
+	aniDuration = (1*3)/rangeSpeed;
+
+$('#animate').change(e=> {
+	aniDuration = (1*3)/e.target.value;
+	console.log(aniDuration);
+})
 
 function runAnimation(name, value) {
 	/*
@@ -25,7 +31,6 @@ function runAnimation(name, value) {
 					resolve(aniSettings);
 				});
 		});
-
 	};
 }
 
@@ -232,7 +237,7 @@ gif and backwards.
 function animateFuncMachine(aniSettings) {
 	return new Promise(function (resolve) {
 		$("#functionMachine").css({
-			"background-image": "url(../img/functionMachineAni.gif)"
+			"background-image": "url(./img/functionMachineAni.gif)"
 		})
 		resolve(aniSettings)
 	});
@@ -241,7 +246,7 @@ function animateFuncMachine(aniSettings) {
 function stopAniFuncMachine(aniSettings) {
 	return new Promise(function (resolve) {
 		$("#functionMachine").css({
-			"background-image": "url(../img/functionMachineStill.gif)"
+			"background-image": "url(./img/functionMachineStill.gif)"
 		})
 		resolve(aniSettings)
 	});
@@ -355,7 +360,7 @@ function animatorControl(dps) {
 
 	numContainer.innerHTML = "";
 
-	if (dps.graphOpt.animateHide) {
+	if (aniDuration === 3) {
 		animateHide(dps, chain);
 	} else {
 		aniPromiseChain(dps, chain);

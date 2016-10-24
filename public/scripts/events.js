@@ -229,9 +229,7 @@ graphOpt.callback still needs a viable method!
 function startFuncMach() {
 
 	var xinputs = $("input[type='number']"),
-		hideAnimationChecked = $("#animate:checked").length > 0,
 		graphOpt = {
-			animateHide: hideAnimationChecked,
 			equation: profOpt.equation,
 			hideEquation: profOpt.hideEquation,
 			view: profOpt.view
