@@ -125,6 +125,10 @@ article:nth-of-type(2) {
 	font-family: sans-serif;
 }
 
+.annotations [x='3'] {
+	transform: translate(200px);
+}
+
 /*
 INSTRUCTIONS MODAL
 */

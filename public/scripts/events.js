@@ -30,8 +30,12 @@ for (var i = 0; i < inputs.length; i++) {
 				});
 			$("#status p").html(``);
 		} else {
-			e.target.value = "";
-			$("#status p").html(`${xInputVal} x-value out of domains.`);
+			$("input[type='button'][value='Go!']")
+				.prop("disabled", true)
+				.css({
+					"cursor": "not-allowed"
+				});
+			$("#status p").html(`${xInputVal} x-value out of window.`);
 		}
 	};
 }
@@ -63,13 +67,10 @@ function changePlot(val) {
 	var y = `y = `,
 		equat = `${val}`,
 		equPara = $("#functionMachine #equ")[0];
-//		yPara = $("#functionMachine #y");
 
 	$(equPara).empty();
-//	$(yPara).empty();
 
 	if (window.profOpt.hideEquation === false) {
-//		katex.render(y, yPara[0]);
 		katex.render(equat, equPara);
 	} else if (window.profOpt.hideEquation === true) {
 		$(equPara)
@@ -202,7 +203,7 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 							element: $("#numContainer p").get(i)
 						};
 				} catch (e) {
-					$("#status p").html("Error! Not valid number");
+					$("#status p").html(`Error! ${xvalue} is out of domain`);
 				}
 
 				/*
