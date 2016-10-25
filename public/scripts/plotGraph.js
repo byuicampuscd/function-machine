@@ -64,11 +64,9 @@ var plotGraph = (function () {
             lineIsPlotted = document.querySelectorAll(dotLocation + ' .graph .line').length > 0,
             pointGroup,
             transition;
-		console.log("points:",aniOptions.datapoints);
 
         //clear any points that will get updated
         aniOptions.datapoints.forEach(function (point) {
-			console.log("in remove:",point.updatePoint);
             if (point.updatePoint) {
                 d3.select('#' + makePointId(point.id)).remove();
             }

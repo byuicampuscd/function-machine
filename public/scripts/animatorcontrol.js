@@ -204,8 +204,6 @@ Accept the datapoint and its iterator and plot that point being passed through
 */
 function plotter(aniSettings) {
 	"use strict";
-	var pointData = aniSettings.datapoints[aniSettings.currentRound];
-	console.log("inplot:",aniSettings);
 	return new Promise(function (resolve) {
 		plotGraph.update(aniSettings, function () {
 			resolve(aniSettings);

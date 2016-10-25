@@ -22,20 +22,6 @@ for (var i = 0; i < inputs.length; i++) {
 			console.log(xInputVal);
 			e.target.value = "";
 			$("#status p").html(`Can't do that bro!`);
-		} else if (profOpt.view.x.min <= xInputVal && xInputVal <= profOpt.view.x.max) {
-			$("input[type='button'][value='Go!']")
-				.prop("disabled", false)
-				.css({
-					"cursor": "pointer"
-				});
-			$("#status p").html(``);
-		} else {
-			$("input[type='button'][value='Go!']")
-				.prop("disabled", true)
-				.css({
-					"cursor": "not-allowed"
-				});
-			$("#status p").html(`${xInputVal} x-value out of window.`);
 		}
 	};
 }
@@ -185,6 +171,12 @@ for (var i = 0; i < inputCount; i++) {
 	$("#numContainer").append($(`<p></p>`));
 }
 
+function UserException(message, errorNum) {
+	this.message = message;
+	this.errorNum = errorNum;
+	this.name = "UserException";
+}
+
 /*
 Set up the object that will be passed through the promise chain
 in animator control.
@@ -203,11 +195,6 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 			$(this).val(roundit);
 
 			if (profOpt.view.x.min <= roundit && roundit <= profOpt.view.x.max) {
-console.log("xMemory ALL:",xMemory);
-console.log("xMemory i:",xMemory[i]);
-console.log("roundit:",roundit);
-console.log("xMemory[i] !== roundit",xMemory[i] !== roundit);
-
 				try {
 					var replaceX = graphOpt.equation.replace(/x/g, `(${roundit})`),
 						yval = math.eval(replaceX),
@@ -222,7 +209,12 @@ console.log("xMemory[i] !== roundit",xMemory[i] !== roundit);
 						};
 
 				} catch (e) {
-					$("#status p").html(`Error! ${xvalue} is out of domain`);
+					$("#status p")
+						.html(`Error! ${xvalue} is out of domain`)
+						.css({
+							"fontWeight": "bold",
+							"color": "#b62727"
+						});
 				}
 
 				/*
@@ -235,11 +227,13 @@ console.log("xMemory[i] !== roundit",xMemory[i] !== roundit);
 				/*Update the xmemory*/
 				xMemory[i] = roundit;
 				aniSettings.datapoints.push(point);
+			} else {
+				throw new UserException("Out of window", xvalue);
 			}
 		}
-
-		console.log(aniSettings);
 	});
+
+	console.log(aniSettings);
 }
 
 /*
@@ -263,9 +257,19 @@ function startFuncMach() {
 			graphOpt: graphOpt
 		};
 
-	setUpObject(xinputs, graphOpt, aniSettings);
-
-	animatorControl(aniSettings);
+	try {
+		setUpObject(xinputs, graphOpt, aniSettings);
+		animatorControl(aniSettings);
+	} catch (e) {
+		console.log(e);
+		xMemory = [];
+		$("#status p")
+			.html(`${e.errorNum} x-value out of window.`)
+			.css({
+				"fontWeight": "bold",
+				"color": "#b62727"
+			});
+	}
 }
 
 /*Before running the function machine, put all inputs next to each other.*/
