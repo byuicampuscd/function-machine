@@ -195,10 +195,12 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 			$(this).val(roundit);
 
 			if (profOpt.view.x.min <= roundit && roundit <= profOpt.view.x.max) {
-				try {
-					var replaceX = graphOpt.equation.replace(/x/g, `(${roundit})`),
-						yval = math.eval(replaceX),
-						inputCoor = this.getBoundingClientRect(),
+
+				var replaceX = graphOpt.equation.replace(/x/g, `(${roundit})`),
+					yval = math.eval(replaceX);
+
+				if (typeof yval === "number") {
+					var inputCoor = this.getBoundingClientRect(),
 						point = {
 							x: roundit,
 							y: yval.toFixed(profOpt.rounding),
@@ -207,14 +209,12 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 							updatePoint: xMemory[i] !== roundit,
 							element: $("#numContainer p").get(i)
 						};
+				} else {
+					throw new UserException("undefined value", xvalue);
+				}
 
-				} catch (e) {
-					$("#status p")
-						.html(`Error! ${xvalue} is out of domain`)
-						.css({
-							"fontWeight": "bold",
-							"color": "#b62727"
-						});
+				if (Infinity === yval) {
+					throw new UserException("undefined value", xvalue);
 				}
 
 				/*
@@ -228,7 +228,7 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 				xMemory[i] = roundit;
 				aniSettings.datapoints.push(point);
 			} else {
-				throw new UserException("Out of window", xvalue);
+				throw new UserException("out of window", xvalue);
 			}
 		}
 	});
@@ -264,7 +264,7 @@ function startFuncMach() {
 		console.log(e);
 		xMemory = [];
 		$("#status p")
-			.html(`${e.errorNum} x-value out of window.`)
+			.html(`${e.errorNum} x-value ${e.message}.`)
 			.css({
 				"fontWeight": "bold",
 				"color": "#b62727"

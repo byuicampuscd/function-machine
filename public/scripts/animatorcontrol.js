@@ -1,9 +1,9 @@
 var equPara = $("#functionMachine #equ")[0],
 	rangeSpeed = $("#animate").val(),
-	aniDuration = (1*5)/rangeSpeed;
+	aniDuration = (1 * 5) / rangeSpeed;
 
-$('#animate').change(e=> {
-	aniDuration = (1*5)/e.target.value;
+$('#animate').change(e => {
+	aniDuration = (1 * 5) / e.target.value;
 	console.log(aniDuration);
 })
 
@@ -41,6 +41,13 @@ function statusMessage(message) {
 	necessary data and then return the function promise
 	*/
 	var statusBar = $("#status p");
+
+	statusBar
+		.html('')
+		.css({
+			"fontWeight": "normal",
+			"color": "black"
+		});
 
 	return function (aniSettings) {
 		return new Promise(function (resolve) {
