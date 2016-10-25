@@ -28,9 +28,14 @@ $(document).ready(function () {
 
 	$.getJSON(query, function (result) {
 
-		window.professorConfigFile = result;
+		console.log(result);
 
-		$.each(result, function (i, profOpt) {
+		$("#title").html(result.title);
+		$("#instructionText").html(result.instructions);
+
+		window.professorConfigFile = result.equations;
+
+		$.each(result.equations, function (i, profOpt) {
 
 			var init = {
 				graphOpt: profOpt
