@@ -4,7 +4,15 @@ $(document).ready(function () {
 	Load Query substring
 	*/
 	var queryString = location.search.substring(1),
-		query = queryString.split("=")[1] + ".json";
+		vars = queryString.split("&"),
+		allQueries = {};
+
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split("=");
+		allQueries[pair[0]] = pair[1];
+	}
+
+	console.log(allQueries);
 
 	function showProfOptions(profOpt, init) {
 		/*
@@ -24,11 +32,13 @@ $(document).ready(function () {
 
 	/*
 	Load the professor configuration file
+
+	general query: ?file=funcMachineSettings&load=general
 	*/
 
-	$.getJSON(query, function (result) {
+	$.getJSON(allQueries.file + ".json", function (data) {
 
-		console.log(result);
+		var result = data[allQueries.load];
 
 		$("#title").html(result.title);
 		$("#instructionText").html(result.instructions);
@@ -68,6 +78,6 @@ $(document).ready(function () {
 
 	}).fail(function () {
 		$("#status p").append("Add a query string")
-	});;
+	});
 
 });

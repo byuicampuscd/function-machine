@@ -4,7 +4,6 @@ var equPara = $("#functionMachine #equ")[0],
 
 $('#animate').change(e => {
 	aniDuration = (1 * 5) / e.target.value;
-	console.log(aniDuration);
 })
 
 function runAnimation(name, value) {

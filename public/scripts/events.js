@@ -19,7 +19,6 @@ for (var i = 0; i < inputs.length; i++) {
 		var xInputVal = e.srcElement.value;
 
 		if (e.which === 69) {
-			console.log(xInputVal);
 			e.target.value = "";
 			$("#status p").html(`Can't do that bro!`);
 		}
@@ -232,8 +231,6 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 			}
 		}
 	});
-
-	console.log(aniSettings);
 }
 
 /*
@@ -261,7 +258,6 @@ function startFuncMach() {
 		setUpObject(xinputs, graphOpt, aniSettings);
 		animatorControl(aniSettings);
 	} catch (e) {
-		console.log(e);
 		xMemory = [];
 		$("#status p")
 			.html(`${e.errorNum} x-value ${e.message}.`)
