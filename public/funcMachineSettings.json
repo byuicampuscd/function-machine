@@ -1,122 +1,122 @@
 {
-	"general": {
-		"title": "Function Machine",
-		"instructions": "Welcome to the Function Machine!<br><br>This application demonstrates how to solve an equation using a table, graph, and the actual equation. Follow the directions in order to operate the machine.<br><br>Choose your equation in the selection drop down menu that is underneath the title \"Options\". Choose the other options if wanted.<br><br>Once your options are chosen then input values into the \"X\" column. Once you have inputed the \"X\" values, click \"Go!\" and see how the function machines works!",
-		"equations": [
-			{
-				"name": "Linear",
-				"equation": "3x+2",
-				"latex": "3x+2",
-				"hideEquation": false,
-				"rounding": 2,
-				"view": {
-					"x": {
-						"min": -10,
-						"max": 10
-					},
-					"y": {
-						"min": -30,
-						"max": 30
-					}
-				}
-   			}, {
-				"name": "Cubic",
-				"equation": "2x^3+5",
-				"latex": "2x^3+5",
-				"hideEquation": false,
-				"rounding": 2,
-				"view": {
-					"x": {
-						"min": -10,
-						"max": 10
-					},
-					"y": {
-						"min": -90,
-						"max": 90
-					}
-				}
-   			}, {
-				"name": "Absolute",
-				"equation": "abs(x)+5",
-				"latex": "|x|+5",
-				"hideEquation": false,
-				"rounding": 1,
-				"view": {
-					"x": {
-						"min": -10,
-						"max": 10
-					},
-					"y": {
-						"min": -10,
-						"max": 10
-					}
-				}
-   			}, {
-				"name": "Horizontal",
-				"equation": "2",
-				"latex": "2",
-				"hideEquation": false,
-				"rounding": 1,
-				"view": {
-					"x": {
-						"min": -10,
-						"max": 10
-					},
-					"y": {
-						"min": -10,
-						"max": 10
-					}
-				}
-   			}, {
-				"name": "Quadratic",
-				"equation": "x^2+x+1",
-				"latex": "x^2+x+1",
-				"hideEquation": false,
-				"rounding": 1,
-				"view": {
-					"x": {
-						"min": -10,
-						"max": 10
-					},
-					"y": {
-						"min": -10,
-						"max": 10
-					}
-				}
-   			}, {
-				"name": "Square Root",
-				"equation": "sqrt(4x)",
-				"latex": "\\sqrt{4x}",
-				"hideEquation": false,
-				"rounding": 1,
-				"view": {
-					"x": {
-						"min": -10,
-						"max": 10
-					},
-					"y": {
-						"min": -10,
-						"max": 10
-					}
-				}
-   			}, {
-				"name": "Rational",
-				"equation": "1/x",
-				"latex": "1/x",
-				"hideEquation": false,
-				"rounding": 1,
-				"view": {
-					"x": {
-						"min": -10,
-						"max": 10
-					},
-					"y": {
-						"min": -1,
-						"max": 10
-					}
-				}
-   			}
-		]
+    "general": {
+        "title": "Function Machine",
+        "instructions": "Welcome to the Function Machine!<br><br>This application demonstrates how to solve an equation using a table, graph, and the actual equation. Follow the directions in order to operate the machine.<br><br>Choose your equation in the selection drop down menu that is underneath the title \"Options\". Choose the other options if wanted.<br><br>Once your options are chosen then input values into the \"X\" column. Once you have inputed the \"X\" values, click \"Go!\" and see how the function machines works!",
+        "equations": [
+            {
+                "name": "Linear",
+                "equation": "-2(x - 3) + 5",
+                "latex": "-2(x - 3) + 5",
+                "hideEquation": false,
+                "rounding": 2,
+                "view": {
+                    "x": {
+                        "min": -15,
+                        "max": 15
+                    },
+                    "y": {
+                        "min": -15,
+                        "max": 15
+                    }
+                }
+   			      }, {
+                "name": "Cubic",
+                "equation": "(x+4)^3-5",
+                "latex": "(x+4)^3-5",
+                "hideEquation": false,
+                "rounding": 2,
+                "view": {
+                    "x": {
+                        "min": -15,
+                        "max": 15
+                    },
+                    "y": {
+                        "min": -15,
+                        "max": 15
+                    }
+                }
+   			      }, {
+                "name": "Absolute",
+                "equation": "abs(x+2)-3",
+                "latex": "|x+2|-3",
+                "hideEquation": false,
+                "rounding": 1,
+                "view": {
+                    "x": {
+                        "min": -15,
+                        "max": 15
+                    },
+                    "y": {
+                        "min": -15,
+                        "max": 15
+                    }
+                }
+   			      }, {
+                "name": "Horizontal",
+                "equation": "2",
+                "latex": "2",
+                "hideEquation": false,
+                "rounding": 1,
+                "view": {
+                    "x": {
+                        "min": -15,
+                        "max": 15
+                    },
+                    "y": {
+                        "min": -15,
+                        "max": 15
+                    }
+                }
+   			      }, {
+                "name": "Quadratic",
+                "equation": "(x+4)^2-5",
+                "latex": "(x+4)^2-5",
+                "hideEquation": false,
+                "rounding": 1,
+                "view": {
+                    "x": {
+                        "min": -15,
+                        "max": 15
+                    },
+                    "y": {
+                        "min": -15,
+                        "max": 15
+                    }
+                }
+   			      }, {
+                "name": "Square Root",
+                "equation": "sqrt(4x)",
+                "latex": "\\sqrt{4x}",
+                "hideEquation": false,
+                "rounding": 1,
+                "view": {
+                    "x": {
+                        "min": -15,
+                        "max": 15
+                    },
+                    "y": {
+                        "min": -15,
+                        "max": 15
+                    }
+                }
+   			      }, {
+                "name": "Rational",
+                "equation": "(4 / (x - 2)) + 5",
+                "latex": "y=\\frac{4}{x-2}+5",
+                "hideEquation": false,
+                "rounding": 1,
+                "view": {
+                    "x": {
+                        "min": -15,
+                        "max": 15
+                    },
+                    "y": {
+                        "min": -1,
+                        "max": 15
+                    }
+                }
+   			      }
+		      ]
 
-	}
+    }
 }
