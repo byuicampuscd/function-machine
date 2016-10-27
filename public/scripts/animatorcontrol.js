@@ -344,8 +344,7 @@ function animateHide(dps, chain) {
 			chain = chain
 				.then(placeYValue)
 				.then(statusMessage(`Plotting (${datapoint.x},${datapoint.y})`))
-				.then(plotter)
-				.then(statusMessage(`Graphing`));
+				.then(plotter);
 		}
 		chain = chain.then(updateRound);
 	});

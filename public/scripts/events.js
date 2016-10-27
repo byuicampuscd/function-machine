@@ -209,7 +209,7 @@ function setUpObject(xinputs, graphOpt, aniSettings) {
 							element: $("#numContainer p").get(i)
 						};
 				} else {
-					throw new UserException("undefined value", xvalue);
+					throw new UserException("out of domain", xvalue);
 				}
 
 				if (Infinity === yval) {
