@@ -17,7 +17,7 @@ The Function Machine contains a table, a function machine, a graph, and graph op
 
 ## Getting Started
 
-The function machine settings file is titled `funcMachineSettings.json` and is located in the public folder with the `index.html` file.  The `funcMachineSettings.json` file follows JavaScript Object Notation for data.  The first dimension of data is the name of the group equations.  In the current file, there is just the "general" settings.  The "general" settings then contain a title, instructions for the student, and a list of the equations with their corresponding settings.  
+The function machine settings file is titled `funcMachineSettings.json` and is located in the [public folder](https://github.com/byuicampuscd/function-machine/tree/master/public) with the `index.html` file.  The `funcMachineSettings.json` file follows JavaScript Object Notation for data.  The first dimension of data is the name of the group equations.  In the current file, there is just the "general" settings.  The "general" settings then contain a title, instructions for the student, and a list of the equations with their corresponding settings.  
 
 - The corresponding settings for the equations are: name, equation, latex, hideEquation, rounding, and view.  
 - The name is the name of the equation.  
