@@ -6,7 +6,7 @@ The Function Machine demonstrates to the student how plotting a graph works thro
 ## Overview
 The Function Machine contains a table, a function machine, a graph, and graph options for the user to interact with a see.  The user inputs x values in the table and clicks "Go!" or hits the enter key for the animation to start running.  The Function Machine will clean and validate the x inputs according to the graph settings that have been setup by the professor.  Once the inputs have been cleaned and validated, then the x values will animate to the function machine to be outputed into a y value.  Once outputed, the y value will then animate to the y column in the table.  Afterwards, the x and y values will then animate to the Function Machine status.  The graph will then plot the x and y values.
 
-### Features
+## Features
 1. X and Y values animate across the screen.
 2. User can change the speed of the animation and show the graph line.
 3. X inputs are validated and cleaned by the application with the Function Machine settings file.
