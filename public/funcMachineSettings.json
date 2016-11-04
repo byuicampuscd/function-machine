@@ -1,7 +1,7 @@
 {
     "general": {
         "title": "Function Machine",
-        "instructions": "Welcome to the Function Machine!<br><br>This application demonstrates how to solve an equation using a table, graph, and the actual equation. Follow the directions in order to operate the machine.<br><br>Choose your equation in the selection drop down menu that is underneath the title \"Options\". Choose the other options if wanted.<br><br>Once your options are chosen then input values into the \"X\" column. Once you have inputed the \"X\" values, click \"Go!\" and see how the function machines works!",
+        "instructions": "Welcome to the Function Machine!<br><br>Choose your equation in the selection drop down menu that is underneath the title \"Options\". Choose the other options if wanted.<br><br>Once your options are chosen then input values into the \"X\" column. Once you have inputed the \"X\" values, click \"Go!\" and see how the function machines works!",
         "equations": [
             {
                 "name": "Linear",
