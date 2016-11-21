@@ -1,6 +1,6 @@
 # Function Machine
 
-## Executive Summary
+## Elevator Pitch
 The Function Machine demonstrates to the student how plotting a graph works through animating numbers to and from a machine that accepts inputs and outputs.
 
 ## Overview
