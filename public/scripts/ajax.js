@@ -28,7 +28,7 @@ $(document).ready(function () {
 //        var pair = queryVars[i].split("=");
 //        allQueries[pair[0]] = pair[1];
 //    }
-console.log(queryVars);
+
     function showProfOptions(profOpt, init) {
         /*
         Append the professor's chosen equations to the application
