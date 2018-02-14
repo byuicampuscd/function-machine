@@ -4,15 +4,16 @@ $(document).ready(function () {
     Load Query substring
     */
     var queryVars = [];
-    if (location.search.substring.length <= 0) {
+    if (location.search.substring(1) == "") {
+            //Default query string if nothing provided
+        queryVars.push("file=funcMachineSettings");
+    }
+    else{
         // Grab the query string and options
             var queryString = location.search.substring(1);
         // Set queryVars to be array of parameters
         queryVars = queryString.split("&");
-    }
-    else{
-            //Default query string if nothing provided
-            queryVars.push("file=funcMachineSettings");
+
     }
     var allQueries = {};
 
