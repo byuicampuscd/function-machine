@@ -45,7 +45,7 @@ gulp.task('scripts', function () {
       .pipe(babel({
          presets: ['es2015']
       }))
-      .pipe(uglify())
+//      .pipe(uglify())
       .pipe(concat('scripts.js'))
       .pipe(sourcemaps.write())
       .pipe(gulp.dest(DIST_PATH))
