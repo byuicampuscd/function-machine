@@ -3,13 +3,15 @@ $(document).ready(function () {
     /*
     Load Query substring
     */
-    var queryVars = [];
+
     if (location.search == "") {
             //Default query string if nothing provided
+        var queryVars = [];
         queryVars.push("file=funcMachineSettings");
     }
     else{
         // Grab the query string and options
+        var queryVars = [];
             var queryString = location.search.substring(1);
         // Set queryVars to be array of parameters
         queryVars = queryString.split("&");
