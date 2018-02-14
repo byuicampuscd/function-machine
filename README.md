@@ -43,7 +43,7 @@ for modifying the `funcMachineSettings.json` file.
 4. In the "equations" option, it is an array.  So you can have as many equations as you want in the "equations" option.
 
 ## Demo
-View the [Function Machine demo here](http://byuicampuscd.github.io/function-machine/?file=funcMachineSettings&load=general)!
+View the [Function Machine demo here](http://byuitechops.github.io/function-machine/?file=funcMachineSettings&load=general)!
 
 ## Support
 If any bug or error occurs with this application, please submit a Github issue.  To submit an issue, go to the top of this screen and click on the "Issues" tab.  Once the page changes, click on the green "New Issue" button to type up the new issue.  Once you have finished typing up your issue, click the green "Submit new issue" button.
