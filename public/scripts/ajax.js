@@ -4,7 +4,7 @@ $(document).ready(function () {
     Load Query substring
     */
     var queryVars = [];
-    if (location.search.length > 0) {
+    if (location.search.substring.length <= 0) {
         // Grab the query string and options
             var queryString = location.search.substring(1);
         // Set queryVars to be array of parameters
