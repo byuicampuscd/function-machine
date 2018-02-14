@@ -17,10 +17,15 @@ $(document).ready(function () {
     }
     var allQueries = {};
 
-    for (var i = 0; i < queryVars.length; i++) {
-        var pair = queryVars[i].split("=");
+    queryVars.forEach(function (query){
+        var pair = query.split("=");
         allQueries[pair[0]] = pair[1];
-    }
+    })
+
+//    for (var i = 0; i < queryVars.length; i++) {
+//        var pair = queryVars[i].split("=");
+//        allQueries[pair[0]] = pair[1];
+//    }
 console.log(queryVars);
     function showProfOptions(profOpt, init) {
         /*
