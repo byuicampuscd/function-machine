@@ -4,7 +4,7 @@ $(document).ready(function () {
     Load Query substring
     */
     var queryVars = [];
-    if (location.search.substring(1) == "") {
+    if (location.search == "") {
             //Default query string if nothing provided
         queryVars.push("file=funcMachineSettings");
     }
