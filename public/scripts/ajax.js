@@ -4,7 +4,7 @@ $(document).ready(function () {
     Load Query substring
     */
     var queryVars = [];
-    if (location.search.substring(1)){
+    if (location.search.length > 0) {
         // Grab the query string and options
             var queryString = location.search.substring(1);
         // Set queryVars to be array of parameters
@@ -20,7 +20,7 @@ $(document).ready(function () {
         var pair = queryVars[i].split("=");
         allQueries[pair[0]] = pair[1];
     }
-
+console.log(queryVars);
     function showProfOptions(profOpt, init) {
         /*
         Append the professor's chosen equations to the application
