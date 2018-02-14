@@ -42,9 +42,9 @@ gulp.task('scripts', function () {
          this.emit('end');
       }))
       .pipe(sourcemaps.init())
-      .pipe(babel({
-         presets: ['es2015']
-      }))
+//      .pipe(babel({
+//         presets: ['es2015']
+//      }))
 //      .pipe(uglify())
       .pipe(concat('scripts.js'))
       .pipe(sourcemaps.write())
