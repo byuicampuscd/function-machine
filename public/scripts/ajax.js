@@ -3,12 +3,21 @@ $(document).ready(function () {
     /*
     Load Query substring
     */
-    var queryString = location.search.substring(1),
-        vars = queryString.split("&"),
-        allQueries = {};
+    var queryVars = [];
+    if (location.search.substring(1)){
+        // Grab the query string and options
+            var queryString = location.search.substring(1);
+        // Set queryVars to be array of parameters
+        queryVars = queryString.split("&");
+    }
+    else{
+            //Default query string if nothing provided
+            queryVars.push("file=funcMachineSettings");
+    }
+    var allQueries = {};
 
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split("=");
+    for (var i = 0; i < queryVars.length; i++) {
+        var pair = queryVars[i].split("=");
         allQueries[pair[0]] = pair[1];
     }
 
@@ -37,7 +46,7 @@ $(document).ready(function () {
     $.getJSON(allQueries.file + ".json", function (data) {
 
         var result;
-
+        // If there is a "load" query, load it, otherwise load the general option.
         if (allQueries.load) {
             result = data[allQueries.load];
         } else {
