@@ -1,6 +1,4 @@
 /node_modules/
 /node_modules/**/
 /node_modules/**/*.js
-/public/dist/
-/public/dist/**.js
-/public/dist/**.css
+
